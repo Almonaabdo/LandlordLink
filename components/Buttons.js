@@ -2,6 +2,7 @@ import React from "react";
 import {StyleSheet, TouchableOpacity, Text, View } from "react-native";
 
 
+const primaryColor = "#60099c"
 
 
 export function ConfirmButton({text , onPress}) {
@@ -9,6 +10,19 @@ export function ConfirmButton({text , onPress}) {
         <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={onPress}>
             <View style={styles.ConfirmButton}>
+                <Text style={styles.ButtonText}>{text}</Text>
+            </View>
+        </TouchableOpacity>
+        </View>
+    )
+}
+
+
+export function LoginButton({text , onPress}) {
+    return (
+        <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={onPress}>
+            <View style={styles.LoginButton}>
                 <Text style={styles.ButtonText}>{text}</Text>
             </View>
         </TouchableOpacity>
@@ -41,6 +55,16 @@ const styles = StyleSheet.create({
         paddingHorizontal: 40,
         backgroundColor: '#5cb85c',
         maxWidth: 150,
+    },
+
+    LoginButton: 
+    {
+        borderRadius : 10,
+        paddingVertical: 10,
+        paddingHorizontal: 40,
+        backgroundColor: primaryColor,
+        maxWidth: 450,
+        width: 350,
     },
 
     CancelButton:

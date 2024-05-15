@@ -1,73 +1,38 @@
-import Greet from "./components/Greet";
-import {ConfirmButton, CancelButton} from "./components/Buttons";
+// Native
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React from 'react';
 
-import { useState} from "react";
-import { View, Text, Image,
-  ImageBackground, ScrollView, Button,
-  Pressable, Modal, StatusBar,
-  ActivityIndicator, Alert} from "react-native";
+// Custom
+import { LoginScreen } from './Login';
+import { SignUpScreen } from './Signup';
 
-const logoImg = require("./assets/adaptive-icon.png");
+const primaryColor = "#60099c"
+
+// screens stack
+const Stack = createNativeStackNavigator();
+
+// screen navigator options for all screens
+const defaultScreenOptions = 
+{
+  headerStyle: { backgroundColor: primaryColor },
+  headerTintColor: '#fff',
+};
 
 
-
-
-export default function App() {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  
-  const openModal = () => 
-  {
-    setIsModalVisible(true);
-  };
-  const closeModal = () =>
-  {
-    setIsModalVisible(false);
-    Alert.alert("Hiii", "I'm back!", [
-      {
-        text: "close",
-      },
-      {
-        text: "open",
-        onPress: () => openModal()
-      },
-    ])
-  };
-
+export default function App() 
+{
   return (
-    <View style={{ flex: 1, backgroundColor: "plum", padding: 40 }}>
+    <NavigationContainer>
+      <Stack.Navigator>
+        
+      {/* SIGN UP SCREEN */}
+      <Stack.Screen name="Signup" component={SignUpScreen} options={defaultScreenOptions}/>
 
-      <ScrollView 
-      showsVerticalScrollIndicator={false} 
-      showsHorizontalScrollIndicator={false}
-      >
-        <StatusBar barStyle="light-content" />
-        <View style={{backgroundColor: "plum", padding: 20 }}>
-        <ActivityIndicator
-          size={"large"}
-          color={"red"}
-          animating={isModalVisible}
-        />
-        </View>
+      {/* LOGIN SCREEN */}
+      <Stack.Screen name="Login" component={LoginScreen} options={defaultScreenOptions}/>
 
-        <Greet name={"Abdell"}/>
-        <Greet name={"Clark"}/>
-
-        <Image source={logoImg} style={{width: 300, height: 300}}/>
-
-        <ConfirmButton text="Open" onPress={openModal}/>
-
-      </ScrollView>
-
-      <Modal 
-        visible={isModalVisible} 
-        onRequestClose={closeModal} // Closes if Scrolled Down
-        animationType="slide"
-        presentationStyle="pageSheet"
-      >
-        <View style={{ height: 200, width: 200, backgroundColor: "cyan", padding: 40 }}>
-          <CancelButton text="Close" onPress={closeModal}/>
-        </View>
-      </Modal>
-    </View>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
