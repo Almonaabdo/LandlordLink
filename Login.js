@@ -12,73 +12,96 @@ import * as React from 'react';
 
 // logos
 const logoImg = require("./assets/Accommod8u.jpg");
-const smallLogo = require("./assets/logo.jpg");
+const smallLogoImg = require("./assets/logo.jpg");
 
 
-// inputs
-const TextInputExample = () => 
-{
-    const [text, onChangeText] = React.useState('Useless Text');
-    const [number, onChangeNumber] = React.useState('');
-}
 
 
 export function LoginScreen({navigation})
- {
-    return (
-        <View style={{ flex: 1, backgroundColor: "white", padding: 20 }}>
-        <KeyboardAvoidingView behavior="position">
-          <ScrollView 
-            showsVerticalScrollIndicator={false} 
-            showsHorizontalScrollIndicator={false}>
-    
-    
-            {/* STATUS BAR */}
-            <StatusBar barStyle="light-content" />
-    
-            {/* LOADING EMOJI */}
-            <ActivityIndicator
-              size={"large"}
-              color={"red"}
-              animating = "false"
-              />
-    
-            {/* LOGOS */}
-            <Image source={logoImg} style={stylesLogin.profileImage} />
-            <Image source={smallLogo} style={[stylesLogin.profileImage, stylesLogin.smallLogo]} />
-    
-    
-    
-            {/* INPUTS*/ }
-            <Text style={stylesLogin.textHeader}>Welcome Back!</Text>
-            <Text style={{color:"gray", marginBottom:20, marginVertical:2}}>Log Into your Account</Text>
-    
-            {/* Email*/ }
-            <View style={stylesLogin.container}>
-              <Text style={stylesLogin.inputLabel}>Email</Text>
-              <TextInput
-                style={stylesLogin.textInput}
-                placeholder="Enter Email..."/>
-    
-            {/* Password*/ }
-            <Text style={stylesLogin.inputLabel}>Password</Text>
-              <TextInput
-                secureTextEntry={true}
-                style={stylesLogin.textInput}
-                placeholder="Enter Password..."/>
-    
-            {/* Login Button */}
-            <LoginButton text="Login"/>
-    
-            <TouchableOpacity style={{alignSelf:"center"}} onPress={() => navigation.push('Signup')}>
-                <Text style={stylesLogin.textLabel}>Not A Member ?</Text>
-            </TouchableOpacity>   
+{
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [viewError, setViewError] = useState(0);
 
-            </View>
+  return (
+      <View style={{ flex: 1, backgroundColor: "white", padding: 20 }}>
+      <KeyboardAvoidingView behavior="position">
+        <ScrollView 
+          showsVerticalScrollIndicator={false} 
+          showsHorizontalScrollIndicator={false}>
     
+          {/* STATUS BAR */}
+          <StatusBar barStyle="light-content" />
     
-          </ScrollView>
-        </KeyboardAvoidingView>
-        </View>
-    );
+          {/* LOGOS */}
+          <Image source={logoImg} style={stylesLogin.profileImage} />
+          <Image source={smallLogoImg} style={[stylesLogin.profileImage, stylesLogin.smallLogo]} />
+
+          {/* LOADING EMOJI */}
+          <ActivityIndicator
+            size={"large"}
+            color={"purple"}
+            animating = {viewError === 1 && true}
+          />
+
+          {/* WELCOME*/ }
+          <Text style={stylesLogin.textHeader}>Welcome Back!</Text>
+          <Text style={{color:"gray", marginBottom:20, marginVertical:2}}>Log Into your Account</Text>
+    
+          {/* Email INPUT*/ }
+          <View style={stylesLogin.container}>
+            <Text style={stylesLogin.inputLabel}>Email</Text>
+            <TextInput
+              style={stylesLogin.textInput}
+              placeholder="Enter Email..."
+              onChangeText={(text)=>{setEmail(text), setViewError(0)} } // The second condition is to hide error message when user enters a value
+              value={email}/>
+    
+          {/* Password INPUT*/ }
+          <Text style={stylesLogin.inputLabel}>Password</Text>
+            <TextInput
+              secureTextEntry={true}
+              style={stylesLogin.textInput}
+              onChangeText={(text)=>{setPassword(text), setViewError(0)}}
+              value={password}
+              placeholder="Enter Password..."/>
+    
+          {/* LOGIN BUTTON*/}
+          <LoginButton text="Login" onPress={() => isFormValid()}/>
+
+          {/* VALIDATING FORM */}
+          {viewError === -1 &&<Text style={stylesLogin.textError}>Invalid Email or Password</Text>}
+          {viewError === -2 &&<Text style={stylesLogin.textError}>Invalid Email @</Text>}
+
+          <TouchableOpacity style={{alignSelf:"center"}} onPress={() => navigation.push("Signup")}>
+              <Text style={stylesLogin.textLabel}>Not A Member ?</Text>
+          </TouchableOpacity>   
+
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+      </View>
+  );
+
+  function isFormValid()
+  {
+    if (!email.includes("@"))
+    {
+      setViewError(-2);
+      return
+    }
+    if (email === "" || password.length < 8)
+    {
+      setViewError(-1);
+      return
+    }
+    setViewError(1);
+    setTimeout(navigateToHome, 1100); //1.1 s
   }
+
+  function navigateToHome() 
+  {
+    navigation.navigate("Home");
+    setViewError(0);
+  }
+}

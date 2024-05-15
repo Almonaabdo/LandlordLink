@@ -5,11 +5,11 @@ const primaryColor = "#60099c"
 export const stylesLogin = StyleSheet.create({ 
     profileImage: 
     { 
-        width: 380, 
-        marginTop: 18,
-        resizeMode:"stretch",
-        height:125,
-        borderRadius: 10, 
+      width: 380, 
+      marginTop: -30,
+      resizeMode:"stretch",
+      height:125,
+      borderRadius: 10, 
     },
     smallLogo: 
     {
@@ -23,7 +23,7 @@ export const stylesLogin = StyleSheet.create({
     {
       alignItems: "baseline",
       padding: 20,
-      borderWidth:1,
+      borderWidth:0.3,
       borderColor: primaryColor,
       borderRadius: 9,
     },
@@ -64,4 +64,12 @@ export const stylesLogin = StyleSheet.create({
       alignSelf:"center",
       fontWeight:"bold"
     },
+
+    textError:{
+      color:"red",
+      fontSize:12,
+      fontWeight:"bold",
+      alignSelf:"center",
+      marginVertical: 7,
+    }
   }); 

@@ -6,6 +6,7 @@ import React from 'react';
 // Custom
 import { LoginScreen } from './Login';
 import { SignUpScreen } from './Signup';
+import { HomeScreen } from './Home';
 
 const primaryColor = "#60099c"
 
@@ -31,6 +32,10 @@ export default function App()
 
       {/* LOGIN SCREEN */}
       <Stack.Screen name="Login" component={LoginScreen} options={defaultScreenOptions}/>
+
+      {/* HOME SCREEN */}
+      <Stack.Screen name="Home" component={HomeScreen} options={defaultScreenOptions}/>
+
 
       </Stack.Navigator>
     </NavigationContainer>
