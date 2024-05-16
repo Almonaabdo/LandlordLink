@@ -96,7 +96,7 @@ export function LoginScreen({navigation})
       return
     }
     setViewError(1);
-    setTimeout(navigateToHome, 1100); //1.1 s
+    setTimeout(navigateToHome, 350); //0.3 s
   }
 
   function navigateToHome() 

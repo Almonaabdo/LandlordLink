@@ -24,6 +24,7 @@ export const stylesLogin = StyleSheet.create({
       alignItems: "baseline",
       padding: 20,
       borderWidth:0.3,
+      margin:10,
       borderColor: primaryColor,
       borderRadius: 9,
     },
@@ -43,10 +44,11 @@ export const stylesLogin = StyleSheet.create({
     {
       width: '100%',
       height: 40,
-      borderColor: 'gray',
+      borderColor: primaryColor,
       borderWidth: 1,
-      borderRadius: 5,
+      borderRadius: 3,
       paddingHorizontal: 10,
+      textAlign:"left",
       marginBottom: 20,
     },
   

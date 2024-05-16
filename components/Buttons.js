@@ -20,13 +20,11 @@ export function ConfirmButton({text , onPress}) {
 
 export function LoginButton({text , onPress}) {
     return (
-        <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={onPress}>
             <View style={styles.LoginButton}>
                 <Text style={styles.ButtonText}>{text}</Text>
             </View>
         </TouchableOpacity>
-        </View>
     )
 }
 
@@ -42,12 +40,6 @@ export function CancelButton({text , onPress}) {
 
 const styles = StyleSheet.create({
 
-    buttonContainer: 
-    {
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-     
     ConfirmButton: 
     {
         borderRadius : 8,
