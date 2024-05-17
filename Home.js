@@ -11,17 +11,21 @@ import { stylesLogin } from "./styles/stylesLogin";
 
 
 // icons
-const AppartmentImg = require("./assets/256LesterSt.jpg")
-const WrenchIcon = require("./assets/wrenchIcon.png")
-const closeIcon = require("./assets/close.png")
-const addImagesLogo = require("./assets/addImagesLogo.png")
-const cameraLogo = require("./assets/cameraLogo.png")
-const gallerylogo = require("./assets/galleryLogo.png")
-const nfcLogo = require("./assets/nfcLogo.png")
+const AppartmentImg = require("./assets/256LesterSt.jpg");
+const icons = {
+    WrenchIcon: require("./assets/wrenchIcon.png"),
+    CloseIcon: require("./assets/close.png"),
+    AddImagesLogo: require("./assets/addImagesLogo.png"),
+    CameraLogo: require("./assets/cameraLogo.png"),
+    GalleryLogo: require("./assets/galleryLogo.png"),
+    NfcLogo: require("./assets/nfcLogo.png"),
+    NfcCardLogo: require("./assets/nfcCardLogo.png"),
+    ArrowDownIcon: require("./assets/arrowDownIcon.png"),
+  };
 
 export function HomeScreen({ navigation })
  {
-    // fields
+    // Input Fields
     const [issueTitle, setIssueTitle] = useState("");
     const [issueDescription, setIssueDescription] = useState("");
     const [selected, setSelected] = useState("");
@@ -38,16 +42,15 @@ export function HomeScreen({ navigation })
       {key:'7', value:'Doors/Windows'},
     ]
 
-    // maintainence window modal handler
-    const [isModalVisible, setIsModalVisible] = useState(false);
-
-    // image picker modal handler
+    //Modal Windows condition
+    const [isMaintenanceVisible, setIsMaintenanceVisible] = useState(false);
     const [imagePickerModalVisible, setImagePickerModalVisible] = useState(false);
+    const [isNfcModalVisible, setIsNfcModalVisible] = useState(false);
 
-
+    let imageResult = {};
+    // function for image uploads from camera/gallery
     const uploadImage = async (mode) =>
     {
-        let imageResult = {};
         try
         {
             // GALLERY MODE
@@ -60,7 +63,6 @@ export function HomeScreen({ navigation })
                     aspect:[1,1],
                     quality:1,
                     allowsMultipleSelection:true,
-
                 });
             }
             // CAMERA MODE
@@ -79,17 +81,14 @@ export function HomeScreen({ navigation })
         {
             console.log(error)
         }
-
         // user saved image
         if (!imageResult.canceled)
         {
             // save image
             await saveImage(imageResult.assets[0].uri);
         }
-        else
-        {
-            setImagePickerModalVisible(false);
-        }
+        // hide imagePicker modal window
+        setImagePickerModalVisible(false);
     }
 
 
@@ -111,13 +110,13 @@ export function HomeScreen({ navigation })
 
             <View style={{ flexDirection: "row", alignItems: "center",justifyContent:"space-between"}}>
                     {/* MAINTAINENCE BUTTON */}
-                    <TouchableOpacity onPress={() => { setIsModalVisible(true) }}>
-                        <Image source={WrenchIcon} style={StylesHome.Icons} />
+                    <TouchableOpacity onPress={() => { setIsMaintenanceVisible(true) }}>
+                        <Image source={icons.WrenchIcon} style={StylesHome.Icons} />
                     </TouchableOpacity>
 
                     {/* NFC BUTTON */}
-                    <TouchableOpacity>
-                        <Image source={nfcLogo} style={[StylesHome.Icons, { marginLeft: 10 }]} />
+                    <TouchableOpacity onPress={() => {setIsNfcModalVisible(true); setTimeout(() => setIsNfcModalVisible(false), 5000)}}>
+                        <Image source={icons.NfcLogo} style={[StylesHome.Icons, { marginLeft: 10 }]} />
                     </TouchableOpacity>
             </View>
 
@@ -127,16 +126,16 @@ export function HomeScreen({ navigation })
                 <Image source={AppartmentImg} style={StylesHome.AppartmentImage}/>
 
 
-                {/* MAINTENCE REQUEST WINDOW */}
+                {/* MAINTENCE REQUEST MODAL */}
                 <Modal 
-                visible={isModalVisible} 
-                onRequestClose={()=> setIsModalVisible(false)} // Closes if Scrolled Down
+                visible={isMaintenanceVisible} 
+                onRequestClose={()=> setIsMaintenanceVisible(false)} // Closes if Scrolled Down
                 animationType="slide"
                 presentationStyle="pageSheet">
                     
                     {/* CLOSE ICON */}
-                    <TouchableOpacity onPress={() => {setIsModalVisible(false)}}>
-                        <Image source={closeIcon} style={StylesHome.IconsSmall}/>
+                    <TouchableOpacity onPress={() => {setIsMaintenanceVisible(false)}}>
+                        <Image source={icons.closeIcon} style={StylesHome.IconsSmall}/>
                         <Text style={StylesHome.TextHeader}>Request Maintenence</Text>               
                     </TouchableOpacity>
 
@@ -168,10 +167,10 @@ export function HomeScreen({ navigation })
 
                         {/* IMAGE UPLOAD */}
                         <TouchableOpacity onPress={() => {setImagePickerModalVisible(true)}}> 
-                            <Image source={addImagesLogo} style={[StylesHome.AppartmentImage, {width:300,marginVertical:20, marginHorizontal:28}]}/>
+                            <Image source={icons.addImagesLogo} style={[StylesHome.AppartmentImage, {width:300,marginVertical:20, marginHorizontal:28}]}/>
                         </TouchableOpacity>
 
-
+                        {/* PHOTO UPLOAD MODAL */}
                         <Modal
                         visible={imagePickerModalVisible}
                         animationType="slide"
@@ -185,21 +184,38 @@ export function HomeScreen({ navigation })
 
                                     {/* Camera Logo */}
                                     <TouchableOpacity onPress={() => uploadImage("Camera")}>
-                                        <Image source={cameraLogo} style={StylesHome.Icons}/>
+                                        <Image source={icons.cameraLogo} style={StylesHome.Icons}/>
                                     </TouchableOpacity>
 
                                     {/* Gallery Logo */}
                                     <TouchableOpacity onPress={() => uploadImage("Gallery")}>
-                                        <Image source={gallerylogo} style={StylesHome.Icons}/>
+                                        <Image source={icons.gallerylogo} style={StylesHome.Icons}/>
                                     </TouchableOpacity>
 
                                 </View>
                             </View>
                         </Modal>
-
                         <LoginButton text="Submit"/>
+                    </View>
+                </Modal>
 
+                {/* NFC SCANNER MODAL */}
+                <Modal 
+                visible={isNfcModalVisible}
+                animationType="slide"
+                onRequestClose={()=> setIsNfcModalVisible(false)} // Closes if Scrolled Down
+                presentationStyle="pageSheet">
+                    
+                    {/* CLOSE ICON */}
+                    <TouchableOpacity onPress={() => {setIsNfcModalVisible(false)}}>
+                        <View style={[StylesHome.parentView, {marginVertical:30}]}>
+                            <Image source={icons.ArrowDownIcon} style={StylesHome.IconsSmall}/>
+                        </View>
+                        <Text style={StylesHome.TextHeader}>Scan your Lock!</Text>               
+                    </TouchableOpacity>
 
+                    <View style={StylesHome.parentView}>
+                        <Image style={{width:450}} source={icons.NfcCardLogo}></Image>
                     </View>
                 </Modal>
             </ScrollView>
