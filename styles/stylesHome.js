@@ -11,8 +11,8 @@ export const StylesHome = StyleSheet.create({
     },
 
     Icons:{
-        width: 40,
-        height: 40,
+        width: 30,
+        height: 30,
         margin:10,
     },
     IconsSmall:{
@@ -28,6 +28,22 @@ export const StylesHome = StyleSheet.create({
         alignSelf:"center",
         marginVertical:5,
         fontFamily: 'Avenir'
+    },
+
+
+    ModalSmall:{
+        backgroundColor:"#b8b4b2",
+        width:"60%", 
+        height:60, 
+        alignSelf:"center",
+        justifyContent: 'center',
+        borderRadius:7,
+        justifyContent:"space-around",
+        flexDirection:"row"
+    },
+
+    parentView:{
+        flex: 1, justifyContent: 'center',
     },
 
 
