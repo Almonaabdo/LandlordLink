@@ -1,8 +1,10 @@
 // Native
+import 'react-native-gesture-handler'; // MUST BE FIRST LINE SO APP WORKS DUE TO PACKAGE CONVENTION
 import {NavigationContainer, Font} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React from 'react';
+import * as React from 'react';
 import {Image} from "react-native";
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 // Custom
 import { LoginScreen } from './Login';
@@ -13,7 +15,7 @@ import { StylesHome } from './styles/stylesHome';
 const primaryColor = "#60099c"
 
 // screens stack
-const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 const ImageLogo = require("./assets/logo.jpg");
 
@@ -45,19 +47,21 @@ export default function App()
 {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        
-      {/* HOME SCREEN */}
-      <Stack.Screen name="Home" component={HomeScreen} options={defaultScreenOptions}/>
+      <Drawer.Navigator>
+          
+        {/* HOME SCREEN */}
+        <Drawer.Screen  name="Home" component={HomeScreen} options={defaultScreenOptions}/>
 
-      {/* LOGIN SCREEN */}
-      <Stack.Screen name="Login" component={LoginScreen} options={defaultScreenOptions}/>
+        {/* LOGIN SCREEN */}
+        <Drawer.Screen  name="Login" component={LoginScreen} options={defaultScreenOptions}/>
 
-      {/* SIGN UP SCREEN */}
-      <Stack.Screen name="Signup" component={SignUpScreen} options={defaultScreenOptions}/>
+        {/* SIGN UP SCREEN */}
+        <Drawer.Screen  name="Signup" component={SignUpScreen} options={defaultScreenOptions}/>
 
-      </Stack.Navigator>
+      </Drawer.Navigator>
     </NavigationContainer>
+
+
   );
 }
 
