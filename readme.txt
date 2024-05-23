@@ -1,0 +1,2 @@
+Drop-down List Support: https://www.npmjs.com/package/react-native-dropdown-select-list
+Image Picker Support  : https://docs.expo.dev/versions/latest/sdk/imagepicker/,  https://www.youtube.com/watch?v=uX5E_QFJubU&ab_channel=ToThePointCode

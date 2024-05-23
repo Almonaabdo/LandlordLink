@@ -2,23 +2,44 @@
 import {NavigationContainer, Font} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
+import {Image} from "react-native";
 
 // Custom
 import { LoginScreen } from './Login';
 import { SignUpScreen } from './Signup';
 import { HomeScreen } from './Home';
+import { StylesHome } from './styles/stylesHome';
 
 const primaryColor = "#60099c"
 
 // screens stack
 const Stack = createNativeStackNavigator();
 
+const ImageLogo = require("./assets/logo.jpg");
+
+
+function LogoTitle()
+{
+  return (
+    <Image
+      style={{width:40, height:35, borderRadius:5}}
+      source={require('./assets/logo.jpg')}
+    />
+  );
+}
+
+
 // screen navigator options for all screens
 const defaultScreenOptions = 
 {
   headerStyle: { backgroundColor: primaryColor },
   headerTintColor: '#fff',
+  headerTitle: (props) => <LogoTitle {...props} />
 };
+
+
+
+
 
 export default function App() 
 {
@@ -39,3 +60,5 @@ export default function App()
     </NavigationContainer>
   );
 }
+
+
