@@ -30,7 +30,6 @@ export function SignUpScreen({ navigation })
         showsVerticalScrollIndicator={false} 
         showsHorizontalScrollIndicator={false}>
     
-    
         {/* STATUS BAR */}
         <StatusBar barStyle="light-content" />
    

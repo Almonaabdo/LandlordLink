@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 40,
         backgroundColor: primaryColor,
         maxWidth: 450,
-        width: 350,
+        width: 330,
     },
 
     CancelButton:

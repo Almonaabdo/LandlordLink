@@ -101,7 +101,7 @@ export function LoginScreen({navigation})
 
   function navigateToHome() 
   {
-    navigation.navigate("Home");
+    navigation.navigate("Home", {isUserLoggedIn : true, });
     setViewError(0);
   }
 }
