@@ -21,12 +21,12 @@ export const stylesLogin = StyleSheet.create({
   
     container: 
     {
-      alignItems: "baseline",
+      margin:7,
       padding: 20,
-      borderWidth:0.3,
-      margin:10,
+      borderWidth:1,
       borderColor: primaryColor,
-      borderRadius: 9,
+      borderRadius: 3,
+      justifyContent: 'center',
     },
   
     inputContainer: 

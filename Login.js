@@ -24,18 +24,14 @@ export function LoginScreen({navigation})
   const [viewError, setViewError] = useState(0);
 
   return (
-      <View style={{ flex: 1, backgroundColor: "white", padding: 20 }}>
+      <View style={{ flex: 1, backgroundColor: "white", padding: 20, paddingVertical: 50 }}>
       <KeyboardAvoidingView behavior="position">
-        <ScrollView 
-          showsVerticalScrollIndicator={false} 
-          showsHorizontalScrollIndicator={false}>
     
           {/* STATUS BAR */}
           <StatusBar barStyle="light-content" />
     
           {/* LOGOS */}
           <Image source={logoImg} style={stylesLogin.profileImage} />
-          <Image source={smallLogoImg} style={[stylesLogin.profileImage, stylesLogin.smallLogo]} />
 
           {/* LOADING EMOJI */}
           <ActivityIndicator
@@ -73,12 +69,12 @@ export function LoginScreen({navigation})
           {viewError === -1 &&<Text style={stylesLogin.textError}>Invalid Email or Password</Text>}
           {viewError === -2 &&<Text style={stylesLogin.textError}>Invalid Email @</Text>}
 
-          <TouchableOpacity style={{alignSelf:"center"}} onPress={() => navigation.push("Signup")}>
+
+          {/* NOT A MEMBER BUTTON */}
+          <TouchableOpacity style={{alignSelf:"center"}} onPress={() => navigation.navigate("Signup")}>
               <Text style={stylesLogin.textLabel}>Not A Member ?</Text>
           </TouchableOpacity>   
-
           </View>
-        </ScrollView>
       </KeyboardAvoidingView>
       </View>
   );

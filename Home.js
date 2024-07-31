@@ -135,7 +135,7 @@ export function HomeScreen({ navigation })
                     
                     {/* CLOSE ICON */}
                     <TouchableOpacity onPress={() => {setIsMaintenanceVisible(false)}}>
-                        <Image source={icons.closeIcon} style={StylesHome.IconsSmall}/>
+                        <Image source={icons.CloseIcon} style={StylesHome.IconsSmall}/>
                         <Text style={StylesHome.TextHeader}>Request Maintenence</Text>               
                     </TouchableOpacity>
 
@@ -144,6 +144,7 @@ export function HomeScreen({ navigation })
                         <TextInput
                         placeholder="Issue Title"
                         style={stylesLogin.textInput}
+                        placeholderTextColor="black"
                         onChangeText={(text) => {setIssueTitle(text)}}
                         value={issueTitle}
                         />
@@ -151,7 +152,8 @@ export function HomeScreen({ navigation })
                         {/* Issue Description*/}
                         <TextInput
                         placeholder="Issue Description"
-                        style={[stylesLogin.textInput, {height: 200}]}
+                        style={[stylesLogin.textInput, {height: 150}]}
+                        placeholderTextColor="black"
                         onChangeText={(text) => {setIssueDescription(text)}}
                         value={issueDescription}
                         />
@@ -167,10 +169,10 @@ export function HomeScreen({ navigation })
 
                         {/* IMAGE UPLOAD */}
                         <TouchableOpacity onPress={() => {setImagePickerModalVisible(true)}}> 
-                            <Image source={icons.addImagesLogo} style={[StylesHome.AppartmentImage, {width:300,marginVertical:20, marginHorizontal:28}]}/>
+                            <Image source={icons.AddImagesLogo} style={[StylesHome.AppartmentImage, {width:200,marginVertical:20, marginHorizontal:68}]}/>
                         </TouchableOpacity>
 
-                        {/* PHOTO UPLOAD MODAL */}
+                        {/* IMAGE UPLOAD MODAL */}
                         <Modal
                         visible={imagePickerModalVisible}
                         animationType="slide"
@@ -182,20 +184,23 @@ export function HomeScreen({ navigation })
                             <View style={StylesHome.parentView}> 
                                 <View style={StylesHome.ModalSmall}>
 
-                                    {/* Camera Logo */}
-                                    <TouchableOpacity onPress={() => uploadImage("Camera")}>
-                                        <Image source={icons.cameraLogo} style={StylesHome.Icons}/>
-                                    </TouchableOpacity>
-
                                     {/* Gallery Logo */}
                                     <TouchableOpacity onPress={() => uploadImage("Gallery")}>
-                                        <Image source={icons.gallerylogo} style={StylesHome.Icons}/>
+                                        <Image source={icons.GalleryLogo} style={[StylesHome.Icons, {marginHorizontal: -30,marginVertical:15}]}/>
+                                    </TouchableOpacity>
+
+
+                                    {/* Camera Logo */}
+                                    <TouchableOpacity onPress={() => uploadImage("Camera")}>
+                                        <Image source={icons.CameraLogo} style={[StylesHome.Icons, { marginVertical:15}]}/>
                                     </TouchableOpacity>
 
                                 </View>
                             </View>
                         </Modal>
-                        <LoginButton text="Submit"/>
+
+                        <LoginButton text="Submit"  onPress={() => setTimeout(() => setIsMaintenanceVisible(false), 250)} />
+                            
                     </View>
                 </Modal>
 

@@ -26,9 +26,7 @@ export function SignUpScreen({ navigation })
     <View style={{ flex: 1, backgroundColor: "white", padding: 20 }}>
     <KeyboardAvoidingView behavior="position">
 
-      <ScrollView 
-        showsVerticalScrollIndicator={false} 
-        showsHorizontalScrollIndicator={false}>
+
     
         {/* STATUS BAR */}
         <StatusBar barStyle="light-content" />
@@ -42,12 +40,12 @@ export function SignUpScreen({ navigation })
     
         {/* LOGOS */}
         <Image source={logoImg} style={stylesLogin.profileImage} />
-        <Image source={smallLogo} style={[stylesLogin.profileImage, stylesLogin.smallLogo]} />
+        {/* <Image source={smallLogo} style={[stylesLogin.profileImage, stylesLogin.smallLogo]} /> */}
   
     
     
         {/* INPUTS*/ }
-        <Text style={stylesLogin.textHeader}>Welcome Back!</Text>
+        <Text style={[stylesLogin.textHeader, {marginTop:20}]}>Welcome Back!</Text>
         <Text style={{color:"gray", marginBottom:10, marginVertical:1}}>Register A New Account</Text>
   
         {/* Email*/ }
@@ -100,13 +98,12 @@ export function SignUpScreen({ navigation })
         {viewError === -2 && <Text style={stylesLogin.textError}>Passwords Don't Match</Text>}        
         {viewError === -3 && <Text style={stylesLogin.textError}>Email is Already in use</Text>}        
 
-        <TouchableOpacity style={{alignSelf:"center"}} onPress={() => navigation.push("Login")}>
+        <TouchableOpacity style={{alignSelf:"center"}} onPress={() => navigation.navigate("Login")}>
             <Text style={stylesLogin.textLabel}>Already A Member ?</Text>
         </TouchableOpacity>
     
         </View>
      
-      </ScrollView>
       </KeyboardAvoidingView>
     </View>
   );

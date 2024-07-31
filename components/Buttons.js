@@ -22,7 +22,7 @@ export function LoginButton({text , onPress}) {
     return (
         <TouchableOpacity onPress={onPress}>
             <View style={styles.LoginButton}>
-                <Text style={styles.ButtonText}>{text}</Text>
+                <Text style={[styles.ButtonText]}>{text}</Text>
             </View>
         </TouchableOpacity>
     )
@@ -53,10 +53,9 @@ const styles = StyleSheet.create({
     {
         borderRadius : 10,
         paddingVertical: 10,
-        paddingHorizontal: 40,
         backgroundColor: primaryColor,
-        maxWidth: 450,
-        width: 330,
+        width: 350,
+        alignSelf:'center'
     },
 
     CancelButton:

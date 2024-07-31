@@ -8,7 +8,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { LoginScreen } from './Login';
 import { SignUpScreen } from './Signup';
 import { HomeScreen } from './Home';
-import { StylesHome } from './styles/stylesHome';
+import { AnnouncementsScreen } from './Announcements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const primaryColor = "#60099c"
@@ -28,13 +28,12 @@ function LogoTitle()
   );
 }
 
-
 // screen navigator options for all screens
 const defaultScreenOptions = 
 {
   headerStyle: { backgroundColor: primaryColor },
   headerTintColor: '#fff',
-  headerTitle: (props) => <LogoTitle {...props} />
+  //headerTitle: (props) => <LogoTitle {...props} /> // puts an icon in center title bar
 };
 
 
@@ -51,10 +50,13 @@ export default function App()
         )}
           
         {/* LOGIN SCREEN */}
-        <Drawer.Screen  name="Login" component={LoginScreen} options={[defaultScreenOptions]}/>
+        <Drawer.Screen  name="Login" component={LoginScreen} options={defaultScreenOptions}/>
 
         {/* SIGN UP SCREEN */}
         <Drawer.Screen  name="Signup" component={SignUpScreen} options={defaultScreenOptions}/>
+
+        {/* Announcements SCREEN */}
+        <Drawer.Screen  name="Announcements" component={AnnouncementsScreen} options={defaultScreenOptions}/>
 
       </Drawer.Navigator>
     </NavigationContainer>
