@@ -33,7 +33,7 @@ const defaultScreenOptions =
 {
   headerStyle: { backgroundColor: primaryColor },
   headerTintColor: '#fff',
-  //headerTitle: (props) => <LogoTitle {...props} /> // puts an icon in center title bar
+  headerTitle: (props) => <LogoTitle {...props} /> // puts an icon in center title bar
 };
 
 

@@ -1,25 +1,30 @@
-import {React, useState} from "react";
+import {React} from "react";
 import {View, Text,Image, ScrollView, TouchableOpacity, Modal, TextInput,StatusBar} from "react-native";
-
-
-
-// Styles
-import { StylesHome } from "./styles/stylesHome";
-import { stylesLogin } from "./styles/stylesLogin";
-
+import AnnouncementCard from "./components/AnnouncementCard.js";
 
 
 export function AnnouncementsScreen ({navigation})
 {
     return(
-        <View style={{flex:1, backgroundColor:"cyan"}}>
+        <ScrollView style={{flex:1,padding:20,backgroundColor:"#f9f9f9"}}>
             <StatusBar barStyle="light-content" />
 
+            <TouchableOpacity>
+                <AnnouncementCard
+                    title="Announcement Title 1"
+                    details="Details about the first announcement go here."
+                    timeAgo="2 hours ago">
+                </AnnouncementCard>
+            </TouchableOpacity>
 
-            <TouchableOpacity style={{alignSelf:"center"}} onPress={() => navigation.navigate("Home")}>
-                <Text style={stylesLogin.textLabel}>HOME</Text>
-            </TouchableOpacity>  
-        </View>
+            <TouchableOpacity>
+                <AnnouncementCard
+                    title="Announcement Title 1"
+                    details="Details about the first announcement go here."
+                    timeAgo="2 hours ago">
+                </AnnouncementCard>
+            </TouchableOpacity>
 
+        </ScrollView>
     );
 }
