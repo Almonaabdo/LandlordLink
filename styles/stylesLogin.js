@@ -24,7 +24,7 @@ export const stylesLogin = StyleSheet.create({
       margin:7,
       padding: 20,
       borderWidth:1,
-      borderColor: primaryColor,
+      borderColor: '#000',
       borderRadius: 3,
       justifyContent: 'center',
     },
@@ -44,7 +44,8 @@ export const stylesLogin = StyleSheet.create({
     {
       width: '100%',
       height: 40,
-      borderColor: primaryColor,
+      //borderColor: primaryColor,
+      borderColor: '#000',
       borderWidth: 1,
       borderRadius: 3,
       paddingHorizontal: 10,

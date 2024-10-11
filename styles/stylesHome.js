@@ -42,9 +42,18 @@ export const StylesHome = StyleSheet.create({
         flexDirection:"row"
     },
 
-    parentView:{
+    parentView:
+    {
         flex: 1, justifyContent: 'center',alignSelf:"center",
     },
+    smallImage:
+    {
+        width: 30,
+        height: 34,
+        borderRadius: 7,
+        alignSelf: 'center',
+        resizeMode: 'contain', // Ensures the image scales properly
+      },
 
 
 })
