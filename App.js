@@ -4,7 +4,7 @@ import {Image, Linking} from "react-native";
 import {NavigationContainer} from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { View, Text, ScrollView,Modal, TextInput,StatusBar} from "react-native";
-
+import { Profile } from './Profile';
 // Custom
 import { LoginScreen } from './Login';
 import { SignUpScreen } from './Signup';
@@ -100,7 +100,7 @@ export default function App()
 
         <Drawer.Screen 
           name="Profile" 
-          component={HomeScreen} 
+          component={Profile} 
           options=
           {{ 
             drawerLabel: () => 

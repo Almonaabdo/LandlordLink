@@ -10,6 +10,13 @@ export const StylesHome = StyleSheet.create({
         height: 200,
     },
 
+    ProfileImage:{
+        width: 180,
+        borderRadius:4000,
+        height: 180,
+        alignSelf:'center',
+    },
+
     Icons:{
         width: 30,
         height: 30,
