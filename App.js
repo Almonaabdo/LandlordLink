@@ -26,6 +26,8 @@ const ProfileIcon = require("./assets/profileIcon.png");
 const AnnouncementIcon = require("./assets/announcementIcon.png");
 const DocumentsIcon = require("./assets/documentsIcon.png");
 
+
+
 // Custom Drawer Item
 const DrawerItem = ({ icon, label, onPress }) => (
   <TouchableOpacity onPress={onPress} style={{ flexDirection: 'row', alignItems: 'center', padding: 15 }}>
@@ -39,10 +41,10 @@ const defaultScreenOptions =
 {
   headerStyle: { backgroundColor: primaryColor },
   headerTintColor: '#fff',
-  headerTitle: (props) => <LogoTitle {...props} /> // puts an icon in center title bar
+  //headerTitle: (props) => <LogoTitle {...props} /> // puts an icon in center title bar
 };
 
-// Custom Side Meny
+// Custom Side Menu
 const CustomDrawerContent = (props) => (
   <View style={{ flex: 1 }}>
 
@@ -103,20 +105,24 @@ const CustomDrawerContent = (props) => (
   </View>
 );
 
-export default function App() {
+export default function App() 
+{
   return (
+    // Screens
     <NavigationContainer>
       <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
 
-        <Drawer.Screen name="Home" component={HomeScreen} options={{headerStyle: { backgroundColor: primaryColor }, headerTintColor: '#fff',}}/>
+        <Drawer.Screen name="Home" component={HomeScreen} options={defaultScreenOptions}/>
 
-        <Drawer.Screen name="Announcements" component={AnnouncementsScreen} options={{ headerStyle: { backgroundColor: primaryColor }, headerTintColor: '#fff',}}/>
+        <Drawer.Screen name="Announcements" component={AnnouncementsScreen} options={defaultScreenOptions}/>
 
-        <Drawer.Screen name="Profile" component={Profile} options={{ headerStyle: { backgroundColor: primaryColor }, headerTintColor: '#fff'}}/>
+        {/* <Drawer.Screen name="Documents" component={Documents} options={defaultScreenOptions}/> */}
+
+        <Drawer.Screen name="Profile" component={Profile} options={defaultScreenOptions}/>
         
-        <Drawer.Screen name="Login" component={LoginScreen} options={{ headerStyle: { backgroundColor: primaryColor }, headerTintColor: '#fff' }} />
+        <Drawer.Screen name="Login" component={LoginScreen} options={defaultScreenOptions} />
 
-        <Drawer.Screen name="Signup" component={SignUpScreen} options={{ headerStyle: { backgroundColor: primaryColor }, headerTintColor: '#fff' }} />
+        <Drawer.Screen name="Signup" component={SignUpScreen} options={defaultScreenOptions} />
 
       </Drawer.Navigator>
     </NavigationContainer>
