@@ -106,7 +106,7 @@ export function HomeScreen({ navigation })
 
     return (
         <View style={{ flex: 1, backgroundColor: "white"}}>
-            <StatusBar barStyle="light-content" />
+            <StatusBar barStyle="light-content"/>
 
             <View style={{ flexDirection: "row", alignItems: "center",justifyContent:"space-between"}}>
                     {/* MAINTAINENCE BUTTON */}
@@ -164,7 +164,7 @@ export function HomeScreen({ navigation })
                             setSelected={(val) => setSelected(val)}
                             selected = {selected}
                             data={maintainenceData}
-                            boxStyles={{marginTop:25, width:'100%', borderColor:"purple"}}
+                            boxStyles={{marginTop:25, width:'100%', borderColor:'#3e1952'}}
                             save="value"/>
 
                         {/* IMAGE UPLOAD */}

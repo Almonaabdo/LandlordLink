@@ -14,7 +14,7 @@ import { AnnouncementsScreen } from './Announcements';
 import { StylesHome } from './styles/stylesHome';
 import { stylesLogin } from './styles/stylesLogin';
 
-const primaryColor = "#60099c";
+const primaryColor = "#3e1952";
 
 // screens stack
 const Drawer = createDrawerNavigator();
@@ -33,6 +33,14 @@ const DrawerItem = ({ icon, label, onPress }) => (
     <Text style={{ fontSize: 16 }}>{label}</Text>
   </TouchableOpacity>
 );
+
+// screen options
+const defaultScreenOptions = 
+{
+  headerStyle: { backgroundColor: primaryColor },
+  headerTintColor: '#fff',
+  headerTitle: (props) => <LogoTitle {...props} /> // puts an icon in center title bar
+};
 
 // Custom Side Meny
 const CustomDrawerContent = (props) => (
@@ -67,13 +75,23 @@ const CustomDrawerContent = (props) => (
         onPress={() => props.navigation.navigate('Profile')}
       />
 
+      <DrawerItem
+        label="Login"
+        onPress={() => props.navigation.navigate('Login')}
+      />
+
+      <DrawerItem
+        label="Signup"
+        onPress={() => props.navigation.navigate('Signup')}
+      />
+
     </ScrollView>
 
     {/* Side menu bottom */}
-    <View style={{ height: '10%', backgroundColor: primaryColor}}>
+    <View style={{ height: '12%', backgroundColor: primaryColor}}>
       <Text style={[StylesHome.TextTitle, {marginTop:'3%',marginBottom:'1%',alignSelf:'center'}]}>Any Questions?</Text>
       
-      <View style={[stylesLogin.container, {padding:0, margin:0, borderColor:'#fff', height:'50%', width:'80%',alignSelf:'center'}]}>
+      <View style={[stylesLogin.container, {padding:0, margin:0, borderColor:'#fff', height:'50%', width:'80%',alignSelf:'center',borderRadius:5}]}>
         <TouchableOpacity onPress={() => Linking.openURL("https://www.accommod8u.com/")}>
           <Text style={[StylesHome.TextTitle, {alignSelf:'center'}]}>Visit US</Text>
           <Text style={[StylesHome.TextTitle, {alignSelf:'center', fontSize:12}]}>www.accommod8u.com</Text>
@@ -86,43 +104,18 @@ const CustomDrawerContent = (props) => (
 );
 
 export default function App() {
-  const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(true);
-
   return (
     <NavigationContainer>
-      <Drawer.Navigator
-        drawerContent={props => <CustomDrawerContent {...props} />}
-      >
-        {isUserLoggedIn && (
-          <Drawer.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{
-              headerStyle: { backgroundColor: primaryColor },
-              headerTintColor: '#fff',
-            }}
-          />
-        )}
+      <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
 
-        <Drawer.Screen
-          name="Announcements"
-          component={AnnouncementsScreen}
-          options={{
-            headerStyle: { backgroundColor: primaryColor },
-            headerTintColor: '#fff',
-          }}
-        />
+        <Drawer.Screen name="Home" component={HomeScreen} options={{headerStyle: { backgroundColor: primaryColor }, headerTintColor: '#fff',}}/>
 
-        <Drawer.Screen
-          name="Profile"
-          component={Profile}
-          options={{
-            headerStyle: { backgroundColor: primaryColor },
-            headerTintColor: '#fff', // controls the color of the title of the nav text
-          }}
-        />
+        <Drawer.Screen name="Announcements" component={AnnouncementsScreen} options={{ headerStyle: { backgroundColor: primaryColor }, headerTintColor: '#fff',}}/>
+
+        <Drawer.Screen name="Profile" component={Profile} options={{ headerStyle: { backgroundColor: primaryColor }, headerTintColor: '#fff'}}/>
         
         <Drawer.Screen name="Login" component={LoginScreen} options={{ headerStyle: { backgroundColor: primaryColor }, headerTintColor: '#fff' }} />
+
         <Drawer.Screen name="Signup" component={SignUpScreen} options={{ headerStyle: { backgroundColor: primaryColor }, headerTintColor: '#fff' }} />
 
       </Drawer.Navigator>

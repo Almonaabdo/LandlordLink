@@ -1,6 +1,6 @@
 import {StyleSheet} from "react-native";
 
-const primaryColor = "#60099c"
+const primaryColor = "#3e1952"
 
 export const stylesLogin = StyleSheet.create({ 
     profileImage: 
