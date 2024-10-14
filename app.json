@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "CoreComponents",
-    "slug": "CoreComponents",
+    "name": "LandlordLink",
+    "slug": "LandlordLink",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

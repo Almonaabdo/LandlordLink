@@ -1,47 +1,30 @@
-// Native
+// react native
 import * as React from 'react';
-import {Image, Linking} from "react-native";
-import {NavigationContainer} from '@react-navigation/native';
+import { Image, View,Linking, Text, TouchableOpacity } from "react-native";
+import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { View, Text, ScrollView,Modal, TextInput,StatusBar} from "react-native";
+import { ScrollView } from 'react-native-gesture-handler';
+
+// my custom components
 import { Profile } from './Profile';
-// Custom
 import { LoginScreen } from './Login';
 import { SignUpScreen } from './Signup';
 import { HomeScreen } from './Home';
 import { AnnouncementsScreen } from './Announcements';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StylesHome } from './styles/stylesHome';
+import { stylesLogin } from './styles/stylesLogin';
 
-const primaryColor = "#60099c"
+const primaryColor = "#60099c";
 
 // screens stack
 const Drawer = createDrawerNavigator();
 
-
+// importing local icons
 const ImageLogo = require("./assets/logo.jpg");
 const HomeIcon = require("./assets/homeIcon.png");
-
-const ProfileIcon = require("./assets/profileIcon.png")
-const AnnouncementIcon = require("./assets/announcementIcon.png")
-
-function LogoTitle()
-{
-  return (
-    <TouchableOpacity onPress={() => {Linking.openURL("https://www.accommod8u.com/")}}>
-      <Image style={{width:40, height:35, borderRadius:5}}
-        source={require('./assets/logo.jpg')}/>
-    </TouchableOpacity>
-  );
-}
-
-// screen navigator options for all screens
-const defaultScreenOptions = 
-{
-  headerStyle: { backgroundColor: primaryColor },
-  headerTintColor: '#fff',
-  headerTitle: (props) => <LogoTitle {...props} /> // puts an icon in center title bar
-};
-
+const ProfileIcon = require("./assets/profileIcon.png");
+const AnnouncementIcon = require("./assets/announcementIcon.png");
+const DocumentsIcon = require("./assets/documentsIcon.png");
 
 // Custom Drawer Item
 const DrawerItem = ({ icon, label, onPress }) => (
@@ -51,73 +34,98 @@ const DrawerItem = ({ icon, label, onPress }) => (
   </TouchableOpacity>
 );
 
+// Custom Side Meny
+const CustomDrawerContent = (props) => (
+  <View style={{ flex: 1 }}>
 
-export default function App() 
-{
+    {/* Side menu top */}
+    <View style={{ height: '9.82%', backgroundColor: primaryColor, alignItems: 'center',flexDirection:'row'}}>
+      <Image source={ImageLogo} style={{height:'55%', width:'18%', marginHorizontal:'4%', alignSelf:'flex-start',  borderRadius:9, marginTop:'12%'}} />
+      <Text style={[StylesHome.TextTitle, {marginTop:'12%'}]}>Accommod8u</Text>
+    </View>
+
+    <ScrollView>
+      <DrawerItem
+        icon={HomeIcon}
+        label="Home"
+        onPress={() => props.navigation.navigate('Home')}
+      />
+      <DrawerItem
+        icon={AnnouncementIcon}
+        label="Announcements"
+        onPress={() => props.navigation.navigate('Announcements')}
+      />
+
+      <DrawerItem
+      icon={DocumentsIcon}
+        label="Documents"
+        onPress={() => props.navigation.navigate('Profile')}
+      />
+      <DrawerItem
+        icon={ProfileIcon}
+        label="Profile"
+        onPress={() => props.navigation.navigate('Profile')}
+      />
+
+    </ScrollView>
+
+    {/* Side menu bottom */}
+    <View style={{ height: '10%', backgroundColor: primaryColor}}>
+      <Text style={[StylesHome.TextTitle, {marginTop:'3%',marginBottom:'1%',alignSelf:'center'}]}>Any Questions?</Text>
+      
+      <View style={[stylesLogin.container, {padding:0, margin:0, borderColor:'#fff', height:'50%', width:'80%',alignSelf:'center'}]}>
+        <TouchableOpacity onPress={() => Linking.openURL("https://www.accommod8u.com/")}>
+          <Text style={[StylesHome.TextTitle, {alignSelf:'center'}]}>Visit US</Text>
+          <Text style={[StylesHome.TextTitle, {alignSelf:'center', fontSize:12}]}>www.accommod8u.com</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+
+
+  </View>
+);
+
+export default function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(true);
 
   return (
     <NavigationContainer>
-      <Drawer.Navigator>
-        {isUserLoggedIn && 
-        (
-          
-          <Drawer.Screen 
-          name="Home" 
-          component={HomeScreen} 
-          options=
-          {{ 
-            drawerLabel: () => 
-            (
-              <DrawerItem 
-                icon={HomeIcon} 
-                label="Home"/>
-            ),
-            headerStyle: { backgroundColor: primaryColor },
-            headerTintColor: '#fff',
-          }} 
-        />
+      <Drawer.Navigator
+        drawerContent={props => <CustomDrawerContent {...props} />}
+      >
+        {isUserLoggedIn && (
+          <Drawer.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{
+              headerStyle: { backgroundColor: primaryColor },
+              headerTintColor: '#fff',
+            }}
+          />
         )}
-          
-        {/* LOGIN SCREEN */}
-        <Drawer.Screen  name="Login" component={LoginScreen} options={defaultScreenOptions}/>
 
-        {/* SIGN UP SCREEN */}
-        <Drawer.Screen  name="Signup" component={SignUpScreen} options={defaultScreenOptions}/>
-
-        {/* Announcements SCREEN */}
-        <Drawer.Screen  name="Announcements" component={AnnouncementsScreen} options={{drawerLabel: () => 
-          (
-            <DrawerItem 
-              icon={AnnouncementIcon} 
-              label="Announcements"
-              />
-          ),
-          headerStyle: { backgroundColor: primaryColor },
-          headerTintColor: '#fff',
-          }}/>
-
-
-        <Drawer.Screen 
-          name="Profile" 
-          component={Profile} 
-          options=
-          {{ 
-            drawerLabel: () => 
-            (
-              <DrawerItem 
-                icon={ProfileIcon} 
-                label="Profile"/>
-            ),
+        <Drawer.Screen
+          name="Announcements"
+          component={AnnouncementsScreen}
+          options={{
             headerStyle: { backgroundColor: primaryColor },
             headerTintColor: '#fff',
-          }} 
+          }}
         />
 
+        <Drawer.Screen
+          name="Profile"
+          component={Profile}
+          options={{
+            headerStyle: { backgroundColor: primaryColor },
+            headerTintColor: '#fff', // controls the color of the title of the nav text
+          }}
+        />
+        
+        <Drawer.Screen name="Login" component={LoginScreen} options={{ headerStyle: { backgroundColor: primaryColor }, headerTintColor: '#fff' }} />
+        <Drawer.Screen name="Signup" component={SignUpScreen} options={{ headerStyle: { backgroundColor: primaryColor }, headerTintColor: '#fff' }} />
 
       </Drawer.Navigator>
     </NavigationContainer>
   );
 }
-
-

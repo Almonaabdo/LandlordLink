@@ -26,8 +26,6 @@ export function SignUpScreen({ navigation })
     <View style={{ flex: 1, backgroundColor: "white", padding: 20 }}>
     <KeyboardAvoidingView behavior="position">
 
-
-    
         {/* STATUS BAR */}
         <StatusBar barStyle="light-content" />
    

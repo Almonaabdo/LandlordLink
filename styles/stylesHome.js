@@ -36,6 +36,11 @@ export const StylesHome = StyleSheet.create({
         marginVertical:5,
         fontFamily: 'Avenir'
     },
+    TextTitle:{
+        fontSize: 18,
+        color:'white',
+        fontFamily: 'Avenir'
+    },
 
 
     ModalSmall:{
