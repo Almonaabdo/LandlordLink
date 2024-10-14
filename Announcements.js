@@ -23,7 +23,7 @@ export function AnnouncementsScreen ({navigation})
             
             {/* Post Announcement Icon*/} 
             <TouchableOpacity onPress={() => {setIsCreatePost(true)}}>
-                <Image source={penIcon} style={[StylesHome.smallImage, {alignSelf: 'flex-end'}]}></Image>
+                <Image source={penIcon} style={[StylesHome.smallImage]}></Image>
             </TouchableOpacity>
 
             <AnnouncementCard

@@ -1,5 +1,5 @@
 import {React,useState} from "react";
-import { View, Text,Image, ScrollView, TouchableOpacity,Modal, TextInput,StatusBar} from "react-native";
+import { View, Text,Image, Animated,ScrollView, TouchableOpacity,Modal, TextInput,StatusBar} from "react-native";
 import * as ImagePicker from "expo-image-picker"
 import { SelectList } from 'react-native-dropdown-select-list'
 import { LoginButton } from "./components/Buttons";
@@ -21,7 +21,9 @@ const icons = {
     NfcLogo: require("./assets/nfcLogo.png"),
     NfcCardLogo: require("./assets/nfcCardLogo.png"),
     ArrowDownIcon: require("./assets/arrowDownIcon.png"),
+    NfcScannerScreen: require("./assets/nfcScannerScreen.png")
   };
+
 
 export function HomeScreen({ navigation })
  {
@@ -104,6 +106,32 @@ export function HomeScreen({ navigation })
         }
     }
 
+//================== IMAGE ANIMATION====================================================
+    const [fadeAnim] = useState(new Animated.Value(0)); // Initial opacity set to 0
+    const startFading = () => {
+        // Loop for fade in and fade out
+        Animated.loop(
+            Animated.sequence([
+                Animated.timing(fadeAnim, {
+                    toValue: 1,
+                    duration: 800, // Duration for fade in ms
+                    useNativeDriver: true,
+                }),
+                Animated.timing(fadeAnim, {
+                    toValue: 0,
+                    duration: 800, // Duration for fade out ms
+                    useNativeDriver: true,
+                }),
+            ])
+        ).start();
+    };
+    // Call startFading when the NFC modal is shown
+    const handleNfcModalOpen = () => {
+        setIsNfcModalVisible(true);
+        startFading();
+        setTimeout(() => setIsNfcModalVisible(false), 6000); // closes the NFC modal again for security purposes
+    };
+//=====================================================================================
     return (
         <View style={{ flex: 1, backgroundColor: "white"}}>
             <StatusBar barStyle="light-content"/>
@@ -115,7 +143,7 @@ export function HomeScreen({ navigation })
                     </TouchableOpacity>
 
                     {/* NFC BUTTON */}
-                    <TouchableOpacity onPress={() => {setIsNfcModalVisible(true); setTimeout(() => setIsNfcModalVisible(false), 5000)}}>
+                    <TouchableOpacity onPress={handleNfcModalOpen}>
                         <Image source={icons.NfcLogo} style={[StylesHome.Icons, { marginLeft: 10 }]} />
                     </TouchableOpacity>
             </View>
@@ -207,22 +235,27 @@ export function HomeScreen({ navigation })
                 {/* NFC SCANNER MODAL */}
                 <Modal 
                 visible={isNfcModalVisible}
-                animationType="slide"
-                onRequestClose={()=> setIsNfcModalVisible(false)} // Closes if Scrolled Down
+                animationType="fade"
+                onRequestClose={() => setIsNfcModalVisible(false)}
                 presentationStyle="pageSheet">
-                    
-                    {/* CLOSE ICON */}
-                    <TouchableOpacity onPress={() => {setIsNfcModalVisible(false)}}>
-                        <View style={[StylesHome.parentView, {marginVertical:30}]}>
-                            <Image source={icons.ArrowDownIcon} style={StylesHome.IconsSmall}/>
-                        </View>
-                        <Text style={StylesHome.TextHeader}>Scan your Lock!</Text>               
-                    </TouchableOpacity>
-
-                    <View style={StylesHome.parentView}>
-                        <Image style={{width:450}} source={icons.NfcCardLogo}></Image>
+                
+                <TouchableOpacity onPress={() => { setIsNfcModalVisible(false) }}>
+                    <View style={[StylesHome.parentView, { marginVertical: 30 }]}>
+                        <Image source={icons.ArrowDownIcon} style={StylesHome.IconsSmall} />
                     </View>
-                </Modal>
+                    <Text style={StylesHome.TextHeader}>Scan your Lock!</Text>               
+                </TouchableOpacity>
+
+                <View style={StylesHome.parentView}>
+                    <Animated.Image
+                        style={{
+                            width: 450,
+                            opacity: fadeAnim, // Use the animated value for opacity
+                        }}
+                        source={icons.NfcScannerScreen}
+                    />
+                </View>
+            </Modal>
             </ScrollView>
         </View>
     );
