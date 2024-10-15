@@ -4,6 +4,7 @@ import { Image, View,Linking, Text, TouchableOpacity } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Documents } from "./Documents";
 
 // my custom components
 import { Profile } from './Profile';
@@ -69,7 +70,7 @@ const CustomDrawerContent = (props) => (
       <DrawerItem
       icon={DocumentsIcon}
         label="Documents"
-        onPress={() => props.navigation.navigate('Profile')}
+        onPress={() => props.navigation.navigate('Documents')}
       />
       <DrawerItem
         icon={ProfileIcon}
@@ -116,7 +117,7 @@ export default function App()
 
         <Drawer.Screen name="Announcements" component={AnnouncementsScreen} options={defaultScreenOptions}/>
 
-        {/* <Drawer.Screen name="Documents" component={Documents} options={defaultScreenOptions}/> */}
+        <Drawer.Screen name="Documents" component={Documents} options={defaultScreenOptions}/>
 
         <Drawer.Screen name="Profile" component={Profile} options={defaultScreenOptions}/>
         
