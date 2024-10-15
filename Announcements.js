@@ -91,21 +91,21 @@ export function AnnouncementsScreen ({navigation})
         </ScrollView>
     );
 
-    function isFormValid()
-    {
-    if (announcementDetails === "" || announcementTitle ==="")
-    {
-        setViewError(-1);
-        return
-    }
-    setViewError(1);
-    setTimeout(closePostModal, 350); //0.3 s
-    }
+  function isFormValid()
+  {
+  if (announcementDetails === "" || announcementTitle ==="")
+  {
+      setViewError(-1);
+      return
+  }
+  setViewError(1);
+  setTimeout(closePostModal, 350); //0.3 s
+  }
 
-    function closePostModal() 
-    {
-    setIsCreatePost(false);
-    setViewError(0);
-    }
+  function closePostModal() 
+  {
+  setIsCreatePost(false);
+  setViewError(0);
+  }
 
 }

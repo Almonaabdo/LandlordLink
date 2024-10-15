@@ -13,7 +13,6 @@ import { SignUpScreen } from './Signup';
 import { HomeScreen } from './Home';
 import { AnnouncementsScreen } from './Announcements';
 import { StylesHome } from './styles/stylesHome';
-import { stylesLogin } from './styles/stylesLogin';
 
 const primaryColor = "#3e1952";
 
@@ -50,58 +49,32 @@ const CustomDrawerContent = (props) => (
   <View style={{ flex: 1 }}>
 
     {/* Side menu top */}
-    <View style={{ height: '9.82%', backgroundColor: primaryColor, alignItems: 'center',flexDirection:'row'}}>
+    <View style={{ height: '10%', backgroundColor: primaryColor,flexDirection:'row'}}>
       <Image source={ImageLogo} style={{height:'55%', width:'18%', marginHorizontal:'4%', alignSelf:'flex-start',  borderRadius:9, marginTop:'12%'}} />
-      <Text style={[StylesHome.TextTitle, {marginTop:'12%'}]}>Accommod8u</Text>
+      <Text style={[StylesHome.TextTitle, {marginTop:'20%'}]}>Accommod8u</Text>
     </View>
 
+    {/*NAVBAR ITEMS */}
     <ScrollView>
-      <DrawerItem
-        icon={HomeIcon}
-        label="Home"
-        onPress={() => props.navigation.navigate('Home')}
-      />
-      <DrawerItem
-        icon={AnnouncementIcon}
-        label="Announcements"
-        onPress={() => props.navigation.navigate('Announcements')}
-      />
 
-      <DrawerItem
-      icon={DocumentsIcon}
-        label="Documents"
-        onPress={() => props.navigation.navigate('Documents')}
-      />
-      <DrawerItem
-        icon={ProfileIcon}
-        label="Profile"
-        onPress={() => props.navigation.navigate('Profile')}
-      />
-
-      <DrawerItem
-        label="Login"
-        onPress={() => props.navigation.navigate('Login')}
-      />
-
-      <DrawerItem
-        label="Signup"
-        onPress={() => props.navigation.navigate('Signup')}
-      />
+      <DrawerItem icon={HomeIcon} label="Home" onPress={() => props.navigation.navigate('Home')} />
+      <DrawerItem icon={AnnouncementIcon} label="Announcements" onPress={() => props.navigation.navigate('Announcements')} />
+      <DrawerItem icon={DocumentsIcon} label="Documents" onPress={() => props.navigation.navigate('Documents')} />
+      <DrawerItem icon={ProfileIcon} label="Profile" onPress={() => props.navigation.navigate('Profile')} />
+      <DrawerItem label="Login" onPress={() => props.navigation.navigate('Login')} />
+      <DrawerItem label="Signup" onPress={() => props.navigation.navigate('Signup')} />
 
     </ScrollView>
 
     {/* Side menu bottom */}
     <View style={{ height: '12%', backgroundColor: primaryColor}}>
       <Text style={[StylesHome.TextTitle, {marginTop:'3%',marginBottom:'1%',alignSelf:'center'}]}>Any Questions?</Text>
-      
-      <View style={[stylesLogin.container, {padding:0, margin:0, borderColor:'#fff', height:'50%', width:'80%',alignSelf:'center',borderRadius:5}]}>
-        <TouchableOpacity onPress={() => Linking.openURL("https://www.accommod8u.com/")}>
-          <Text style={[StylesHome.TextTitle, {alignSelf:'center'}]}>Visit US</Text>
-          <Text style={[StylesHome.TextTitle, {alignSelf:'center', fontSize:12}]}>www.accommod8u.com</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity onPress={() => Linking.openURL("https://www.accommod8u.com/")}>
+        <Text style={[StylesHome.TextTitle, {alignSelf:'center'}]}>Visit US</Text>
+        <Text style={[StylesHome.TextTitle, {alignSelf:'center', fontSize:12}]}>www.accommod8u.com</Text>
+        <Text style={[StylesHome.TextTitle, {alignSelf:'center', fontSize:12}]}>+1(226)-898-0000</Text>
+      </TouchableOpacity>
     </View>
-
 
   </View>
 );
@@ -109,20 +82,15 @@ const CustomDrawerContent = (props) => (
 export default function App() 
 {
   return (
-    // Screens
+    // APP Screens
     <NavigationContainer>
       <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
 
         <Drawer.Screen name="Home" component={HomeScreen} options={defaultScreenOptions}/>
-
         <Drawer.Screen name="Announcements" component={AnnouncementsScreen} options={defaultScreenOptions}/>
-
         <Drawer.Screen name="Documents" component={Documents} options={defaultScreenOptions}/>
-
         <Drawer.Screen name="Profile" component={Profile} options={defaultScreenOptions}/>
-        
         <Drawer.Screen name="Login" component={LoginScreen} options={defaultScreenOptions} />
-
         <Drawer.Screen name="Signup" component={SignUpScreen} options={defaultScreenOptions} />
 
       </Drawer.Navigator>

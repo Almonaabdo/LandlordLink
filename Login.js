@@ -1,21 +1,14 @@
 // Custom
-import {CancelButton, LoginButton} from "./components/Buttons";
+import {LoginButton} from "./components/Buttons";
 import { stylesLogin } from "./styles/stylesLogin";
 
 // Native
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { useState} from "react";
-import { View, Text, Image, ScrollView, TouchableOpacity,Modal, StatusBar,ActivityIndicator, Alert, TextInput, KeyboardAvoidingView} from "react-native";
+import { View, Text, Image,  TouchableOpacity,Modal, StatusBar,ActivityIndicator, Alert, TextInput, KeyboardAvoidingView} from "react-native";
 import * as React from 'react';
-
 
 // logos
 const logoImg = require("./assets/Accommod8u.jpg");
-const smallLogoImg = require("./assets/logo.jpg");
-
-
-
 
 export function LoginScreen({navigation})
 {
@@ -92,7 +85,7 @@ export function LoginScreen({navigation})
       return
     }
     setViewError(1);
-    setTimeout(navigateToHome, 350); //0.3 s
+    setTimeout(navigateToHome, 1250); //1.25 s
   }
 
   function navigateToHome() 

@@ -135,22 +135,22 @@ export function HomeScreen({ navigation })
     return (
         <View style={{ flex: 1, backgroundColor: "white"}}>
             <StatusBar barStyle="light-content"/>
+            <View>
 
-            <View style={{ flexDirection: "row", alignItems: "center",justifyContent:"space-between"}}>
-                    {/* MAINTAINENCE BUTTON */}
-                    <TouchableOpacity onPress={() => { setIsMaintenanceVisible(true) }}>
-                        <Image source={icons.WrenchIcon} style={StylesHome.Icons} />
-                    </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "center",justifyContent:"space-between"}}>
+                  {/* MAINTAINENCE BUTTON */}
+                  <TouchableOpacity onPress={() => { setIsMaintenanceVisible(true) }}>
+                      <Image source={icons.WrenchIcon} style={StylesHome.Icons} />
+                  </TouchableOpacity>
 
-                    {/* NFC BUTTON */}
-                    <TouchableOpacity onPress={handleNfcModalOpen}>
-                        <Image source={icons.NfcLogo} style={[StylesHome.Icons, { marginLeft: 10 }]} />
-                    </TouchableOpacity>
-            </View>
+                  {/* NFC BUTTON */}
+                  <TouchableOpacity onPress={handleNfcModalOpen}>
+                      <Image source={icons.NfcLogo} style={[StylesHome.Icons, { marginLeft: 10 }]} />
+                  </TouchableOpacity>
+              </View>
 
-            <ScrollView>
+                {/* Appartment */}
                 <Text style={StylesHome.TextHeader}>256 Lester St N</Text>
-
                 <Image source={AppartmentImg} style={StylesHome.AppartmentImage}/>
 
 
@@ -255,8 +255,9 @@ export function HomeScreen({ navigation })
                         source={icons.NfcScannerScreen}
                     />
                 </View>
-            </Modal>
-            </ScrollView>
+                </Modal>
+
+            </View>
         </View>
     );
  }

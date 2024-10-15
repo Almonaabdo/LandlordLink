@@ -1,12 +1,10 @@
 import {React,useState} from "react";
-import {View, Text,Image, ScrollView, TouchableOpacity, Modal, TextInput,StatusBar} from "react-native";
+import {View, Text,Image, TouchableOpacity, StatusBar} from "react-native";
+
+// custom
 import { StylesHome } from "./styles/stylesHome.js";
 import { stylesLogin } from "./styles/stylesLogin.js";
 import { LoginButton } from "./components/Buttons.js";
-import { KeyboardAvoidingView } from "react-native-web";
-import { StyleSheet } from "react-native";
-const penIcon = require("./assets/penIcon.png");
-const CloseIcon= require("./assets/close.png");
 const profileImage = require("./assets/profile.jpg");
 
 
@@ -40,12 +38,12 @@ export function Profile ({navigation})
         {/*EMAIL */}
         <View style={stylesLogin.container}>
           <Text style={stylesLogin.inputLabel}>Email</Text>
-          <Text style={styles.timeAgo}>Almonaabdo@gmail.com</Text>
+          <Text style={{fontSize: 16, color: '#aaa',}}>Almonaabdo@gmail.com</Text>
         </View>
 
         <View style={stylesLogin.container}>
           <Text style={stylesLogin.inputLabel}>Password</Text>
-          <Text style={styles.timeAgo}>*********</Text>
+          <Text style={{fontSize: 16, color: '#aaa',}}>*********</Text>
         </View>
 
         {/* SPACING */}
@@ -59,11 +57,3 @@ export function Profile ({navigation})
     );
 
 }
-
-const styles = StyleSheet.create({
-    timeAgo: 
-    {
-      fontSize: 16,
-      color: '#aaa',
-    }
-  });
