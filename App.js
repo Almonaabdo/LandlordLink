@@ -1,6 +1,7 @@
 // react native
 import * as React from 'react';
 import { Image, View,Linking, Text, TouchableOpacity } from "react-native";
+import { AppRegistry } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { ScrollView } from 'react-native-gesture-handler';
