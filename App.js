@@ -28,11 +28,29 @@ const DocumentsIcon = require("./assets/documentsIcon.png");
 
 
 
+// divides items in the nav menu
+const Divider = () => (
+  <View style={{
+    height: 1,
+    backgroundColor: '#E0E0E0', 
+    marginVertical: 1,
+  }} />
+);
+
 // Custom Drawer Item
-const DrawerItem = ({ icon, label, onPress }) => (
-  <TouchableOpacity onPress={onPress} style={{ flexDirection: 'row', alignItems: 'center', padding: 15 }}>
-    <Image source={icon} style={{ width: 24, height: 24, marginRight: 10 }} />
-    <Text style={{ fontSize: 16 }}>{label}</Text>
+const DrawerItem = ({ icon, label, onPress, size }) => (
+  <TouchableOpacity onPress={onPress} style={{padding: label==="Profile" ? 1 : 10}}>
+    <View style=
+    {{
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: label==="Profile" ? 12 : 2,
+      borderRadius: 5,
+      backgroundColor: label === "Profile" ? '#D1C4E9' : 'transparent',
+    }}>
+      <Image source={icon} style={{ width: size || 24, height: size || 24, marginRight: 10 }} />
+      <Text style={{ fontSize: label === "Profile" ? 26 : 20 }}>{label}</Text>
+    </View>
   </TouchableOpacity>
 );
 
@@ -56,15 +74,19 @@ const CustomDrawerContent = (props) => (
 
     {/*NAVBAR ITEMS */}
     <ScrollView>
-
-      <DrawerItem icon={HomeIcon} label="Home" onPress={() => props.navigation.navigate('Home')} />
-      <DrawerItem icon={AnnouncementIcon} label="Announcements" onPress={() => props.navigation.navigate('Announcements')} />
-      <DrawerItem icon={DocumentsIcon} label="Documents" onPress={() => props.navigation.navigate('Documents')} />
-      <DrawerItem icon={ProfileIcon} label="Profile" onPress={() => props.navigation.navigate('Profile')} />
-      <DrawerItem label="Login" onPress={() => props.navigation.navigate('Login')} />
-      <DrawerItem label="Signup" onPress={() => props.navigation.navigate('Signup')} />
-
+      <DrawerItem icon={HomeIcon} label="Home" onPress={() => props.navigation.navigate('Home')} size={28} />
+      <Divider />
+      <DrawerItem icon={AnnouncementIcon} label="Announcements" onPress={() => props.navigation.navigate('Announcements')} size={28} />
+      <Divider />
+      <DrawerItem icon={DocumentsIcon} label="Documents" onPress={() => props.navigation.navigate('Documents')} size={28}/>
+      <Divider />
+      <DrawerItem label="Login" onPress={() => props.navigation.navigate('Login')}size={28} />
+      <Divider />
+      <DrawerItem label="Signup" onPress={() => props.navigation.navigate('Signup')} size={28}/>
+      <Divider />
     </ScrollView>
+
+    <DrawerItem icon={ProfileIcon} label="Profile" onPress={() => props.navigation.navigate('Profile')} size={36}/>
 
     {/* Side menu bottom */}
     <View style={{ height: '12%', backgroundColor: primaryColor}}>
@@ -75,7 +97,6 @@ const CustomDrawerContent = (props) => (
         <Text style={[StylesHome.TextTitle, {alignSelf:'center', fontSize:12}]}>+1(226)-898-0000</Text>
       </TouchableOpacity>
     </View>
-
   </View>
 );
 
@@ -85,12 +106,12 @@ export default function App()
     // APP Screens
     <NavigationContainer>
       <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
-
+      
+        <Drawer.Screen name="Login" component={LoginScreen} options={defaultScreenOptions} />
         <Drawer.Screen name="Home" component={HomeScreen} options={defaultScreenOptions}/>
         <Drawer.Screen name="Announcements" component={AnnouncementsScreen} options={defaultScreenOptions}/>
         <Drawer.Screen name="Documents" component={Documents} options={defaultScreenOptions}/>
         <Drawer.Screen name="Profile" component={Profile} options={defaultScreenOptions}/>
-        <Drawer.Screen name="Login" component={LoginScreen} options={defaultScreenOptions} />
         <Drawer.Screen name="Signup" component={SignUpScreen} options={defaultScreenOptions} />
 
       </Drawer.Navigator>

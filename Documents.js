@@ -14,10 +14,12 @@ const DocumentsList = [
 
 export function Documents({ navigation }) {
     const [selected, setSelected] = useState("");
+    const [isViewPressed, setIsViewPressed] = useState(false);
+
     const pdfUri = 'https://css4.pub/2015/icelandic/dictionary.pdf'; // Replace with your PDF URL
 
     return (
-        <View style={{ flex: 1, padding: 20, backgroundColor: "white" }}>
+        <View style={{ flex: 1, padding: 10, backgroundColor: "white" }}>
             <StatusBar barStyle="light-content" />
 
             <SelectList 
@@ -27,19 +29,24 @@ export function Documents({ navigation }) {
                 boxStyles={{ marginTop: 25, width: '100%', borderColor: '#3e1952' }}
                 save="value"/>
 
-            <View style={{marginVertical:'10%'}}></View>
-
-            <View style={{flex: 1}}>
-                <WebView
-                    originWhitelist={['*']}
-                    source={{ uri:pdfUri }}
-                    style={{ flex: 1 }}
-                />
-            </View>         
-
+            <View style={{marginVertical:'2%'}}></View>
+            
+            {/*Conditional view */}
+            {isViewPressed && selected !="" && (
+                <View style={{ flex: 0, height:'70%' }}>
+                    <WebView
+                        originWhitelist={['*']}
+                        source={{ uri: pdfUri }}
+                        style={{ flex: 1 }}
+                    />
+                </View>
+            )}      
 
             {/* VIEW BUTTON */}
-            <LoginButton text="View"/>
+            <LoginButton 
+            text={isViewPressed === false ? "View" : "Download"} 
+            onPress={() => {if (selected !== "") {setIsViewPressed(true)}}} />
+
         </View>
     );
 }
