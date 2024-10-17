@@ -1,5 +1,5 @@
 // react native
-import * as React from 'react';
+import  React , {useState }from 'react';
 import { Image, View,Linking, Text, TouchableOpacity } from "react-native";
 import { AppRegistry } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -81,6 +81,7 @@ const CustomDrawerContent = (props) => (
       <Divider />
       <DrawerItem icon={DocumentsIcon} label="Documents" onPress={() => props.navigation.navigate('Documents')} size={28}/>
       <Divider />
+      
       {/*
       <DrawerItem label="Login" onPress={() => props.navigation.navigate('Login')}size={28} />
       <Divider />
@@ -103,20 +104,30 @@ const CustomDrawerContent = (props) => (
   </View>
 );
 
-export default function App() 
-{
-  return (
-    // APP Screens
-    <NavigationContainer>
-      <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
-      
-        <Drawer.Screen name="Login" component={LoginScreen} options={{defaultScreenOptions, headerShown: false}} />
-        <Drawer.Screen name="Home" component={HomeScreen} options={defaultScreenOptions}/>
-        <Drawer.Screen name="Announcements" component={AnnouncementsScreen} options={defaultScreenOptions}/>
-        <Drawer.Screen name="Documents" component={Documents} options={defaultScreenOptions}/>
-        <Drawer.Screen name="Profile" component={Profile} options={defaultScreenOptions}/>
-        <Drawer.Screen name="Signup" component={SignUpScreen} options={{defaultScreenOptions, headerShown: false}} />
+export default function App() {
+  const [drawerEnabled, setDrawerEnabled] = useState(true);
 
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator
+        drawerContent={props => <CustomDrawerContent {...props} />}
+        screenOptions={({ route }) => 
+        {
+          // Disable drawer for Login and Signup screens
+          const isAuthScreen = route.name === 'Login' || route.name === 'Signup';
+          return {
+            headerShown: !isAuthScreen,
+            drawerType: isAuthScreen ? 'front' : 'back',
+            swipeEnabled: !isAuthScreen,
+          };
+        }}>
+          
+        <Drawer.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+        <Drawer.Screen name="Home" component={HomeScreen} options={defaultScreenOptions} />
+        <Drawer.Screen name="Announcements" component={AnnouncementsScreen} options={defaultScreenOptions} />
+        <Drawer.Screen name="Documents" component={Documents} options={defaultScreenOptions} />
+        <Drawer.Screen name="Profile" component={Profile} options={defaultScreenOptions} />
+        <Drawer.Screen name="Signup" component={SignUpScreen} options={{ headerShown: false }} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
