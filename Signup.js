@@ -57,7 +57,7 @@ export function SignUpScreen({ navigation }) {
       <KeyboardAvoidingView behavior="position">
 
         {/* STATUS BAR */}
-        <StatusBar barStyle="light-content" />
+        <StatusBar barStyle="dark-content" />
 
         {/* LOADING EMOJI */}
         <ActivityIndicator
