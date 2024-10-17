@@ -67,13 +67,10 @@ export function SignUpScreen({ navigation }) {
         />
 
         {/* LOGOS */}
-        <Image source={logoImg} style={stylesLogin.profileImage} />
-        {/* <Image source={smallLogo} style={[stylesLogin.profileImage, stylesLogin.smallLogo]} /> */}
-
-
+        <Image source={logoImg} style={stylesLogin.companyImage} />
 
         {/* INPUTS*/}
-        <Text style={[stylesLogin.textHeader, { marginTop: 20 }]}>Welcome Back!</Text>
+        <Text style={[stylesLogin.textHeader, { marginTop: 20 }]}>Hi There! 👋</Text>
         <Text style={{ color: "gray", marginBottom: 10, marginVertical: 1 }}>Register A New Account</Text>
 
         {/* Email*/}
@@ -82,14 +79,14 @@ export function SignUpScreen({ navigation }) {
 
           <Text style={stylesLogin.inputLabel}>First Name</Text>
           <TextInput
-            style={stylesLogin.textInput}
+            style={stylesLogin.textInputSignup}
             onChangeText={(text) => { setFirstName(text) }}
             value={firstName}
             placeholder="Enter First Name..." />
 
           <Text style={stylesLogin.inputLabel}>Last Name</Text>
           <TextInput
-            style={stylesLogin.textInput}
+            style={stylesLogin.textInputSignup}
             onChangeText={(text) => { setLastname(text) }}
             value={lastName}
             placeholder="Enter Last Name..." />
@@ -97,7 +94,7 @@ export function SignUpScreen({ navigation }) {
           {/* Email*/}
           <Text style={stylesLogin.inputLabel}>Email</Text>
           <TextInput
-            style={stylesLogin.textInput}
+            style={stylesLogin.textInputSignup}
             onChangeText={(text) => { setEmail(text) }}
             value={email}
             placeholder="Enter Email..." />
@@ -105,7 +102,7 @@ export function SignUpScreen({ navigation }) {
           {/* Password*/}
           <Text style={stylesLogin.inputLabel}>Password</Text>
           <TextInput
-            style={stylesLogin.textInput}
+            style={stylesLogin.textInputSignup}
             secureTextEntry={true}
             onChangeText={(text) => { setPassword(text) }}
             value={password}
@@ -113,7 +110,7 @@ export function SignUpScreen({ navigation }) {
 
           <Text style={stylesLogin.inputLabel}>Confirm Password</Text>
           <TextInput
-            style={stylesLogin.textInput}
+            style={stylesLogin.textInputSignup}
             secureTextEntry={true}
             onChangeText={(text) => { setConfirmPassword(text) }}
             value={confirmPassword}

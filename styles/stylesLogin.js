@@ -39,7 +39,7 @@ export const stylesLogin = StyleSheet.create({
     textInput:
     {
       width: '100%',
-      height: '15%',
+      height: '14%',
       borderColor: '#000',
       borderWidth: 1,
       borderRadius: 3,
