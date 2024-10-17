@@ -8,6 +8,12 @@ import { View, Text, Image,  TouchableOpacity,Modal, StatusBar,ActivityIndicator
 import * as React from 'react';
 import { ScrollView } from "react-native-gesture-handler";
 
+// Import for sign in with firebase
+import { auth } from './firebaseConfig'; // Make sure the path is correct
+import { signInWithEmailAndPassword } from "firebase/auth";
+
+
+
 // logos
 const logoImg = require("./assets/Accommod8u.jpg");
 
@@ -17,6 +23,32 @@ export function LoginScreen({navigation})
   const [password, setPassword] = useState("");
   const [viewError, setViewError] = useState(0);
 
+  const handleSignIn = async () => {
+    console.log("Here in sign in."); // Debug
+    
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password); // Give email and password and authenticate user
+      const user = userCredential.user;
+  
+      // Print user information (for debug)
+      console.log("User Info:", {
+        UID: user.uid,
+        Email: user.email,
+        DisplayName: user.displayName, // If you have a display name set
+        EmailVerified: user.emailVerified,
+        CreationTime: user.metadata.creationTime,
+        LastSignInTime: user.metadata.lastSignInTime,
+      });
+  
+      navigateToHome(); // If succesfully authenticated
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      setViewError(-1); // Show error message
+    }
+  };
+  
   return (
       <ScrollView style={{ flex: 1, backgroundColor: "white", padding: 20, paddingVertical: 50 }}>
       <KeyboardAvoidingView behavior="position">
@@ -57,7 +89,11 @@ export function LoginScreen({navigation})
               placeholder="Enter Password..."/>
     
           {/* LOGIN BUTTON*/}
-          <LoginButton text="Login" onPress={() => isFormValid()}/>
+          <LoginButton text="Login" onPress={() => {
+            if (isFormValid()) {
+              handleSignIn(); // Call the handleSignIn function after form validation
+            }
+          }} />
 
           {/* VALIDATING FORM */}
           {viewError === -1 &&<Text style={stylesLogin.textError}>Invalid Email or Password</Text>}
@@ -73,20 +109,17 @@ export function LoginScreen({navigation})
       </ScrollView>
   );
 
-  function isFormValid()
-  {
-    if (!email.includes("@"))
-    {
+  function isFormValid() {
+    if (!email.includes("@")) {
       setViewError(-2);
-      return
+      return false;
     }
-    if (email === "" || password.length < 8)
-    {
+    if (email === "" || password.length < 8) {
       setViewError(-1);
-      return
+      return false;
     }
     setViewError(1);
-    setTimeout(navigateToHome, 1250); //1.25 s
+    return true;
   }
 
   function navigateToHome() 
