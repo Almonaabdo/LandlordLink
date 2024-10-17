@@ -3,10 +3,9 @@ import {StyleSheet} from "react-native";
 const primaryColor = "#3e1952"
 
 export const stylesLogin = StyleSheet.create({ 
-    profileImage: 
+    companyImage: 
     { 
       width: '100%', 
-      marginTop: -30,
       resizeMode:"stretch",
       alignSelf:'center',
       height:125,
@@ -24,7 +23,7 @@ export const stylesLogin = StyleSheet.create({
     {
       margin:'2%',
       padding: '4%',
-      borderWidth:1,
+      borderWidth:1.2,
       borderColor: '#000',
       borderRadius: 10,
       justifyContent: 'center',

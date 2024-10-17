@@ -50,14 +50,14 @@ export function LoginScreen({navigation})
   };
   
   return (
-      <ScrollView style={{ flex: 1, backgroundColor: "white", padding: 20, paddingVertical: 50 }}>
+      <ScrollView style={{ flex: 1, backgroundColor: "white", padding: '4%'}}>
       <KeyboardAvoidingView behavior="position">
     
           {/* STATUS BAR */}
-          <StatusBar barStyle="light-content" />
-    
+          <StatusBar barStyle="dark-content" />
+          <View style={{marginTop:'11%'}}></View>
           {/* LOGOS */}
-          <Image source={logoImg} style={stylesLogin.profileImage} />
+          <Image source={logoImg} style={stylesLogin.companyImage} />
 
           {/* LOADING EMOJI */}
           <ActivityIndicator

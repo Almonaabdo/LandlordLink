@@ -80,10 +80,12 @@ const CustomDrawerContent = (props) => (
       <Divider />
       <DrawerItem icon={DocumentsIcon} label="Documents" onPress={() => props.navigation.navigate('Documents')} size={28}/>
       <Divider />
+      {/*
       <DrawerItem label="Login" onPress={() => props.navigation.navigate('Login')}size={28} />
       <Divider />
       <DrawerItem label="Signup" onPress={() => props.navigation.navigate('Signup')} size={28}/>
       <Divider />
+      */}
     </ScrollView>
 
     <DrawerItem icon={ProfileIcon} label="Profile" onPress={() => props.navigation.navigate('Profile')} size={36}/>
@@ -106,13 +108,13 @@ export default function App()
     // APP Screens
     <NavigationContainer>
       <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
-
+      
+        <Drawer.Screen name="Login" component={LoginScreen} options={{defaultScreenOptions, headerShown: false}} />
         <Drawer.Screen name="Home" component={HomeScreen} options={defaultScreenOptions}/>
-        <Drawer.Screen name="Login" component={LoginScreen} options={defaultScreenOptions} />
         <Drawer.Screen name="Announcements" component={AnnouncementsScreen} options={defaultScreenOptions}/>
         <Drawer.Screen name="Documents" component={Documents} options={defaultScreenOptions}/>
         <Drawer.Screen name="Profile" component={Profile} options={defaultScreenOptions}/>
-        <Drawer.Screen name="Signup" component={SignUpScreen} options={defaultScreenOptions} />
+        <Drawer.Screen name="Signup" component={SignUpScreen} options={{defaultScreenOptions, headerShown: false}} />
 
       </Drawer.Navigator>
     </NavigationContainer>

@@ -23,11 +23,11 @@ export function SignUpScreen({ navigation })
   const [viewError, setViewError] = useState(0);
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: "white", padding: 20 }}>
+    <ScrollView style={{ flex: 1, backgroundColor: "white", padding: '4%' }}>
     <KeyboardAvoidingView behavior="position">
 
         {/* STATUS BAR */}
-        <StatusBar barStyle="light-content" />
+        <StatusBar barStyle="dark-content" />
    
         {/* LOADING EMOJI */}
         <ActivityIndicator
@@ -37,7 +37,7 @@ export function SignUpScreen({ navigation })
           />
     
         {/* LOGOS */}
-        <Image source={logoImg} style={stylesLogin.profileImage} />
+        <Image source={logoImg} style={stylesLogin.companyImage} />
         {/* <Image source={smallLogo} style={[stylesLogin.profileImage, stylesLogin.smallLogo]} /> */}
   
     
