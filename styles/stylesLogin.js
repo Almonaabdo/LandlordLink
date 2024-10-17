@@ -5,9 +5,10 @@ const primaryColor = "#3e1952"
 export const stylesLogin = StyleSheet.create({ 
     profileImage: 
     { 
-      width: 380, 
+      width: '100%', 
       marginTop: -30,
       resizeMode:"stretch",
+      alignSelf:'center',
       height:125,
       borderRadius: 10, 
     },
