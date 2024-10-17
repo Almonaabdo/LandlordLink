@@ -106,9 +106,9 @@ export default function App()
     // APP Screens
     <NavigationContainer>
       <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
-      
-        <Drawer.Screen name="Login" component={LoginScreen} options={defaultScreenOptions} />
+
         <Drawer.Screen name="Home" component={HomeScreen} options={defaultScreenOptions}/>
+        <Drawer.Screen name="Login" component={LoginScreen} options={defaultScreenOptions} />
         <Drawer.Screen name="Announcements" component={AnnouncementsScreen} options={defaultScreenOptions}/>
         <Drawer.Screen name="Documents" component={Documents} options={defaultScreenOptions}/>
         <Drawer.Screen name="Profile" component={Profile} options={defaultScreenOptions}/>

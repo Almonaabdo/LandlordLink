@@ -9,7 +9,6 @@ import { StylesHome } from "./styles/stylesHome";
 import { stylesLogin } from "./styles/stylesLogin";
 
 
-
 // icons
 const AppartmentImg = require("./assets/256LesterSt.jpg");
 const icons = {
@@ -21,7 +20,9 @@ const icons = {
     NfcLogo: require("./assets/nfcLogo.png"),
     NfcCardLogo: require("./assets/nfcCardLogo.png"),
     ArrowDownIcon: require("./assets/arrowDownIcon.png"),
-    NfcScannerScreen: require("./assets/nfcScannerScreen.png")
+    NfcScannerScreen: require("./assets/nfcScannerScreen.png"),
+    HouseImage: require("./assets/houseImage.png"),
+
   };
 
 
@@ -132,30 +133,31 @@ export function HomeScreen({ navigation })
         setTimeout(() => setIsNfcModalVisible(false), 6000); // closes the NFC modal again for security purposes
     };
 //=====================================================================================
-    return (
-        <View style={{ flex: 1, backgroundColor: "white"}}>
-            <StatusBar barStyle="light-content"/>
-            <View>
+    
+  return (
+    <View style={{ flex: 1, backgroundColor: "white"}}>
+        <StatusBar barStyle="light-content"/>
+        <View>
 
-              <View style={{ flexDirection: "row", alignItems: "center",justifyContent:"space-between"}}>
-                  {/* MAINTAINENCE BUTTON */}
-                  <TouchableOpacity onPress={() => { setIsMaintenanceVisible(true) }}>
-                      <Image source={icons.WrenchIcon} style={StylesHome.Icons} />
-                  </TouchableOpacity>
+          <View style={{ flexDirection: "row", alignItems: "center",justifyContent:"space-between"}}>
+            {/* MAINTAINENCE BUTTON */}
+            <TouchableOpacity onPress={() => { setIsMaintenanceVisible(true) }}>
+              <Image source={icons.WrenchIcon} style={StylesHome.Icons} />
+            </TouchableOpacity>
 
-                  {/* NFC BUTTON */}
-                  <TouchableOpacity onPress={handleNfcModalOpen}>
-                      <Image source={icons.NfcLogo} style={[StylesHome.Icons, { marginLeft: 10 }]} />
-                  </TouchableOpacity>
-              </View>
+            {/* NFC BUTTON */}
+            <TouchableOpacity onPress={handleNfcModalOpen}>
+              <Image source={icons.NfcLogo} style={[StylesHome.Icons, { marginLeft: 10 }]} />
+            </TouchableOpacity>
+          </View>
 
-                {/* Appartment */}
-                <Text style={StylesHome.TextHeader}>256 Lester St N</Text>
-                <Image source={AppartmentImg} style={StylesHome.AppartmentImage}/>
+          {/* Appartment */}
+          <Text style={StylesHome.TextHeader}>256 Lester St N</Text>
+          <Image source={AppartmentImg} style={StylesHome.AppartmentImage}/>
 
 
-                {/* MAINTENCE REQUEST MODAL */}
-                <Modal 
+          {/* MAINTENCE REQUEST MODAL */}
+          <Modal 
                 visible={isMaintenanceVisible} 
                 onRequestClose={()=> setIsMaintenanceVisible(false)} // Closes if Scrolled Down
                 animationType="slide"
@@ -230,10 +232,10 @@ export function HomeScreen({ navigation })
                         <LoginButton text="Submit"  onPress={() => setTimeout(() => setIsMaintenanceVisible(false), 250)} />
                             
                     </View>
-                </Modal>
+          </Modal>
 
-                {/* NFC SCANNER MODAL */}
-                <Modal 
+          {/* NFC SCANNER MODAL */}
+          <Modal 
                 visible={isNfcModalVisible}
                 animationType="fade"
                 onRequestClose={() => setIsNfcModalVisible(false)}
@@ -255,9 +257,20 @@ export function HomeScreen({ navigation })
                         source={icons.NfcScannerScreen}
                     />
                 </View>
-                </Modal>
+          </Modal>
 
-            </View>
+          <View style={{flexDirection:"row", padding:10}}>
+            <Image source={icons.HouseImage} style={{height:70, width:70}}></Image>
+            <Text style={{fontSize:24, padding:15}}> Home Visits:          25</Text>
+          </View>
+
+          
+          <View style={{flexDirection:"row", padding:10}}>
+            <Image source={icons.WrenchIcon} style={{height:70, width:70}}></Image>
+            <Text style={{fontSize:24, padding:15}}> Current Requests:    25</Text>
+          </View>                
+
+          </View>
         </View>
     );
  }

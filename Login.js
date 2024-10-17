@@ -6,6 +6,7 @@ import { stylesLogin } from "./styles/stylesLogin";
 import { useState} from "react";
 import { View, Text, Image,  TouchableOpacity,Modal, StatusBar,ActivityIndicator, Alert, TextInput, KeyboardAvoidingView} from "react-native";
 import * as React from 'react';
+import { ScrollView } from "react-native-gesture-handler";
 
 // logos
 const logoImg = require("./assets/Accommod8u.jpg");
@@ -17,7 +18,7 @@ export function LoginScreen({navigation})
   const [viewError, setViewError] = useState(0);
 
   return (
-      <View style={{ flex: 1, backgroundColor: "white", padding: 20, paddingVertical: 50 }}>
+      <ScrollView style={{ flex: 1, backgroundColor: "white", padding: 20, paddingVertical: 50 }}>
       <KeyboardAvoidingView behavior="position">
     
           {/* STATUS BAR */}
@@ -69,7 +70,7 @@ export function LoginScreen({navigation})
           </TouchableOpacity>   
           </View>
       </KeyboardAvoidingView>
-      </View>
+      </ScrollView>
   );
 
   function isFormValid()

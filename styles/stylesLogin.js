@@ -21,37 +21,45 @@ export const stylesLogin = StyleSheet.create({
   
     container: 
     {
-      margin:7,
-      padding: 20,
+      margin:'2%',
+      padding: '4%',
       borderWidth:1,
       borderColor: '#000',
-      borderRadius: 3,
+      borderRadius: 10,
       justifyContent: 'center',
     },
-  
-    inputContainer: 
-    {
-      marginBottom: 20,
-    },
+
   
     inputLabel: 
     {
-      marginBottom: 5,
+      marginBottom: '3%',
       fontWeight: 'bold',
     },
   
     textInput:
     {
       width: '100%',
-      height: 40,
-      //borderColor: primaryColor,
+      height: '15%',
       borderColor: '#000',
       borderWidth: 1,
       borderRadius: 3,
-      paddingHorizontal: 10,
+      paddingHorizontal: '3%',
       textAlign:"left",
-      marginBottom: 20,
+      marginBottom: '2%',
     },
+
+    textInputSignup:
+    {
+      width: '100%',
+      height: '7.5%',
+      borderColor: '#000',
+      borderWidth: 1,
+      borderRadius: 3,
+      paddingHorizontal: '3%',
+      textAlign:"left",
+      marginBottom: '2%',
+    },
+  
   
     textHeader:{
       fontSize: 24,
@@ -63,7 +71,7 @@ export const stylesLogin = StyleSheet.create({
     {
       color:primaryColor,
       fontSize:12,
-      marginVertical:20,
+      padding:'5%',
       alignSelf:"center",
       fontWeight:"bold"
     },
@@ -73,6 +81,6 @@ export const stylesLogin = StyleSheet.create({
       fontSize:12,
       fontWeight:"bold",
       alignSelf:"center",
-      marginVertical: 7,
+      marginVertical: '2%',
     }
   }); 

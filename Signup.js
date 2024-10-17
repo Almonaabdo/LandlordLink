@@ -23,7 +23,7 @@ export function SignUpScreen({ navigation })
   const [viewError, setViewError] = useState(0);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white", padding: 20 }}>
+    <ScrollView style={{ flex: 1, backgroundColor: "white", padding: 20 }}>
     <KeyboardAvoidingView behavior="position">
 
         {/* STATUS BAR */}
@@ -52,14 +52,14 @@ export function SignUpScreen({ navigation })
 
           <Text style={stylesLogin.inputLabel}>First Name</Text>
           <TextInput
-            style={stylesLogin.textInput}
+            style={stylesLogin.textInputSignup}
             onChangeText={(text) =>{setFirstName(text)}}
             value={firstName}
             placeholder="Enter First Name..."/>
 
           <Text style={stylesLogin.inputLabel}>Last Name</Text>
           <TextInput
-            style={stylesLogin.textInput}
+            style={stylesLogin.textInputSignup}
             onChangeText={(text) =>{setLastname(text)}}
             value={lastName}
             placeholder="Enter Last Name..."/>
@@ -67,7 +67,7 @@ export function SignUpScreen({ navigation })
           {/* Email*/ }
           <Text style={stylesLogin.inputLabel}>Email</Text>
           <TextInput
-            style={stylesLogin.textInput}
+            style={stylesLogin.textInputSignup}
             onChangeText={(text) =>{setEmail(text)}}
             value={email}
             placeholder="Enter Email..."/>
@@ -75,7 +75,7 @@ export function SignUpScreen({ navigation })
         {/* Password*/ }
         <Text style={stylesLogin.inputLabel}>Password</Text>
           <TextInput
-            style={stylesLogin.textInput}
+            style={stylesLogin.textInputSignup}
             secureTextEntry={true}
             onChangeText={(text) =>{setPassword(text)}}
             value={password}
@@ -83,7 +83,7 @@ export function SignUpScreen({ navigation })
 
         <Text style={stylesLogin.inputLabel}>Confirm Password</Text>
           <TextInput
-            style={stylesLogin.textInput}
+            style={stylesLogin.textInputSignup}
             secureTextEntry={true}
             onChangeText={(text) =>{setConfirmPassword(text)}}
             value={confirmPassword}
@@ -103,7 +103,7 @@ export function SignUpScreen({ navigation })
         </View>
      
       </KeyboardAvoidingView>
-    </View>
+    </ScrollView>
   );
 
   function isFormValid()
