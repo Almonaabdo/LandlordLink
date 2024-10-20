@@ -15,7 +15,7 @@ import { HomeScreen } from './Home';
 import { AnnouncementsScreen } from './Announcements';
 import { StylesHome } from './styles/stylesHome';
 import { SignOutScreen } from './SignOut';
-import { Contact } from './Contac';
+import { Contact } from './Contact';
 
 
 const primaryColor = "#3e1952";
