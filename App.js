@@ -15,6 +15,8 @@ import { HomeScreen } from './Home';
 import { AnnouncementsScreen } from './Announcements';
 import { StylesHome } from './styles/stylesHome';
 import { SignOutScreen } from './SignOut';
+import { Contact } from './Contac';
+
 
 const primaryColor = "#3e1952";
 
@@ -27,7 +29,7 @@ const HomeIcon = require("./assets/homeIcon.png");
 const ProfileIcon = require("./assets/profileIcon.png");
 const AnnouncementIcon = require("./assets/announcementIcon.png");
 const DocumentsIcon = require("./assets/documentsIcon.png");
-
+const ContactIcon = require("./assets/contactIcon.png");
 
 
 // divides items in the nav menu
@@ -82,7 +84,8 @@ const CustomDrawerContent = (props) => (
       <Divider />
       <DrawerItem icon={DocumentsIcon} label="Documents" onPress={() => props.navigation.navigate('Documents')} size={28}/>
       <Divider />
-      
+      <DrawerItem icon={ContactIcon} label="Contact" onPress={() => props.navigation.navigate('Contact')} size={28}/>
+      <Divider />
       {/*
       <DrawerItem label="Login" onPress={() => props.navigation.navigate('Login')}size={28} />
       <Divider />
@@ -128,6 +131,7 @@ export default function App() {
         <Drawer.Screen name="Announcements" component={AnnouncementsScreen} options={defaultScreenOptions} />
         <Drawer.Screen name="Documents" component={Documents} options={defaultScreenOptions} />
         <Drawer.Screen name="Profile" component={Profile} options={defaultScreenOptions} />
+        <Drawer.Screen name="Contact" component={Contact} options={defaultScreenOptions} />
         <Drawer.Screen name="Signup" component={SignUpScreen} options={{ headerShown: false }} />
         <Drawer.Screen name='SignOut' component={SignOutScreen}/>
       </Drawer.Navigator>
