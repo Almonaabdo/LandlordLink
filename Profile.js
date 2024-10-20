@@ -5,6 +5,8 @@ import {View, Text,Image, TouchableOpacity, StatusBar} from "react-native";
 import { StylesHome } from "./styles/stylesHome.js";
 import { stylesLogin } from "./styles/stylesLogin.js";
 import { LoginButton } from "./components/Buttons.js";
+import { auth } from './firebaseConfig';  // Import Firebase auth for logout
+
 const profileImage = require("./assets/profile.jpg");
 
 
@@ -38,8 +40,8 @@ export function Profile ({navigation})
         {/*EMAIL */}
         <View style={stylesLogin.container}>
           <Text style={stylesLogin.inputLabel}>Email</Text>
-          <Text style={{fontSize: 16, color: '#aaa',}}>Almonaabdo@gmail.com</Text>
-        </View>
+          <Text style={{ fontSize: 16, color: '#aaa' }}>{auth.currentUser?.email || "user@example.com"}</Text> 
+          </View>
 
         <View style={stylesLogin.container}>
           <Text style={stylesLogin.inputLabel}>Password</Text>
@@ -50,8 +52,8 @@ export function Profile ({navigation})
         <View style={{marginVertical:60}}>
 
         </View>
-        {/* LOGIN BUTTON*/}
-        <LoginButton text="Logout" onPress={() => isFormValid()}/>
+        {/* Logout BUTTON*/}
+        <LoginButton text="Logout" onPress={() => navigation.navigate("SignOut")} />
 
         </View>
     );

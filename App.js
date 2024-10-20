@@ -14,6 +14,7 @@ import { SignUpScreen } from './Signup';
 import { HomeScreen } from './Home';
 import { AnnouncementsScreen } from './Announcements';
 import { StylesHome } from './styles/stylesHome';
+import { SignOutScreen } from './SignOut';
 
 const primaryColor = "#3e1952";
 
@@ -121,13 +122,14 @@ export default function App() {
             swipeEnabled: !isAuthScreen,
           };
         }}>
-          
+        
         <Drawer.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         <Drawer.Screen name="Home" component={HomeScreen} options={defaultScreenOptions} />
         <Drawer.Screen name="Announcements" component={AnnouncementsScreen} options={defaultScreenOptions} />
         <Drawer.Screen name="Documents" component={Documents} options={defaultScreenOptions} />
         <Drawer.Screen name="Profile" component={Profile} options={defaultScreenOptions} />
         <Drawer.Screen name="Signup" component={SignUpScreen} options={{ headerShown: false }} />
+        <Drawer.Screen name='SignOut' component={SignOutScreen}/>
       </Drawer.Navigator>
     </NavigationContainer>
   );
