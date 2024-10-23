@@ -95,8 +95,8 @@ export function AnnouncementsScreen ({navigation})
   {
   if (announcementDetails === "" || announcementTitle ==="")
   {
-      setViewError(-1);
-      return
+    setViewError(-1);
+    return
   }
   setViewError(1);
   setTimeout(closePostModal, 350); //0.3 s

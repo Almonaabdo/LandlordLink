@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity, StatusBar, StyleSheet, TextInput, 
 import { LoginButton } from "./components/Buttons.js";
 import { auth } from './firebaseConfig';  // Import Firebase auth for logout
 
-const profileImage = require("./assets/profile.jpg");
+const profileImage = require("./assets/profileUser.png");
 
 export function Profile({ navigation }) {
   // State hooks
@@ -20,7 +20,6 @@ export function Profile({ navigation }) {
       <Image source={profileImage} style={styles.profileImage} />
       <Text style={styles.name}>Yafet Tekleab</Text>
 
-      <View style={{margin:'10%'}}/>
 
       {/* Email Input */}
         <Text style={styles.inputLabel}>Email</Text>
@@ -41,7 +40,7 @@ export function Profile({ navigation }) {
 
       <View style={{margin:'20%'}}/>
       {/* Logout BUTTON */}
-      <LoginButton text="Logout" onPress={() => navigation.navigate("SignOut")} />
+      <LoginButton text="Sign Out" onPress={() => navigation.navigate("SignOut")} />
     </ScrollView>
   );
 }
@@ -68,7 +67,7 @@ const styles = StyleSheet.create({
     borderColor: '#1560BD',
     alignSelf: 'center',
     marginBottom: 20,
-
+    resizeMode: 'contain',
   },
   name: {
     fontSize: 22,

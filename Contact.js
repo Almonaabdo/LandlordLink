@@ -53,7 +53,7 @@ export function Contact({ navigation }) {
           onPress={() => openGoogleMaps(propertyManagementOffice)}/>
       </Section>
 
-
+      <View style={{marginVertical:'7%'}}></View>
       {/*LEASING OFFICE */}
       <Section title="Leasing Office" hours="Monday - Friday: 10am - 6pm">
         <ContactLink
@@ -167,11 +167,11 @@ const styles = StyleSheet.create({
   contactLink: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: '2.75%',
+    marginVertical: '3%',
   },
   linkIcon: {
     width: '7%',
-    height: '150%',
+    height: '165%',
     marginRight: '3%',
   },
   linkText: {

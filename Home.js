@@ -1,15 +1,10 @@
-import {React,useState} from "react";
-import { View, Text,Image, Animated,ScrollView, TouchableOpacity,Modal, TextInput,StatusBar} from "react-native";
-import * as ImagePicker from "expo-image-picker"
-import { SelectList } from 'react-native-dropdown-select-list'
+import { React, useState } from "react";
+import { View, Text, Image, Animated, TouchableOpacity, Modal, TextInput, StatusBar } from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import { SelectList } from 'react-native-dropdown-select-list';
 import { LoginButton } from "./components/Buttons";
 
-// Styles
-import { StylesHome } from "./styles/stylesHome";
-import { stylesLogin } from "./styles/stylesLogin";
-
-
-// icons
+// Icons
 const AppartmentImg = require("./assets/256LesterSt.jpg");
 const icons = {
     WrenchIcon: require("./assets/wrenchIcon.png"),
@@ -18,259 +13,228 @@ const icons = {
     CameraLogo: require("./assets/cameraLogo.png"),
     GalleryLogo: require("./assets/galleryLogo.png"),
     NfcLogo: require("./assets/nfcLogo.png"),
-    NfcCardLogo: require("./assets/nfcCardLogo.png"),
     ArrowDownIcon: require("./assets/arrowDownIcon.png"),
-    NfcScannerScreen: require("./assets/nfcScannerScreen.png"),
     HouseImage: require("./assets/houseImage.png"),
+    NfcScannerScreen: require("./assets/nfcScannerScreen.png"),
+};
 
-  };
-
-
-export function HomeScreen({ navigation })
- {
-    // Input Fields
+export function HomeScreen({ navigation }) {
     const [issueTitle, setIssueTitle] = useState("");
     const [issueDescription, setIssueDescription] = useState("");
     const [selected, setSelected] = useState("");
     const [image, setImage] = useState();
-
-    //{key:'1', value:'Mobiles', disabled:true},
-    const maintainenceData = [
-      {key:'1', value:'Pest control'},
-      {key:'2', value:'Electrical'},
-      {key:'3', value:'Water Leakage'},
-      {key:'4', value:'HVAC'},
-      {key:'5', value:'Appliances'},
-      {key:'6', value:'Flooring'},
-      {key:'7', value:'Doors/Windows'},
-    ]
-
-    //Modal Windows condition
     const [isMaintenanceVisible, setIsMaintenanceVisible] = useState(false);
     const [imagePickerModalVisible, setImagePickerModalVisible] = useState(false);
     const [isNfcModalVisible, setIsNfcModalVisible] = useState(false);
+    const [fadeAnim] = useState(new Animated.Value(0));
 
-    let imageResult = {};
-    // function for image uploads from camera/gallery
-    const uploadImage = async (mode) =>
-    {
-        try
+    // Sample data for recent announcements
+    const recentAnnouncements = [
         {
-            // GALLERY MODE
-            if (mode === "Gallery")
-            {
-                await ImagePicker.requestMediaLibraryPermissionsAsync();
-                imageResult = await ImagePicker.launchImageLibraryAsync({
-                    mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                    allowsEditing:false,
-                    aspect:[1,1],
-                    quality:1,
-                    allowsMultipleSelection:true,
-                });
-            }
-            // CAMERA MODE
-            else
-            {
-                await ImagePicker.requestCameraPermissionsAsync();
-                imageResult = await ImagePicker.launchCameraAsync({
-                    cameraType: ImagePicker.CameraType.back,
-                    allowsEditing:true,
-                    aspect:[1,1],
-                    quality:1,
-                });
-            }
-        } // end of try
-        catch(error)
+            title: "Planned Maintenance",
+            details: "There will be a planned maintenance on the heating system this Friday."
+        },
         {
-            console.log(error)
+            title: "New Gym Hours",
+            details: "The gym will now be open from 6 AM to 10 PM."
         }
-        // user saved image
-        if (!imageResult.canceled)
-        {
-            // save image
-            await saveImage(imageResult.assets[0].uri);
-        }
-        // hide imagePicker modal window
-        setImagePickerModalVisible(false);
-    }
+    ];
 
+    const maintainenceData = [
+        { key: '1', value: 'Pest control' },
+        { key: '2', value: 'Electrical' },
+        { key: '3', value: 'Water Leakage' },
+        { key: '4', value: 'HVAC' },
+        { key: '5', value: 'Appliances' },
+        { key: '6', value: 'Flooring' },
+        { key: '7', value: 'Doors/Windows' },
+    ];
 
-    const saveImage = async (image) =>
-    {
-        try
-        {
-            setImage(image);
-        }
-        catch(error)
-        {
-            console.log("saveImage: " + error)
-        }
-    }
-
-//================== IMAGE ANIMATION====================================================
-    const [fadeAnim] = useState(new Animated.Value(0)); // Initial opacity set to 0
     const startFading = () => {
-        // Loop for fade in and fade out
         Animated.loop(
             Animated.sequence([
-                Animated.timing(fadeAnim, {
-                    toValue: 1,
-                    duration: 800, // Duration for fade in ms
-                    useNativeDriver: true,
-                }),
-                Animated.timing(fadeAnim, {
-                    toValue: 0,
-                    duration: 800, // Duration for fade out ms
-                    useNativeDriver: true,
-                }),
+                Animated.timing(fadeAnim, { toValue: 1, duration: 800, useNativeDriver: true }),
+                Animated.timing(fadeAnim, { toValue: 0, duration: 800, useNativeDriver: true }),
             ])
         ).start();
     };
-    // Call startFading when the NFC modal is shown
+
     const handleNfcModalOpen = () => {
         setIsNfcModalVisible(true);
         startFading();
-        setTimeout(() => setIsNfcModalVisible(false), 6000); // closes the NFC modal again for security purposes
+        setTimeout(() => setIsNfcModalVisible(false), 6000);
     };
-//=====================================================================================
-    
-  return (
-    <View style={{ flex: 1, backgroundColor: "white"}}>
-        <StatusBar barStyle="light-content"/>
-        <View>
 
-          <View style={{ flexDirection: "row", alignItems: "center",justifyContent:"space-between"}}>
-            {/* MAINTAINENCE BUTTON */}
-            <TouchableOpacity onPress={() => { setIsMaintenanceVisible(true) }}>
-              <Image source={icons.WrenchIcon} style={StylesHome.Icons} />
-            </TouchableOpacity>
+    const uploadImage = async (mode) => {
+        try {
+            let imageResult = {};
+            if (mode === "Gallery") {
+                await ImagePicker.requestMediaLibraryPermissionsAsync();
+                imageResult = await ImagePicker.launchImageLibraryAsync({
+                    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                    allowsEditing: false,
+                    aspect: [1, 1],
+                    quality: 1,
+                    allowsMultipleSelection: true,
+                });
+            } else {
+                await ImagePicker.requestCameraPermissionsAsync();
+                imageResult = await ImagePicker.launchCameraAsync({
+                    cameraType: ImagePicker.CameraType.back,
+                    allowsEditing: true,
+                    aspect: [1, 1],
+                    quality: 1,
+                });
+            }
 
-            {/* NFC BUTTON */}
-            <TouchableOpacity onPress={handleNfcModalOpen}>
-              <Image source={icons.NfcLogo} style={[StylesHome.Icons, { marginLeft: 10 }]} />
-            </TouchableOpacity>
-          </View>
+            if (!imageResult.canceled) {
+                setImage(imageResult.assets[0].uri);
+            }
+            setImagePickerModalVisible(false);
+        } catch (error) {
+            console.log("Image upload error:", error);
+        }
+    };
 
-          {/* Appartment */}
-          <Text style={StylesHome.TextHeader}>256 Lester St N</Text>
-          <Image source={AppartmentImg} style={StylesHome.AppartmentImage}/>
+    return (
+        <View style={{ flex: 1, backgroundColor: "#f5f5f5", padding: 16 }}>
+            <StatusBar barStyle="light-content" />
+            <View style={{ marginBottom: 20, alignItems: "center" }}>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#333' }}>256 Lester St N</Text>
+                <Image source={AppartmentImg} style={{ width: '100%', height: 200, borderRadius: 12, marginTop: 10 }} />
+            </View>
 
+            <View style={{ flexDirection: "row", justifyContent: "space-around", marginBottom: 20 }}>
+                <TouchableOpacity onPress={() => setIsMaintenanceVisible(true)}>
+                    <Image source={icons.WrenchIcon} style={{ width: 50, height: 50 }} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleNfcModalOpen}>
+                    <Image source={icons.NfcLogo} style={{ width: 50, height: 50 }} />
+                </TouchableOpacity>
+            </View>
 
-          {/* MAINTENCE REQUEST MODAL */}
-          <Modal 
-                visible={isMaintenanceVisible} 
-                onRequestClose={()=> setIsMaintenanceVisible(false)} // Closes if Scrolled Down
-                animationType="slide"
-                presentationStyle="pageSheet">
-                    
-                    {/* CLOSE ICON */}
-                    <TouchableOpacity onPress={() => {setIsMaintenanceVisible(false)}}>
-                        <Image source={icons.CloseIcon} style={StylesHome.IconsSmall}/>
-                        <Text style={StylesHome.TextHeader}>Request Maintenence</Text>               
-                    </TouchableOpacity>
+            <Text style={{ fontSize: 20, color: '#666', marginVertical: 10 }}>Maintenance Requests</Text>
 
-                    <View style={stylesLogin.container}>
-                        {/* Issue Title*/}
-                        <TextInput
-                        placeholder="Issue Title"
-                        style={stylesLogin.textInput}
-                        placeholderTextColor="black"
-                        onChangeText={(text) => {setIssueTitle(text)}}
-                        value={issueTitle}
-                        />
-
-                        {/* Issue Description*/}
-                        <TextInput
-                        placeholder="Issue Description"
-                        style={[stylesLogin.textInput, {height: 150}]}
-                        placeholderTextColor="black"
-                        onChangeText={(text) => {setIssueDescription(text)}}
-                        value={issueDescription}
-                        />
-
-
-                        {/* MAINTAINENCE LIST (MIGHT DELETE SECOND LINE)*/}
-                        <SelectList 
-                            setSelected={(val) => setSelected(val)}
-                            selected = {selected}
-                            data={maintainenceData}
-                            boxStyles={{marginTop:25, width:'100%', borderColor:'#3e1952'}}
-                            save="value"/>
-
-                        {/* IMAGE UPLOAD */}
-                        <TouchableOpacity onPress={() => {setImagePickerModalVisible(true)}}> 
-                            <Image source={icons.AddImagesLogo} style={[StylesHome.AppartmentImage, {width:200,marginVertical:20, marginHorizontal:68}]}/>
-                        </TouchableOpacity>
-
-                        {/* IMAGE UPLOAD MODAL */}
-                        <Modal
-                        visible={imagePickerModalVisible}
-                        animationType="slide"
-                        transparent={true}
-                        onDismiss={() =>setImagePickerModalVisible(false)}
-                        onRequestClose={() => setImagePickerModalVisible(false)}>
-
-                            {/* We use View inside a View to achieve horizontal centering */}
-                            <View style={StylesHome.parentView}> 
-                                <View style={StylesHome.ModalSmall}>
-
-                                    {/* Gallery Logo */}
-                                    <TouchableOpacity onPress={() => uploadImage("Gallery")}>
-                                        <Image source={icons.GalleryLogo} style={[StylesHome.Icons, {marginHorizontal: -30,marginVertical:15}]}/>
-                                    </TouchableOpacity>
-
-
-                                    {/* Camera Logo */}
-                                    <TouchableOpacity onPress={() => uploadImage("Camera")}>
-                                        <Image source={icons.CameraLogo} style={[StylesHome.Icons, { marginVertical:15}]}/>
-                                    </TouchableOpacity>
-
-                                </View>
-                            </View>
-                        </Modal>
-
-                        <LoginButton text="Submit"  onPress={() => setTimeout(() => setIsMaintenanceVisible(false), 250)} />
-                            
-                    </View>
-          </Modal>
-
-          {/* NFC SCANNER MODAL */}
-          <Modal 
-                visible={isNfcModalVisible}
-                animationType="fade"
-                onRequestClose={() => setIsNfcModalVisible(false)}
-                presentationStyle="pageSheet">
-                
-                <TouchableOpacity onPress={() => { setIsNfcModalVisible(false) }}>
-                    <View style={[StylesHome.parentView, { marginVertical: 30 }]}>
-                        <Image source={icons.ArrowDownIcon} style={StylesHome.IconsSmall} />
-                    </View>
-                    <Text style={StylesHome.TextHeader}>Scan your Lock!</Text>               
+            <View style={{ backgroundColor: "white", borderRadius: 12, padding: 16, elevation: 3 }}>
+                <TouchableOpacity onPress={() => setIsMaintenanceVisible(true)} style={{ flexDirection: "row", alignItems: "center", marginBottom: 10 }}>
+                    <Image source={icons.WrenchIcon} style={{ width: 30, height: 30 }} />
+                    <Text style={{ marginLeft: 10, fontSize: 16 }}>New Maintenance Request</Text>
                 </TouchableOpacity>
 
-                <View style={StylesHome.parentView}>
-                    <Animated.Image
-                        style={{
-                            width: 450,
-                            opacity: fadeAnim, // Use the animated value for opacity
-                        }}
-                        source={icons.NfcScannerScreen}
-                    />
+                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                    <Text style={{ fontSize: 16 }}>Home Visits: 25</Text>
+                    <Text style={{ fontSize: 16 }}>Current Requests: 25</Text>
                 </View>
-          </Modal>
+            </View>
 
-          <View style={{flexDirection:"row", padding:10}}>
-            <Image source={icons.HouseImage} style={{height:70, width:70}}></Image>
-            <Text style={{fontSize:24, padding:15}}> Home Visits:          25</Text>
-          </View>
+            {/* Recent Announcements Section */}
+            <View style={{ backgroundColor: "#9B59B6", borderRadius: 12, padding: 16, elevation: 3, marginTop: 20 }}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10,color:'white' }}>Recent Announcements</Text>
+                  <View style={{ marginBottom: 10 }}>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold',color:'white' }}>Planned Maintenance</Text>
+                    <Text style={{ fontSize: 14, color: 'white' }}>There will be a schedueled  maintainence between the times of the first adn second...</Text>
+                  </View>
+            </View>
 
-          
-          <View style={{flexDirection:"row", padding:10}}>
-            <Image source={icons.WrenchIcon} style={{height:70, width:70}}></Image>
-            <Text style={{fontSize:24, padding:15}}> Current Requests:    25</Text>
-          </View>                
+            {/* Maintenance Modal */}
+            <Modal
+                visible={isMaintenanceVisible}
+                onRequestClose={() => setIsMaintenanceVisible(false)}
+                animationType="slide"
+                presentationStyle="pageSheet">
+                <View style={{ flex: 1, padding: 20, backgroundColor: '#fff' }}>
+                    <TouchableOpacity onPress={() => setIsMaintenanceVisible(false)}>
+                        <Image source={icons.CloseIcon} style={{ width: 25, height: 25 }} />
+                    </TouchableOpacity>
+                    <Text style={{ fontSize: 24, marginVertical: 20 }}>Request Maintenance</Text>
 
-          </View>
+                    <TextInput
+                        placeholder="Issue Title"
+                        placeholderTextColor="black"
+                        style={{
+                            borderColor: '#ccc',
+                            borderWidth: 1,
+                            borderRadius: 8,
+                            padding: 12,
+                            marginBottom: 10,
+                            backgroundColor: "#f9f9f9"
+                        }}
+                        onChangeText={setIssueTitle}
+                        value={issueTitle}
+                    />
+                    <TextInput
+                        placeholder="Issue Description"
+                        placeholderTextColor="black"
+                        style={{
+                            borderColor: '#ccc',
+                            borderWidth: 1,
+                            borderRadius: 8,
+                            padding: 12,
+                            height: 100,
+                            marginBottom: 10,
+                            backgroundColor: "#f9f9f9"
+                        }}
+                        onChangeText={setIssueDescription}
+                        value={issueDescription}
+                    />
+                    <SelectList
+                        setSelected={setSelected}
+                        selected={selected}
+                        data={maintainenceData}
+                        boxStyles={{ marginVertical: 20, borderColor: '#3e1952', borderRadius: 8 }}
+                        save="value" />
+
+                    <TouchableOpacity onPress={() => setImagePickerModalVisible(true)} style={{ alignItems: 'center' }}>
+                        <Image source={icons.AddImagesLogo} style={{ width: 200, height: 200 }} />
+                    </TouchableOpacity>
+
+                    {/* Image Picker Modal */}
+                    <Modal
+                    visible={imagePickerModalVisible}
+                    animationType="slide"
+                    transparent={true}
+                    onRequestClose={() => setImagePickerModalVisible(false)}>
+                      <TouchableOpacity
+                        style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}
+                        activeOpacity={1}
+                        onPress={() => setImagePickerModalVisible(false)}>
+                        <TouchableOpacity style={{ width: 300, backgroundColor: 'white', borderRadius: 12, padding: 20, flexDirection: 'row', justifyContent: 'space-around' }} activeOpacity={1}>
+                          {/* GALLERY */}
+                          <TouchableOpacity onPress={() => uploadImage("Gallery")} style={{ marginBottom: 10 }}>
+                            <Image source={icons.GalleryLogo} style={{ width: 50, height: 50 }} />
+                          </TouchableOpacity>
+
+                          {/* CAMERA */}
+                          <TouchableOpacity onPress={() => uploadImage("Camera")}>
+                            <Image source={icons.CameraLogo} style={{ width: 50, height: 50 }} />
+                          </TouchableOpacity>
+                        </TouchableOpacity>
+                    </TouchableOpacity>
+                  </Modal>
+
+                  <LoginButton text="Submit" onPress={() => setIsMaintenanceVisible(false)} />
+                </View>
+            </Modal>
+
+            {/* NFC Scanner Modal */}
+            <Modal
+              visible={isNfcModalVisible}
+              animationType="fade"
+              onRequestClose={() => setIsNfcModalVisible(false)}
+              presentationStyle="pageSheet">
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                  <Animated.Image
+                  style={{
+                  width: 300,
+                  height: 300,
+                  opacity: fadeAnim,
+                  }}
+                  source={icons.NfcScannerScreen}/>
+                <TouchableOpacity onPress={() => setIsNfcModalVisible(false)} style={{ marginTop: 20 }}>
+                    <Image source={icons.ArrowDownIcon} style={{ width: 35, height: 35 }} />
+                </TouchableOpacity>
+                </View>
+            </Modal>
         </View>
     );
- }
+}

@@ -1,169 +1,158 @@
-// Custom
-import { LoginButton } from "./components/Buttons";
-import { stylesLogin } from "./styles/stylesLogin";
-
-// Native
-import { useState } from "react";
-import { View, Text, Image, ScrollView, StatusBar, ActivityIndicator, TextInput, TouchableOpacity, KeyboardAvoidingView } from "react-native";
-import React from 'react';
-
-// logos
-const logoImg = require("./assets/Accommod8u.jpg");
-const smallLogo = require("./assets/logo.jpg");
-
-// Import auth for creating user
+import React, { useState } from "react";
+import { View, Text, Image, TouchableOpacity, StatusBar, ActivityIndicator, TextInput, KeyboardAvoidingView, ScrollView, StyleSheet } from "react-native";
 import { auth } from './firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { LoginButton } from "./components/Buttons";
+
+// Logo
+const logoImg = require("./assets/Accommod8u.jpg");
 
 export function SignUpScreen({ navigation }) {
-  // fields
   const [firstName, setFirstName] = useState("");
-  const [lastName, setLastname] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [viewError, setViewError] = useState(0);
 
   const handleSignUp = async () => {
-
-    console.log("Sign Up button pressed");
-
-    
-    // Validate form first
-    if(!isFormValid()) {
-        return;
-      }
-
+    if (!isFormValid()) {
+      return;
+    }
     try {
-      await createUserWithEmailAndPassword(auth, email, password); // Call function to create user
-      console.log("User signed up successfully.");
-      navigation.navigate("Home"); // Nav to home page when successfulled created
-    } catch (error)
-    {
-      if(error.code == "auth/email-already-in-use"){
+      await createUserWithEmailAndPassword(auth, email, password);
+      navigation.navigate("Home");
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
         setViewError(-3);
-      }
-      else
-      {
-        console.error("Error during sign up.", error);
+      } else {
         setViewError(-1);
       }
     }
-
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white", padding: 20 }}>
+    <ScrollView style={styles.container}>
       <KeyboardAvoidingView behavior="position">
-
-        {/* STATUS BAR */}
         <StatusBar barStyle="dark-content" />
 
-        {/* LOADING EMOJI */}
-        <ActivityIndicator
-          size={"large"}
-          color={"red"}
-          animating="false"
-        />
+        <Image source={logoImg} style={styles.logo} />
 
-        {/* LOGOS */}
-        <Image source={logoImg} style={stylesLogin.companyImage} />
+        <ActivityIndicator size={"large"} color={"purple"} animating={viewError === 1} />
 
-        {/* INPUTS*/}
-        <Text style={[stylesLogin.textHeader, { marginTop: 20 }]}>Hi There! 👋</Text>
-        <Text style={{ color: "gray", marginBottom: 10, marginVertical: 1 }}>Register A New Account</Text>
+        <Text style={styles.titleHeader}>Create Your Account</Text>
+        <Text style={styles.subHeader}>Sign Up to Get Started</Text>
 
-        {/* Email*/}
-        <View style={stylesLogin.container}>
+        <Text style={styles.label}>First Name</Text>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter First Name..."
+          onChangeText={(text) => { setFirstName(text); setViewError(0); }}
+          value={firstName}/>
 
+        <Text style={styles.label}>Last Name</Text>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter Last Name..."
+          onChangeText={(text) => { setLastName(text); setViewError(0); }}
+          value={lastName}/>
 
-          <Text style={stylesLogin.inputLabel}>First Name</Text>
-          <TextInput
-            style={stylesLogin.textInputSignup}
-            onChangeText={(text) => { setFirstName(text) }}
-            value={firstName}
-            placeholder="Enter First Name..." />
+        <Text style={styles.label}>Email</Text>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter Email..."
+          onChangeText={(text) => { setEmail(text); setViewError(0); }}
+          value={email}/>
 
-          <Text style={stylesLogin.inputLabel}>Last Name</Text>
-          <TextInput
-            style={stylesLogin.textInputSignup}
-            onChangeText={(text) => { setLastname(text) }}
-            value={lastName}
-            placeholder="Enter Last Name..." />
+        <Text style={styles.label}>Password</Text>
+        <TextInput
+          secureTextEntry={true}
+          style={styles.textInput}
+          placeholder="Enter Password..."
+          onChangeText={(text) => { setPassword(text); setViewError(0); }}
+          value={password}/>
 
-          {/* Email*/}
-          <Text style={stylesLogin.inputLabel}>Email</Text>
-          <TextInput
-            style={stylesLogin.textInputSignup}
-            onChangeText={(text) => { setEmail(text) }}
-            value={email}
-            placeholder="Enter Email..." />
+        <Text style={styles.label}>Confirm Password</Text>
+        <TextInput
+          secureTextEntry={true}
+          style={styles.textInput}
+          placeholder="Confirm Password..."
+          onChangeText={(text) => { setConfirmPassword(text); setViewError(0); }}
+          value={confirmPassword}/>
 
-          {/* Password*/}
-          <Text style={stylesLogin.inputLabel}>Password</Text>
-          <TextInput
-            style={stylesLogin.textInputSignup}
-            secureTextEntry={true}
-            onChangeText={(text) => { setPassword(text) }}
-            value={password}
-            placeholder="Enter Password..." />
+        <LoginButton text="Sign Up" onPress={() => {if (isFormValid()) {handleSignUp();}}} />
 
-          <Text style={stylesLogin.inputLabel}>Confirm Password</Text>
-          <TextInput
-            style={stylesLogin.textInputSignup}
-            secureTextEntry={true}
-            onChangeText={(text) => { setConfirmPassword(text) }}
-            value={confirmPassword}
-            placeholder="Confirm Password..." />
+          {viewError === -1 && <Text style={styles.errorText}>Invalid User Information</Text>}
+          {viewError === -2 && <Text style={styles.errorText}>Passwords Don't Match</Text>}
+          {viewError === -3 && <Text style={styles.errorText}>Email is Already in use</Text>}
 
-          {/* Signup Button */}
-          <LoginButton onPress={handleSignUp} text="Sign Up" />
-
-          {viewError === -1 && <Text style={stylesLogin.textError}>Invalid User Information</Text>}
-          {viewError === -2 && <Text style={stylesLogin.textError}>Passwords Don't Match</Text>}
-          {viewError === -3 && <Text style={stylesLogin.textError}>Email is Already in use</Text>}
-
-          <TouchableOpacity style={{ alignSelf: "center" }} onPress={() => navigation.navigate("Login")}>
-            <Text style={stylesLogin.textLabel}>Already A Member ?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+            <Text style={styles.signInText}>Already A Member?</Text>
           </TouchableOpacity>
 
-        </View>
 
       </KeyboardAvoidingView>
-    </View>
+    </ScrollView>
   );
 
   function isFormValid() {
-
-    console.log("Validating form...");
-
-    if (email === "" || firstName === "" || lastName === "" || password.length < 8) {
+    if (firstName === "" || lastName === "" || email === "" || password.length < 8) {
       setViewError(-1);
-      console.log("Validation failed: Empty fields or password too short.");
-
-      return;
+      return false;
     }
-    if (containsNumber(firstName) || containsNumber(lastName)) {
-      setViewError(-1);
-      console.log("Validation failed: First or last name contains numbers.");
-
-      return;
-    }
-
-    if (password != confirmPassword) {
+    if (password !== confirmPassword) {
       setViewError(-2);
-      console.log("Validation failed: Passwords do not match.");
-      return
+      return false;
     }
-
     setViewError(0);
-    console.log("Form is valid.");
     return true;
   }
-
-
-  function containsNumber(str) {
-    // Check if the string contains any digit between 0 and 9
-    return /\d/.test(str);
-  }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#ffffff",
+    padding: '4%',
+  },
+  logo: {
+    width: '100%',
+    height: 150,
+    resizeMode: 'stretch',
+    borderRadius: 20,
+    marginTop: '10%',
+    alignSelf: 'center',
+  },
+  
+  titleHeader: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  subHeader: {
+    color: "gray",
+    textAlign: 'center',
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  textInput: {
+    height: 50,
+    borderColor: '#cccccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+  },
+  errorText: {
+    color: 'red',
+    marginTop: 10,
+    textAlign: 'center',
+  },
+  signInText: {
+    color: '#3e1952',
+    alignSelf:'center',
+    marginTop:'2%'
+  },
+});
