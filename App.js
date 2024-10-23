@@ -36,7 +36,7 @@ const ContactIcon = require("./assets/contactIcon.png");
 const Divider = () => (
   <View style={{
     height: 1,
-    backgroundColor: '#E0E0E0', 
+    backgroundColor: '#3e1952', 
     marginVertical: 1,
   }} />
 );
@@ -85,6 +85,7 @@ const CustomDrawerContent = (props) => (
       <DrawerItem icon={DocumentsIcon} label="Documents" onPress={() => props.navigation.navigate('Documents')} size={28}/>
       <Divider/>
       <DrawerItem icon={ContactIcon} label="Contact" onPress={() => props.navigation.navigate('Contact')} size={28}/>
+      <Divider/>
       </ScrollView>
     <DrawerItem icon={ProfileIcon} label="Profile" onPress={() => props.navigation.navigate('Profile')} size={36}/>
 

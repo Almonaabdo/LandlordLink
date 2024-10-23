@@ -164,9 +164,9 @@ export function HomeScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
 
-            {/* Recent Announcements Card */}
+            {/* MAINTENENCE Card */}
             <View style={{ backgroundColor: "white", borderRadius: 12, padding: 16, elevation: 3 }}>
-                <TouchableOpacity onPress={() => setIsMaintenanceVisible(true)} style={{ flexDirection: "row", alignItems: "center", marginBottom: 10 }}>
+                <TouchableOpacity onPress={() => navigation.navigate("Requests")}>
                     <Image source={icons.WrenchIcon} style={{ width: 30, height: 30 }} />
                     <Text style={{ marginLeft: 10, fontSize: 16 }}>Maintenance Request</Text>
                 </TouchableOpacity>
