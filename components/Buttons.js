@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     LoginButton: 
     {
         borderRadius : 10,
-        paddingVertical: 10,
+        padding: 10,
         backgroundColor: primaryColor,
         width: '40%',
         alignSelf:'center'

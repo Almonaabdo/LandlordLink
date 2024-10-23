@@ -127,7 +127,7 @@ export default function App() {
         <Drawer.Screen name="Profile" component={Profile} options={defaultScreenOptions} />
         <Drawer.Screen name="Contact" component={Contact} options={defaultScreenOptions} />
         <Drawer.Screen name="Signup" component={SignUpScreen} options={{ headerShown: false }} />
-        <Drawer.Screen name='SignOut' component={SignOutScreen}/>
+        <Drawer.Screen name='SignOut' component={SignOutScreen} options={{ headerShown: false }}/>
       </Drawer.Navigator>
     </NavigationContainer>
   );

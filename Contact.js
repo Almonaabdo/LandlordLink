@@ -7,6 +7,9 @@ const emailIcon = require("./assets/emailIcon.png");
 const callIcon = require("./assets/callIcon.png");
 const mapsIcon = require("./assets/mapsIcon.png");
 const personImage = require("./assets/person.jpg");
+const instagramIcon = require("./assets/instagramIcon.png");
+const facebookIcon = require("./assets/facebookIcon.png");
+const googleIcon = require("./assets/googleIcon.png");
 
 // Divider component
 const Divider = () => (
@@ -31,7 +34,8 @@ export function Contact({ navigation }) {
           <Text style={styles.headerRole}>Building Manager</Text>
         </View>
       </View>
-      <Divider />
+      
+      <View style={{margin:'5%'}}/>
 
 
       {/*MANAGMENT OFFICE */}
@@ -40,6 +44,8 @@ export function Contact({ navigation }) {
           icon={emailIcon}
           text="maintenance@accommod8u.com"
           onPress={() => Linking.openURL('mailto:support@example.com?subject=Property Inspection Request&body=Hello Accommod8u, hope this email finds you well')}/>
+        
+        <Divider />
 
         <ContactLink
           icon={mapsIcon}
@@ -54,18 +60,29 @@ export function Contact({ navigation }) {
           icon={callIcon}
           text="+1 (226) 898-0000"
           onPress={() => Linking.openURL(`tel:2268980000`)}/>
+        <Divider />
 
         <ContactLink
           icon={emailIcon}
           text="leasing@accommod8u.com"
           onPress={() => Linking.openURL('mailto:support@example.com?subject=Property Inspection Request&body=Hello Accommod8u, hope this email finds you well')}/>
+        <Divider />
 
         <ContactLink
           icon={mapsIcon}
           text="150 University Ave W. - Unit 4, Waterloo"
           onPress={() => openGoogleMaps(leasingOfficeAddress)}/>
-
       </Section>
+
+      <View style={{marginVertical:'5%'}}/>
+      {/*SOCIAL MEDIA */}
+      <View style={{ height: '3%', flexDirection: 'row', marginVertical: '10%', alignSelf: 'center', justifyContent: 'space-between' }}>
+        <Image source={facebookIcon} style={{ width: '9%', height: '150%', marginRight: '10%' }} />
+        <Image source={instagramIcon} style={{ width: '9%', height: '150%', marginRight: '10%' }} />
+        <Image source={googleIcon} style={{ width: '9%', height: '150%' }} />
+      </View>
+
+
     </View>
   );
 }
@@ -82,7 +99,7 @@ const ContactLink = ({ icon, text, onPress }) => (
 // Section component
 const Section = ({ title, hours, children }) => (
   <View style={styles.section}>
-    <Text style={styles.sectionTitle}>{title}</Text>
+    <Text style={[styles.sectionTitle]}>{title}</Text>
     <Text style={styles.sectionHours}>{hours}</Text>
     {children}
   </View>
@@ -103,12 +120,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8F9FA',
-    padding: '2%',
+    padding: '3%',
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: '4%',
   },
   profileImage: {
     width: 99,
@@ -130,14 +146,14 @@ const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: '#e0e0e0',
-    marginVertical: 16,
   },
   section: {
-    marginBottom: 20,
+    marginBottom: 0,
   },
   sectionTitle: {
     fontSize: 26,
     fontWeight: 'bold',
+    width:'300',
     color: '#333',
     backgroundColor: '#f0eff5',
     padding: 10,
@@ -151,12 +167,12 @@ const styles = StyleSheet.create({
   contactLink: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 8,
+    marginVertical: '2.75%',
   },
   linkIcon: {
     width: '7%',
     height: '150%',
-    marginRight: '2%',
+    marginRight: '3%',
   },
   linkText: {
     fontSize: 14,
