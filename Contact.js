@@ -1,84 +1,165 @@
-import {React,useState} from "react";
-import {View, Text,Image, TouchableOpacity, StatusBar} from "react-native";
+import { React, useState } from "react";
+import { View, Text, Image, TouchableOpacity, StatusBar, StyleSheet } from "react-native";
 import { Linking } from "react-native";
-// custom
-import { StylesHome } from "./styles/stylesHome.js";
-import { stylesContact } from "./styles/StylesContact.js";
 
 // icons
-const emailicon = require("./assets/emailIcon.png");
-const calllIcon = require("./assets/callIcon.png");
+const emailIcon = require("./assets/emailIcon.png");
+const callIcon = require("./assets/callIcon.png");
 const mapsIcon = require("./assets/mapsIcon.png");
+const personImage = require("./assets/person.jpg");
+
+// Divider component
+const Divider = () => (
+  <View style={styles.divider} />
+);
+
+export function Contact({ navigation }) {
+  const leasingOfficeAddress = "150 University Ave W. - Unit 4, Waterloo";
+  const propertyManagementOffice = "The HUB - 130 Columbia St W, Waterloo";
+
+  return (
+    
+    <View style={styles.container}>
+      <StatusBar barStyle="light-content" />
 
 
-
-
-export function Contact ({navigation})
-{
-    const [isCreatePost, setIsCreatePost] = useState(false);
-    const leasingOfficeAddress = "150 University Ave W. - Unit 4, Waterloo";
-    const propertyManagmentOffice = "The HUB - 130 Columbia St W, Waterloo";
-
-    return(
-        <View style={{flex:1,padding:20,backgroundColor:"#f9f9f9"}}>
-          <StatusBar barStyle="light-content" />
-
-          {/* PROPERT MANAGMENT OFFICE */}
-          <Text style={[StylesHome.TextHeader, {fontSize:28}]}>Management Office</Text>
-          <Text style={stylesContact.header}>Monday - Friday: 10am - 5pm</Text>
-          {/* EMAIL */}
-          <TouchableOpacity onPress={() => Linking.openURL('mailto:support@example.com?subject=Propert Inspection Request&body=Hello Accommod8u, hope this email finds you well') }title="support@example.com" description>
-            <View style={{flexDirection:'row', alignSelf:'center'}}>
-              <Image source={emailicon} style={stylesContact.linkIcon}></Image>
-              <Text style={stylesContact.linkText}>maintenance@accommod8u.com</Text>
-            </View>
-          </TouchableOpacity>
-          {/* MAPS */}
-          <TouchableOpacity onPress={() => {openGoogleMaps(propertyManagmentOffice)}}>
-            <View style={{flexDirection:'row', alignSelf:'center'}}>
-              <Image source={mapsIcon} style={stylesContact.linkIcon}></Image>
-              <Text style={stylesContact.linkText}>The HUB - 130 Columbia St W, Waterloo</Text>
-            </View>
-          </TouchableOpacity>
-
-          
-          <View style={{marginVertical:'10%'}}></View>
-
-          {/* LEASING OFFICE */}
-          <Text style={[StylesHome.TextHeader, {fontSize:28}]}>Leasing Office</Text>
-          <Text style={stylesContact.header}>Monday - Friday: 10am - 6pm</Text>
-          {/* CALL */}
-          <TouchableOpacity onPress={() => Linking.openURL(`tel:2268980000`)}>
-            <View style={{flexDirection:'row', alignSelf:'center'}}>
-              <Image source={calllIcon} style={stylesContact.linkIcon}></Image>
-              <Text style={stylesContact.linkText}>+1(226)-898-0000</Text>
-            </View>
-          </TouchableOpacity>
-          {/* EMAIL */}
-          <TouchableOpacity onPress={() => Linking.openURL('mailto:support@example.com?subject=Propert Inspection Request&body=Hello Accommod8u, hope this email finds you well') }title="support@example.com" description>
-            <View style={{flexDirection:'row', alignSelf:'center'}}>
-              <Image source={emailicon} style={stylesContact.linkIcon}></Image>
-              <Text style={stylesContact.linkText}>leasing@accommod8u.com</Text>
-            </View>
-          </TouchableOpacity>
-          <View style={{marginVertical:'0.5%'}}></View>
-          {/* MAPS */}
-          <TouchableOpacity onPress={() => {openGoogleMaps(leasingOfficeAddress)}}>
-            <View style={{flexDirection:'row', alignSelf:'center'}}>
-              <Image source={mapsIcon} style={stylesContact.linkIcon}></Image>
-              <Text style={stylesContact.linkText}>150 University Ave W. - Unit 4, Waterloo</Text>
-            </View>
-          </TouchableOpacity>
-
+      {/*Contact Person Section */}
+      <View style={styles.header}>
+        <Image source={personImage} style={styles.profileImage} />
+        <View style={styles.headerTextContainer}>
+          <Text style={styles.headerName}>Paul S</Text>
+          <Text style={styles.headerRole}>Building Manager</Text>
         </View>
-    );
+      </View>
+      <Divider />
+
+
+      {/*MANAGMENT OFFICE */}
+      <Section title="Management Office" hours="Monday - Friday: 10am - 5pm">
+        <ContactLink
+          icon={emailIcon}
+          text="maintenance@accommod8u.com"
+          onPress={() => Linking.openURL('mailto:support@example.com?subject=Property Inspection Request&body=Hello Accommod8u, hope this email finds you well')}/>
+
+        <ContactLink
+          icon={mapsIcon}
+          text="The HUB - 130 Columbia St W, Waterloo"
+          onPress={() => openGoogleMaps(propertyManagementOffice)}/>
+      </Section>
+
+
+      {/*LEASING OFFICE */}
+      <Section title="Leasing Office" hours="Monday - Friday: 10am - 6pm">
+        <ContactLink
+          icon={callIcon}
+          text="+1 (226) 898-0000"
+          onPress={() => Linking.openURL(`tel:2268980000`)}/>
+
+        <ContactLink
+          icon={emailIcon}
+          text="leasing@accommod8u.com"
+          onPress={() => Linking.openURL('mailto:support@example.com?subject=Property Inspection Request&body=Hello Accommod8u, hope this email finds you well')}/>
+
+        <ContactLink
+          icon={mapsIcon}
+          text="150 University Ave W. - Unit 4, Waterloo"
+          onPress={() => openGoogleMaps(leasingOfficeAddress)}/>
+
+      </Section>
+    </View>
+  );
 }
 
+// Contact link component
+const ContactLink = ({ icon, text, onPress }) => (
+  <TouchableOpacity onPress={onPress} style={styles.contactLink}>
+    <Image source={icon} style={styles.linkIcon} />
+    <Text style={styles.linkText}>{text}</Text>
+  </TouchableOpacity>
+);
 
-// function that redirects user to google maps app with the given address
+
+// Section component
+const Section = ({ title, hours, children }) => (
+  <View style={styles.section}>
+    <Text style={styles.sectionTitle}>{title}</Text>
+    <Text style={styles.sectionHours}>{hours}</Text>
+    {children}
+  </View>
+);
+
+
+// Function to open Google Maps
 const openGoogleMaps = (address) => 
 {
   const formattedAddress = encodeURIComponent(address);
   const url = `https://www.google.com/maps/search/?api=1&query=${formattedAddress}`;
   Linking.openURL(url);
 };
+
+
+// Styles
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F8F9FA',
+    padding: '2%',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: '4%',
+  },
+  profileImage: {
+    width: 99,
+    height: 99,
+    borderRadius: 99,
+    marginRight: '5%',
+  },
+  headerTextContainer: {
+    flexDirection: 'column',
+  },
+  headerName: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  headerRole: {
+    fontSize: 18,
+    color: '#666',
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#e0e0e0',
+    marginVertical: 16,
+  },
+  section: {
+    marginBottom: 20,
+  },
+  sectionTitle: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: '#333',
+    backgroundColor: '#f0eff5',
+    padding: 10,
+    borderRadius: 5,
+  },
+  sectionHours: {
+    fontSize: 16,
+    color: '#888',
+    marginVertical: 4,
+  },
+  contactLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 8,
+  },
+  linkIcon: {
+    width: '7%',
+    height: '150%',
+    marginRight: '2%',
+  },
+  linkText: {
+    fontSize: 14,
+    color: '#0D47A1',
+  },
+});

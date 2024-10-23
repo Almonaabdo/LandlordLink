@@ -86,12 +86,6 @@ const CustomDrawerContent = (props) => (
       <Divider />
       <DrawerItem icon={ContactIcon} label="Contact" onPress={() => props.navigation.navigate('Contact')} size={28}/>
       <Divider />
-      {/*
-      <DrawerItem label="Login" onPress={() => props.navigation.navigate('Login')}size={28} />
-      <Divider />
-      <DrawerItem label="Signup" onPress={() => props.navigation.navigate('Signup')} size={28}/>
-      <Divider />
-      */}
     </ScrollView>
 
     <DrawerItem icon={ProfileIcon} label="Profile" onPress={() => props.navigation.navigate('Profile')} size={36}/>
