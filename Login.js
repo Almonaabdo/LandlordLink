@@ -19,7 +19,7 @@ export function LoginScreen({ navigation }) {
 
       navigation.navigate("Home", { isUserLoggedIn: true });
       setViewError(0);
-    
+
     } catch (error) {
       console.log(error.code, error.message);
       setViewError(-1);
@@ -47,7 +47,7 @@ export function LoginScreen({ navigation }) {
           style={styles.textInput}
           placeholder="Enter Email..."
           onChangeText={(text) => { setEmail(text); setViewError(0); }}
-          value={email}/>
+          value={email} />
 
         <Text style={styles.label}>Password</Text>
         <TextInput
@@ -55,9 +55,9 @@ export function LoginScreen({ navigation }) {
           style={styles.textInput}
           placeholder="Enter Password..."
           onChangeText={(text) => { setPassword(text); setViewError(0); }}
-          value={password}/>
+          value={password} />
 
-        <LoginButton text="Login" onPress={() => {if (isFormValid()) {handleSignIn();}}} />
+        <LoginButton text="Login" onPress={() => { if (isFormValid()) { handleSignIn(); } }} />
 
         {viewError === -1 && <Text style={styles.errorText}>Invalid Email or Password</Text>}
         {viewError === -2 && <Text style={styles.errorText}>Invalid Email @</Text>}
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     height: 150,
     marginTop: '20%',
     resizeMode: 'stretch',
-    borderRadius:20,
+    borderRadius: 20,
     alignSelf: 'center',
   },
   titleHeader: {

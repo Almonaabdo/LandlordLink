@@ -48,21 +48,21 @@ export function SignUpScreen({ navigation }) {
           style={styles.textInput}
           placeholder="Enter First Name..."
           onChangeText={(text) => { setFirstName(text); setViewError(0); }}
-          value={firstName}/>
+          value={firstName} />
 
         <Text style={styles.label}>Last Name</Text>
         <TextInput
           style={styles.textInput}
           placeholder="Enter Last Name..."
           onChangeText={(text) => { setLastName(text); setViewError(0); }}
-          value={lastName}/>
+          value={lastName} />
 
         <Text style={styles.label}>Email</Text>
         <TextInput
           style={styles.textInput}
           placeholder="Enter Email..."
           onChangeText={(text) => { setEmail(text); setViewError(0); }}
-          value={email}/>
+          value={email} />
 
         <Text style={styles.label}>Password</Text>
         <TextInput
@@ -70,7 +70,7 @@ export function SignUpScreen({ navigation }) {
           style={styles.textInput}
           placeholder="Enter Password..."
           onChangeText={(text) => { setPassword(text); setViewError(0); }}
-          value={password}/>
+          value={password} />
 
         <Text style={styles.label}>Confirm Password</Text>
         <TextInput
@@ -78,17 +78,17 @@ export function SignUpScreen({ navigation }) {
           style={styles.textInput}
           placeholder="Confirm Password..."
           onChangeText={(text) => { setConfirmPassword(text); setViewError(0); }}
-          value={confirmPassword}/>
+          value={confirmPassword} />
 
-        <LoginButton text="Sign Up" onPress={() => {if (isFormValid()) {handleSignUp();}}} />
+        <LoginButton text="Sign Up" onPress={() => { if (isFormValid()) { handleSignUp(); } }} />
 
-          {viewError === -1 && <Text style={styles.errorText}>Invalid User Information</Text>}
-          {viewError === -2 && <Text style={styles.errorText}>Passwords Don't Match</Text>}
-          {viewError === -3 && <Text style={styles.errorText}>Email is Already in use</Text>}
+        {viewError === -1 && <Text style={styles.errorText}>Invalid User Information</Text>}
+        {viewError === -2 && <Text style={styles.errorText}>Passwords Don't Match</Text>}
+        {viewError === -3 && <Text style={styles.errorText}>Email is Already in use</Text>}
 
-          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-            <Text style={styles.signInText}>Already A Member?</Text>
-          </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+          <Text style={styles.signInText}>Already A Member?</Text>
+        </TouchableOpacity>
 
 
       </KeyboardAvoidingView>
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     marginTop: '10%',
     alignSelf: 'center',
   },
-  
+
   titleHeader: {
     fontSize: 28,
     fontWeight: 'bold',
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   },
   signInText: {
     color: '#3e1952',
-    alignSelf:'center',
-    marginTop:'2%'
+    alignSelf: 'center',
+    marginTop: '2%'
   },
 });

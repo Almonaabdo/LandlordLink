@@ -22,23 +22,23 @@ export function Profile({ navigation }) {
 
 
       {/* Email Input */}
-        <Text style={styles.inputLabel}>Email</Text>
-        <TextInput 
-          style={styles.input} 
-          value={email} 
-          editable={false}/>
+      <Text style={styles.inputLabel}>Email</Text>
+      <TextInput
+        style={styles.input}
+        value={email}
+        editable={false} />
 
-      <View style={{margin:'3%'}}/>
+      <View style={{ margin: '3%' }} />
 
       {/* Password Input */}
-        <Text style={styles.inputLabel}>Password</Text>
-        <TextInput 
-          style={styles.input} 
-          value="*********" 
-          editable={false} />
+      <Text style={styles.inputLabel}>Password</Text>
+      <TextInput
+        style={styles.input}
+        value="*********"
+        editable={false} />
 
 
-      <View style={{margin:'20%'}}/>
+      <View style={{ margin: '20%' }} />
       {/* Logout BUTTON */}
       <LoginButton text="Sign Out" onPress={() => navigation.navigate("SignOut")} />
     </ScrollView>
