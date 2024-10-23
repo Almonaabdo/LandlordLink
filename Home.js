@@ -3,6 +3,7 @@ import { View, Text, Image, Animated, TouchableOpacity, Modal, TextInput, Status
 import * as ImagePicker from "expo-image-picker";
 import { SelectList } from 'react-native-dropdown-select-list';
 import { LoginButton } from "./components/Buttons";
+import { addDocument, fetchDocuments } from "./Functions";
 
 // Icons
 const AppartmentImg = require("./assets/256LesterSt.jpg");
@@ -27,6 +28,48 @@ export function HomeScreen({ navigation }) {
     const [imagePickerModalVisible, setImagePickerModalVisible] = useState(false);
     const [isNfcModalVisible, setIsNfcModalVisible] = useState(false);
     const [fadeAnim] = useState(new Animated.Value(0));
+    const [selectedPriority, setSelectedPriority] = useState("");
+
+ 
+    const handleRepairRequestSubmit = async() => {
+       // Make sure not emtpy
+        if (!issueTitle || !issueDescription || !selected)
+        {
+            alert("Please fill in all fields before submitting.");
+            return;
+        }
+
+        // Populate the data to be sent
+        const repairRequestData = {
+            title: issueTitle,
+            description: issueDescription,
+            type: selected,
+            priority: selectedPriority,
+            status: 'Pending',
+            import: image || null,
+            createdAt: new Date(),
+        };
+
+        try
+        {
+            await addDocument("repairRequests", repairRequestData);
+            alert("Repair request submitted successfully.");
+            
+            // Reset the fields after submission
+            setIssueTitle("");
+            setIssueDescription("");
+            setSelected("");
+            setImage(null);
+            setIsMaintenanceVisible(false); // Close the modal
+        }
+        catch (error) 
+        {
+            console.error("Error submitting repair request:", error);
+            alert("Failed to submit repair request. Please try again.");
+        }
+    };
+
+
 
     // Sample data for recent announcements
     const recentAnnouncements = [
@@ -49,6 +92,13 @@ export function HomeScreen({ navigation }) {
         { key: '6', value: 'Flooring' },
         { key: '7', value: 'Doors/Windows' },
     ];
+
+    const priorityData = [
+        { key: '1', value: 'High' },
+        { key: '2', value: 'Medium' },
+        { key: '3', value: 'Low' },
+    ];
+   
 
     const startFading = () => {
         Animated.loop(
@@ -118,7 +168,7 @@ export function HomeScreen({ navigation }) {
             <View style={{ backgroundColor: "white", borderRadius: 12, padding: 16, elevation: 3 }}>
                 <TouchableOpacity onPress={() => setIsMaintenanceVisible(true)} style={{ flexDirection: "row", alignItems: "center", marginBottom: 10 }}>
                     <Image source={icons.WrenchIcon} style={{ width: 30, height: 30 }} />
-                    <Text style={{ marginLeft: 10, fontSize: 16 }}>New Maintenance Request</Text>
+                    <Text style={{ marginLeft: 10, fontSize: 16 }}>Maintenance Request</Text>
                 </TouchableOpacity>
 
                 <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
@@ -184,6 +234,13 @@ export function HomeScreen({ navigation }) {
                         boxStyles={{ marginVertical: 20, borderColor: '#3e1952', borderRadius: 8 }}
                         save="value" />
 
+                    <SelectList 
+                    setSelected={setSelectedPriority}
+                    selected={selectedPriority}
+                    data={priorityData}
+                    boxStyles={{ marginVertical: 20, borderColor: '#3e1952', borderRadius: 8 }}
+                    save="value"/>
+
                     <TouchableOpacity onPress={() => setImagePickerModalVisible(true)} style={{ alignItems: 'center' }}>
                         <Image source={icons.AddImagesLogo} style={{ width: 200, height: 200 }} />
                     </TouchableOpacity>
@@ -212,8 +269,8 @@ export function HomeScreen({ navigation }) {
                     </TouchableOpacity>
                   </Modal>
 
-                  <LoginButton text="Submit" onPress={() => setIsMaintenanceVisible(false)} />
-                </View>
+                  <LoginButton text="Submit" onPress={handleRepairRequestSubmit} />
+                  </View>
             </Modal>
 
             {/* NFC Scanner Modal */}

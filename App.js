@@ -16,7 +16,7 @@ import { AnnouncementsScreen } from './Announcements';
 import { StylesHome } from './styles/stylesHome';
 import { SignOutScreen } from './SignOut';
 import { Contact } from './Contact';
-
+import { RequestsScreen } from './RequestScreen';
 
 const primaryColor = "#3e1952";
 
@@ -84,10 +84,10 @@ const CustomDrawerContent = (props) => (
       <Divider />
       <DrawerItem icon={DocumentsIcon} label="Documents" onPress={() => props.navigation.navigate('Documents')} size={28}/>
       <Divider />
+      <DrawerItem icon={ContactIcon} label="Requests" onPress={() => props.navigation.navigate('Requests')} size={28}/>
+      <Divider/>
       <DrawerItem icon={ContactIcon} label="Contact" onPress={() => props.navigation.navigate('Contact')} size={28}/>
-      <Divider />
-    </ScrollView>
-
+      </ScrollView>
     <DrawerItem icon={ProfileIcon} label="Profile" onPress={() => props.navigation.navigate('Profile')} size={36}/>
 
     {/* Side menu bottom */}
@@ -128,6 +128,7 @@ export default function App() {
         <Drawer.Screen name="Contact" component={Contact} options={defaultScreenOptions} />
         <Drawer.Screen name="Signup" component={SignUpScreen} options={{ headerShown: false }} />
         <Drawer.Screen name='SignOut' component={SignOutScreen} options={{ headerShown: false }}/>
+        <Drawer.Screen name="Requests" component={RequestsScreen} options={defaultScreenOptions} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

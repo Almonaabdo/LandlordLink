@@ -17,14 +17,6 @@ export function LoginScreen({ navigation }) {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      /*console.log("User Info:", {
-        UID: user.uid,
-        Email: user.email,
-        DisplayName: user.displayName,
-        EmailVerified: user.emailVerified,
-        CreationTime: user.metadata.creationTime,
-        LastSignInTime: user.metadata.lastSignInTime,
-      });*/
       navigation.navigate("Home", { isUserLoggedIn: true });
       setViewError(0);
     
