@@ -13,10 +13,11 @@ const icons = {
     AddImagesLogo: require("./assets/addImagesLogo.png"),
     CameraLogo: require("./assets/cameraLogo.png"),
     GalleryLogo: require("./assets/galleryLogo.png"),
-    NfcLogo: require("./assets/nfcLogo.png"),
     ArrowDownIcon: require("./assets/arrowDownIcon.png"),
     HouseImage: require("./assets/houseImage.png"),
     NfcScannerScreen: require("./assets/nfcScannerScreen.png"),
+    DoorHandleIcon: require("./assets/doorHandleIcon.png"),
+
 };
 
 export function HomeScreen({ navigation }) {
@@ -159,12 +160,11 @@ export function HomeScreen({ navigation }) {
                     <Image source={icons.WrenchIcon} style={{ width: 50, height: 50 }} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleNfcModalOpen}>
-                    <Image source={icons.NfcLogo} style={{ width: 50, height: 50 }} />
+                    <Image source={icons.DoorHandleIcon} style={{ width: 50, height: 50 }} />
                 </TouchableOpacity>
             </View>
 
-            <Text style={{ fontSize: 20, color: '#666', marginVertical: 10 }}>Maintenance Requests</Text>
-
+            {/* Recent Announcements Card */}
             <View style={{ backgroundColor: "white", borderRadius: 12, padding: 16, elevation: 3 }}>
                 <TouchableOpacity onPress={() => setIsMaintenanceVisible(true)} style={{ flexDirection: "row", alignItems: "center", marginBottom: 10 }}>
                     <Image source={icons.WrenchIcon} style={{ width: 30, height: 30 }} />
@@ -177,14 +177,16 @@ export function HomeScreen({ navigation }) {
                 </View>
             </View>
 
-            {/* Recent Announcements Section */}
-            <View style={{ backgroundColor: "#9B59B6", borderRadius: 12, padding: 16, elevation: 3, marginTop: 20 }}>
-                <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10,color:'white' }}>Recent Announcements</Text>
-                  <View style={{ marginBottom: 10 }}>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold',color:'white' }}>Planned Maintenance</Text>
-                    <Text style={{ fontSize: 14, color: 'white' }}>There will be a schedueled  maintainence between the times of the first adn second...</Text>
-                  </View>
-            </View>
+            {/* Recent Announcements Card */}
+            <TouchableOpacity onPress={() => navigation.navigate("Announcements")}>
+              <View style={{ backgroundColor: "#9B59B6", borderRadius: 12, padding: 16, elevation: 3, marginTop: 20 }}>
+                  <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10,color:'white' }}>Recent Announcements</Text>
+                    <View style={{ marginBottom: 10 }}>
+                      <Text style={{ fontSize: 16, fontWeight: 'bold',color:'white' }}>Planned Maintenance</Text>
+                      <Text style={{ fontSize: 14, color: 'white' }}>There will be a schedueled  maintainence between the times of the first adn second...</Text>
+                    </View>
+              </View>
+            </TouchableOpacity>
 
             {/* Maintenance Modal */}
             <Modal
