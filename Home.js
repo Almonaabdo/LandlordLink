@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { View, Text, Image, Animated, TouchableOpacity, Modal, TextInput, StatusBar } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { SelectList } from 'react-native-dropdown-select-list';
@@ -30,16 +30,34 @@ export function HomeScreen({ navigation }) {
 	const [isNfcModalVisible, setIsNfcModalVisible] = useState(false);
 	const [fadeAnim] = useState(new Animated.Value(0));
 	const [selectedPriority, setSelectedPriority] = useState("");
+	const [requestCount, setRequestCount] = useState(0);
+	const [loading, setLoading] = useState(true);
 
+	// Fetch repair requests when component first renders
+	useEffect(() => {
+		loadRequests();
+	}, []);
 
+	// Function to fetch repair requests from Firebase and update request count
+	const loadRequests = async () => {
+		try {
+			setLoading(true);
+			const fetchedRequests = await fetchDocuments("repairRequests");
+			setRequestCount(fetchedRequests.length); // Update the request count
+		} catch (error) {
+			console.error("Error fetching requests:", error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	// Call loadRequests after submission to update count and re-fetch requests
 	const handleRepairRequestSubmit = async () => {
-		// Make sure not emtpy
 		if (!issueTitle || !issueDescription || !selected) {
 			alert("Please fill in all fields before submitting.");
 			return;
 		}
 
-		// Populate the data to be sent
 		const repairRequestData = {
 			title: issueTitle,
 			description: issueDescription,
@@ -54,18 +72,22 @@ export function HomeScreen({ navigation }) {
 			await addDocument("repairRequests", repairRequestData);
 			alert("Repair request submitted successfully.");
 
-			// Reset the fields after submission
+			// Reset fields after submission
 			setIssueTitle("");
 			setIssueDescription("");
 			setSelected("");
 			setImage(null);
 			setIsMaintenanceVisible(false); // Close the modal
-		}
-		catch (error) {
+
+			// Re-fetch requests and update count
+			loadRequests();
+
+		} catch (error) {
 			console.error("Error submitting repair request:", error);
 			alert("Failed to submit repair request. Please try again.");
 		}
 	};
+
 
 
 
@@ -169,13 +191,11 @@ export function HomeScreen({ navigation }) {
 				{/* MAINTENENCE Card */}
 				<View style={{ backgroundColor: "white", borderRadius: 12, padding: 16, elevation: 3 }}>
 					<TouchableOpacity onPress={() => navigation.navigate("Requests")}>
-						<Image source={icons.WrenchIcon} style={{ width: 30, height: 30 }} />
 						<Text style={{ marginLeft: 10, fontSize: 16 }}>Maintenance Request</Text>
 					</TouchableOpacity>
 
 					<View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-						<Text style={{ fontSize: 16 }}>Home Visits: 25</Text>
-						<Text style={{ fontSize: 16 }}>Current Requests: 25</Text>
+						<Text style={{ fontSize: 16 }}>Current Requests: {requestCount}</Text>
 					</View>
 				</View>
 

@@ -53,9 +53,9 @@ export function RequestsScreen() {
             {requests.map((request, index) => (
                 <RequestCard
                     key={index}
-                    title={request.title} // Adjust according to your request structure
+                    title={request.title} 
                     details={request.details}
-                    status={request.status} // Add any other relevant properties
+                    status={request.status} 
                     createdAt={request.createdAt}
                     priority={request.priority}
                 />
