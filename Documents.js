@@ -1,52 +1,113 @@
 import React, { useState } from 'react';
-import { View, StatusBar  } from "react-native";
+import { View, Text, StatusBar, StyleSheet, ActivityIndicator } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { WebView } from 'react-native-webview';
-
-// my custom components
 import { LoginButton } from './components/Buttons';
 
-const DocumentsList = [
-    { key: '1', value: 'Lease Document' },
-    { key: '2', value: 'Contract Document' },
-    { key: '3', value: 'Bills' },
-];
+
+const DocumentsList =
+    [
+        { key: '1', value: 'Lease Document' },
+        { key: '2', value: 'Contract Document' },
+        { key: '3', value: 'Bills' },
+    ];
 
 export function Documents({ navigation }) {
     const [selected, setSelected] = useState("");
     const [isViewPressed, setIsViewPressed] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-    const pdfUri = 'https://css4.pub/2015/icelandic/dictionary.pdf'; // Replace with your PDF URL
+    const pdfUri = 'https://css4.pub/2015/icelandic/dictionary.pdf';
 
     return (
-        <View style={{ flex: 1, padding: 10, backgroundColor: "white" }}>
+        <View style={styles.container}>
             <StatusBar barStyle="light-content" />
 
-            <SelectList 
+            <Text style={styles.header}>Documents</Text>
+            <Text style={styles.description}>
+                Select a document to view or download. Tap "View" to open the document or "Download" to save it.
+            </Text>
+
+            <SelectList
                 setSelected={setSelected}
                 selected={selected}
                 data={DocumentsList}
-                boxStyles={{ marginTop: 25, width: '100%', borderColor: '#3e1952' }}
+                boxStyles={styles.selectBox}
                 save="value"/>
 
-            <View style={{marginVertical:'2%'}}></View>
-            
-            {/*Conditional view */}
-            {isViewPressed && selected !="" && (
-                <View style={{ flex: 0, height:'70%' }}>
+
+            {/* Conditional view */}
+            {isViewPressed && selected !== "" && (
+                <View style={styles.webViewContainer}>
+                    {loading && <ActivityIndicator size="large" color="#3e1952" />}
                     <WebView
                         originWhitelist={['*']}
                         source={{ uri: pdfUri }}
-                        style={{ flex: 1 }}
+                        style={styles.webView}
+                        onLoadStart={() => setLoading(true)}
+                        onLoadEnd={() => setLoading(false)}
                     />
                 </View>
-            )}      
+            )}
 
+            <View style={{marginVertical:'2%'}}/>
+            
             {/* VIEW BUTTON */}
-            <LoginButton 
-            text={isViewPressed === false ? "View" : "Download"} 
-            onPress={() => {if (selected !== "") {setIsViewPressed(true)}}} />
+            <LoginButton
+                text={isViewPressed ? "Download" : "View"}
+                onPress={() => {
+                    if (selected !== "") {
+                        setIsViewPressed(true);
+                    }
+                }}
+            />
+
+            <View style={{marginVertical:'2%'}}/>
+
+            {/* RESET BUTTON*/}
+            {isViewPressed && 
+            (
+              <LoginButton
+                text="Reset"
+                onPress={() => 
+                {
+                  setIsViewPressed(false);
+                  setSelected("");
+                }}/>
+            )}
+
 
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 10,
+        backgroundColor: "white",
+    },
+    header: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#3e1952',
+        marginBottom: 10,
+    },
+    description: {
+        fontSize: 16,
+        color: '#666',
+        marginBottom: 15,
+    },
+    selectBox: {
+        marginTop: 25,
+        width: '100%',
+        borderColor: '#3e1952',
+    },
+    webViewContainer: 
+    {
+        marginVertical:'5%',
+        flex: 0,
+        height: '50%',
+    },
+
+});
