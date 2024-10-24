@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { View, Text, Image, Animated, TouchableOpacity, Modal, TextInput, StatusBar } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { SelectList } from 'react-native-dropdown-select-list';
@@ -31,6 +31,26 @@ export function HomeScreen({ navigation }) {
 	const [fadeAnim] = useState(new Animated.Value(0));
 	const [selectedPriority, setSelectedPriority] = useState("");
 
+	const [requestCount, setRequestCount] = useState(0);
+	const [loading, setLoading] = useState(true);
+
+	// Fetch repair requests when component first renders
+	useEffect(() => {
+		loadRequests();
+	}, []);
+
+	// Function to fetch repair requests from Firebase and update request count
+	const loadRequests = async () => {
+		try {
+			setLoading(true);
+			const fetchedRequests = await fetchDocuments("repairRequests");
+			setRequestCount(fetchedRequests.length); // Update the request count
+		} catch (error) {
+			console.error("Error fetching requests:", error);
+		} finally {
+			setLoading(false);
+		}
+	};
 
 	const handleRepairRequestSubmit = async () => {
 		// Make sure not emtpy
@@ -60,6 +80,8 @@ export function HomeScreen({ navigation }) {
 			setSelected("");
 			setImage(null);
 			setIsMaintenanceVisible(false); // Close the modal
+
+			loadRequests();
 		}
 		catch (error) {
 			console.error("Error submitting repair request:", error);
@@ -170,7 +192,7 @@ export function HomeScreen({ navigation }) {
 				<View style={{ backgroundColor: "white", borderRadius: 12, padding: 16, elevation: 3 }}>
 					<TouchableOpacity onPress={() => navigation.navigate("Requests")}>
 						<Text style={{ marginLeft: 10, fontSize: 16 }}>Maintenance Requests</Text>
-						<Text style={{ marginLeft: 10, fontSize: 16 }}>Open Requests: 5</Text>
+						<Text style={{ marginLeft: 10, fontSize: 16 }}>Open Requests: {requestCount}</Text>
 					</TouchableOpacity>
 				</View>
 
@@ -268,7 +290,7 @@ export function HomeScreen({ navigation }) {
 							</TouchableOpacity>
 						</Modal>
 
-						<LoginButton text="Submrit" onPress={handleRepairRequestSubmit} />
+						<LoginButton text="Submit" onPress={handleRepairRequestSubmit} />
 					</View>
 				</Modal>
 

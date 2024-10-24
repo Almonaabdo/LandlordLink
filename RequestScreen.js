@@ -23,7 +23,7 @@ export function RequestsScreen() {
     const getRequests = async () => {
         try {
             setLoading(true); // Set loading state
-            const fetchedRequests = await fetchDocuments("repairRequests"); // Replace with your requests collection name
+            const fetchedRequests = await fetchDocuments("repairRequests"); 
             const sortedRequests = sortRequestsByPriority(fetchedRequests); // Sort by priority
             setRequests(sortedRequests);
         } catch (err) {
@@ -54,7 +54,8 @@ export function RequestsScreen() {
                 <RequestCard
                     key={index}
                     title={request.title} 
-                    details={request.details}
+                    type={request.type}  
+                    details={request.description}
                     status={request.status} 
                     createdAt={request.createdAt}
                     priority={request.priority}

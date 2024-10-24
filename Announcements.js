@@ -5,7 +5,7 @@ import AnnouncementCard from "./components/AnnouncementCard.js";
 import { StylesHome } from "./styles/stylesHome.js";
 import { stylesLogin } from "./styles/stylesLogin.js";
 import { LoginButton } from "./components/Buttons.js";
-import { addDocument, fetchDocuments, deleteDocument } from "./Functions.js"; // Ensure deleteDocument is included
+import { addDocument, fetchDocuments, deleteDocument, updateDocument } from "./Functions.js"; // Ensure deleteDocument is included
 
 const penIcon = require("./assets/penIcon.png");
 const CloseIcon = require("./assets/close.png");
@@ -16,7 +16,8 @@ export function AnnouncementsScreen({ navigation }) {
   const [announcementDetails, setAnnouncementDetails] = useState("");
   const [viewError, setViewError] = useState(0);
   const [announcements, setAnnouncements] = useState([]);
-
+  const [isEditPost, setIsEditPost] = useState(false);  // State to control edit modal
+  const [editId, setEditId] = useState(null);    
 
   // function that fetches all announcement from database table
   useEffect(() => {
@@ -66,6 +67,48 @@ export function AnnouncementsScreen({ navigation }) {
     catch (error) {
       console.log("Error submitting announcement.", error);
       alert("Failed to submit announcement. Please try again later.");
+    }
+  };
+
+  const handleEdit = (id) => {
+    const announcement = announcements.find(announcement => announcement.id === id);
+    if(announcement)
+    {
+      setAnnouncementTitle(announcement.title);
+      setAnnouncementDetails(announcement.details);
+      setEditId(id);
+      setIsEditPost(true);
+    }
+  };
+
+  const handleEditSubmit = async () => {
+    if(!announcementTitle || !announcementDetails)
+    {
+      alert("Please fill in all fields before updating.");
+      return;
+    }
+
+    const updatedAnnouncements = {
+      title: announcementTitle,
+      details: announcementDetails,
+      updatedAt: new Date(),
+    };
+
+    try
+    {
+      await updateDocument("announcements", editId, updatedAnnouncements);
+      alert("Announcement updated successfully!!");
+      setAnnouncementTitle("");
+      setAnnouncementDetails("");
+      setEditId(null);
+      setIsEditPost(false); // Close edit modal
+      const fetchedAnnouncements = await fetchDocuments("announcements");
+      setAnnouncements(fetchedAnnouncements); // Refresh announcements
+    }
+    catch(error)
+    {
+      console.log("Error updating announcements.", error);
+      alert("Failed to update announcement. Please try again later.");
     }
   };
 
@@ -167,6 +210,36 @@ export function AnnouncementsScreen({ navigation }) {
             value={announcementDetails} />
 
           <LoginButton text="Post" onPress={handleAnnouncementSubmit} />
+
+          {viewError === -1 && <Text style={stylesLogin.textError}>Please fill in required fields</Text>}
+        </View>
+      </Modal>
+
+      {/*Edit post modal*/}
+      <Modal visible={isEditPost} onRequestClose={() => setIsEditPost(false)} animationType="slide">
+        <TouchableOpacity onPress={() => { setIsEditPost(false) }}>
+          <Image source={CloseIcon} style={StylesHome.IconsSmall} />
+          <Text style={StylesHome.TextHeader}>Edit Announcement</Text>
+        </TouchableOpacity>
+
+        <View style={stylesLogin.container}>
+          <TextInput
+            placeholder="Announcement Title"
+            style={stylesLogin.textInput}
+            placeholderTextColor="black"
+            onChangeText={(text) => setAnnouncementTitle(text)}
+            value={announcementTitle}
+          />
+
+          <TextInput
+            placeholder="Announcement Details"
+            style={[stylesLogin.textInput, { height: 150 }]}
+            placeholderTextColor="black"
+            onChangeText={(text) => setAnnouncementDetails(text)}
+            value={announcementDetails}
+          />
+
+          <LoginButton text="Update" onPress={handleEditSubmit} />
 
           {viewError === -1 && <Text style={stylesLogin.textError}>Please fill in required fields</Text>}
         </View>
