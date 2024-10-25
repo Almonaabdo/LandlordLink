@@ -78,13 +78,13 @@ const CustomDrawerContent = (props) => (
 
     {/*NAVBAR ITEMS */}
     <ScrollView>
-      <DrawerItem icon={HomeIcon} label="Home" onPress={() => props.navigation.navigate('Home')} size={28} />
+      <DrawerItem icon={HomeIcon} label="Home" onPress={() => props.navigation.navigate('Home')} size={32} />
       <Divider />
-      <DrawerItem icon={AnnouncementIcon} label="Announcements" onPress={() => props.navigation.navigate('Announcements')} size={28} />
+      <DrawerItem icon={AnnouncementIcon} label="Announcements" onPress={() => props.navigation.navigate('Announcements')} size={32} />
       <Divider />
-      <DrawerItem icon={DocumentsIcon} label="Documents" onPress={() => props.navigation.navigate('Documents')} size={28} />
+      <DrawerItem icon={DocumentsIcon} label="Documents" onPress={() => props.navigation.navigate('Documents')} size={32} />
       <Divider />
-      <DrawerItem icon={ContactIcon} label="Contact" onPress={() => props.navigation.navigate('Contact')} size={28} />
+      <DrawerItem icon={ContactIcon} label="Contact" onPress={() => props.navigation.navigate('Contact')} size={32} />
       <Divider />
     </ScrollView>
     <DrawerItem icon={ProfileIcon} label="Profile" onPress={() => props.navigation.navigate('Profile')} size={36} />
