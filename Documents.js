@@ -3,21 +3,34 @@ import { View, Text, StatusBar, StyleSheet, ActivityIndicator, TouchableOpacity 
 import { WebView } from 'react-native-webview';
 
 const documentsList = [
-  { key: '1', value: 'Lease Document', uri: 'https://css4.pub/2015/icelandic/dictionary.pdf' },
-  { key: '2', value: 'Contract Document', uri: 'https://css4.pub/2015/icelandic/dictionary.pdf' },
-  { key: '3', value: 'Agreement Document', uri: 'https://css4.pub/2015/icelandic/dictionary.pdf' },
+  { key: '1', value: 'Lease Document', uri: 'https://css4.pub/2015/icelandic/dictionary.pdf', expiryDate: '2025-12-31' },
+  { key: '2', value: 'Contract Document', uri: 'https://css4.pub/2015/icelandic/dictionary.pdf', expiryDate: '2024-12-31' },
+  { key: '3', value: 'Agreement Document', uri: 'https://besjournals.onlinelibrary.wiley.com/doi/pdf/10.1111/2041-210X.13500', expiryDate: '2024-11-30' },
 ];
 
 const billsList = [
-  { key: '1', value: 'Hydro Bill', uri: 'https://css4.pub/2015/icelandic/dictionary.pdf' },
-  { key: '2', value: 'Water Bill', uri: 'https://css4.pub/2015/icelandic/dictionary.pdf' },
-  { key: '3', value: 'AC Bill', uri: 'https://css4.pub/2015/icelandic/dictionary.pdf' },
+  { key: '1', value: 'Hydro Bill', uri: 'https://css4.pub/2015/icelandic/dictionary.pdf', startDate: '2024-01-01', endDate: '2024-01-31' },
+  { key: '2', value: 'Water Bill', uri: 'https://css4.pub/2015/icelandic/dictionary.pdf', startDate: '2024-02-01', endDate: '2024-02-28' },
+  { key: '3', value: 'AC Bill', uri: 'https://css4.pub/2015/icelandic/dictionary.pdf', startDate: '2024-03-01', endDate: '2024-03-31' },
 ];
 
 export function Documents({ navigation }) {
   const [selectedUri, setSelectedUri] = useState("");
   const [loading, setLoading] = useState(false);
   const [isDocumentsVisible, setIsDocumentsVisible] = useState(true);
+
+  // Function to toggle the documents open and close based on current state
+  const documentToggle = (uri) => {
+    if(selectedUri === uri)
+    {
+      setSelectedUri("");// Hide document
+    }
+    else
+    {
+      setSelectedUri(uri);
+    }
+  };
+
 
   return (
     <View style={styles.container}>
@@ -32,7 +45,7 @@ export function Documents({ navigation }) {
           <View style={styles.section}>
             <Text style={styles.sectionHeader}>Documents</Text>
             {documentsList.map(doc => (
-              <Card key={doc.key} title={doc.value} onPress={() => setSelectedUri(doc.uri)} />
+              <Card key={doc.key} title={doc.value} onPress={() => documentToggle(doc.uri)} expiryDate={doc.expiryDate} />
             ))}
           </View>
         </View>
@@ -41,7 +54,7 @@ export function Documents({ navigation }) {
           <View style={styles.section}>
             <Text style={styles.sectionHeader}>Bills</Text>
             {billsList.map(bill => (
-              <Card key={bill.key} title={bill.value} onPress={() => setSelectedUri(bill.uri)} />
+              <Card key={bill.key} title={bill.value} onPress={() => documentToggle(bill.uri)} />
             ))}
           </View>
         </View>
@@ -71,11 +84,17 @@ export function Documents({ navigation }) {
   );
 }
 
-const Card = ({ title, onPress }) => (
+const Card = ({ title, onPress, expiryDate, startDate, endDate }) => (
   <TouchableOpacity style={styles.card} onPress={onPress}>
     <Text style={styles.cardTitle}>{title}</Text>
+    {expiryDate && <Text style={styles.expiryText}>Expiry: {expiryDate}</Text>}
+    {startDate && endDate && (
+      <Text style={styles.periodText}>Period: {startDate} - {endDate}</Text>
+    )}
   </TouchableOpacity>
 );
+
+
 
 const CustomButton = ({ text, onPress, style }) => (
   <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
@@ -147,5 +166,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
     flex: 0,
     height: '45%',
+  },
+  expiryText: {
+    fontSize: 14,
+    color: '#555',
+    marginTop: 4,
   },
 });

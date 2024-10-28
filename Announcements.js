@@ -6,6 +6,7 @@ import { StylesHome } from "./styles/stylesHome.js";
 import { stylesLogin } from "./styles/stylesLogin.js";
 import { LoginButton } from "./components/Buttons.js";
 import { addDocument, fetchDocuments, deleteDocument, updateDocument } from "./Functions.js"; // Ensure deleteDocument is included
+import { useFocusEffect } from "@react-navigation/native";
 
 const penIcon = require("./assets/penIcon.png");
 const CloseIcon = require("./assets/close.png");
@@ -20,7 +21,7 @@ export function AnnouncementsScreen({ navigation }) {
   const [editId, setEditId] = useState(null);    
 
   // function that fetches all announcement from database table
-  useEffect(() => {
+  useFocusEffect(() => {
     const getAnnouncements = async () => {
       try {
         const fetchedAnnouncements = await fetchDocuments("announcements");

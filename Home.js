@@ -1,10 +1,9 @@
-import { React, useState, useEffect } from "react";
-import { View, Text, Image, Animated, TouchableOpacity, Modal, TextInput, StatusBar } from "react-native";
+import React, { useState } from "react"; // Ensure React is imported properly
+import { RefreshControl, Text, Image, Animated, TouchableOpacity, Modal, TextInput, StatusBar, ScrollView, View } from "react-native"; // Removed View and imported ScrollView from react-native
 import * as ImagePicker from "expo-image-picker";
 import { SelectList } from 'react-native-dropdown-select-list';
-import { LoginButton } from "./components/Buttons";
 import { addDocument, fetchDocuments } from "./Functions";
-
+import { useFocusEffect } from "@react-navigation/native";
 // Icons
 const AppartmentImg = require("./assets/256LesterSt.jpg");
 const icons = {
@@ -17,7 +16,6 @@ const icons = {
 	HouseImage: require("./assets/houseImage.png"),
 	NfcScannerScreen: require("./assets/nfcScannerScreen.png"),
 	DoorHandleIcon: require("./assets/doorHandleIcon.png"),
-
 };
 
 export function HomeScreen({ navigation }) {
@@ -30,14 +28,26 @@ export function HomeScreen({ navigation }) {
 	const [isNfcModalVisible, setIsNfcModalVisible] = useState(false);
 	const [fadeAnim] = useState(new Animated.Value(0));
 	const [selectedPriority, setSelectedPriority] = useState("");
-
+	const [announcements, setAnnouncements] = useState([]);
 	const [requestCount, setRequestCount] = useState(0);
 	const [loading, setLoading] = useState(true);
 
-	// Fetch repair requests when component first renders
-	useEffect(() => {
-		loadRequests();
-	}, []);
+	useFocusEffect(
+        React.useCallback(() => {
+            const getRecentAnnouncements = async () => {
+                try {
+                    const fetchedAnnouncements = await fetchDocuments("announcements");
+                    fetchedAnnouncements.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                    setAnnouncements(fetchedAnnouncements);
+                } catch (error) {
+                    console.error("Error fetching announcements: ", error);
+                }
+            };
+
+			loadRequests();
+            getRecentAnnouncements();
+        }, [])
+    );
 
 	// Function to fetch repair requests from Firebase and update request count
 	const loadRequests = async () => {
@@ -53,7 +63,7 @@ export function HomeScreen({ navigation }) {
 	};
 
 	const handleRepairRequestSubmit = async () => {
-		// Make sure not emtpy
+		// Make sure not empty
 		if (!issueTitle || !issueDescription || !selected) {
 			alert("Please fill in all fields before submitting.");
 			return;
@@ -89,9 +99,6 @@ export function HomeScreen({ navigation }) {
 		}
 	};
 
-
-
-	// Sample data for recent announcements
 	const recentAnnouncements = [
 		{
 			title: "Planned Maintenance",
@@ -118,7 +125,6 @@ export function HomeScreen({ navigation }) {
 		{ key: '2', value: 'Medium' },
 		{ key: '3', value: 'Low' },
 	];
-
 
 	const startFading = () => {
 		Animated.loop(
@@ -167,16 +173,16 @@ export function HomeScreen({ navigation }) {
 	};
 
 	return (
-		<View style={{ backgroundColor: "#f5f5f5" }}>
+		<ScrollView style={{ backgroundColor: "#f5f5f5" }} contentContainerStyle={{ paddingBottom: 20 }} refreshControl={<RefreshControl refreshing={loading} onRefresh={loadRequests} />}>
 			<StatusBar barStyle="light-content" />
 
 			{/* APPARTMENT NAME AND IMAGE */}
-			<View style={{ marginBottom: 20, alignItems: "center", padding: 2 }}>
+			<View style={{ alignItems: "center", padding: 2 }}>
 				<Text style={{ fontSize: 24, fontWeight: 'bold', color: '#333' }}>256 Lester St N</Text>
 				<Image source={AppartmentImg} style={{ width: '100%', height: 200, borderRadius: 12, marginTop: 10 }} />
 			</View>
 
-			{/* MAINTENECE AND DOOR ICONS */}
+			{/* MAINTENANCE AND DOOR ICONS */}
 			<View style={{ flexDirection: "row", justifyContent: "space-around", marginBottom: 20 }}>
 				<TouchableOpacity onPress={() => setIsMaintenanceVisible(true)}>
 					<Image source={icons.WrenchIcon} style={{ width: 50, height: 50 }} />
@@ -186,134 +192,89 @@ export function HomeScreen({ navigation }) {
 				</TouchableOpacity>
 			</View>
 
-
+			{/* MAINTENANCE Card */}
 			<View style={{ padding: 16 }}>
-				{/* MAINTENENCE Card */}
-				<View style={{ backgroundColor: "white", borderRadius: 12, padding: 16, elevation: 3 }}>
-					<TouchableOpacity onPress={() => navigation.navigate("Requests")}>
-						<Text style={{ marginLeft: 10, fontSize: 16 }}>Maintenance Requests</Text>
-						<Text style={{ marginLeft: 10, fontSize: 16 }}>Open Requests: {requestCount}</Text>
-					</TouchableOpacity>
-				</View>
+				<TouchableOpacity onPress={() => navigation.navigate("Requests")} style={{ backgroundColor: "white", borderRadius: 12, padding: 16, elevation: 3 }}>
+					<Text style={{ marginLeft: 10, fontSize: 16 }}>Maintenance Requests</Text>
+					<Text style={{ marginLeft: 10, fontSize: 16 }}>Open Requests: {requestCount}</Text>
+				</TouchableOpacity>
 
 				{/* Announcements Card */}
 				<TouchableOpacity onPress={() => navigation.navigate("Announcements")}>
 					<View style={{ backgroundColor: "#9B59B6", borderRadius: 12, padding: 16, elevation: 3, marginTop: 20 }}>
-						<Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10, color: 'white' }}>Recent Announcements</Text>
-						<View style={{ marginBottom: 10 }}>
-							<Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>Planned Maintenance</Text>
-							<Text style={{ fontSize: 14, color: 'white' }}>There will be a schedueled  maintainence between the times of the first adn second...</Text>
-						</View>
+						<Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Recent Announcements</Text>
+						{announcements.length > 0 ? (
+							announcements.slice(0, 3).map((announcement) => ( // Display the latest 3 announcements
+								<View key={announcement.id} style={{ marginBottom: 10 }}>
+									<Text style={{ fontSize: 16, fontWeight: 'bold' }}>{announcement.title}</Text>
+									<Text style={{ fontSize: 12, color: 'white' }}>{new Date(announcement.createdAt).toLocaleString()}</Text>
+								</View>
+							))
+						) : (
+							<Text style={{ color: 'white' }}>No announcements available</Text>
+						)}
 					</View>
 				</TouchableOpacity>
-
-				{/* Maintenance Modal */}
-				<Modal
-					visible={isMaintenanceVisible}
-					onRequestClose={() => setIsMaintenanceVisible(false)}
-					animationType="slide"
-					presentationStyle="pageSheet">
-					<View style={{ flex: 1, padding: 20, backgroundColor: '#fff' }}>
-						<TouchableOpacity onPress={() => setIsMaintenanceVisible(false)}>
-							<Image source={icons.CloseIcon} style={{ width: 25, height: 25 }} />
-						</TouchableOpacity>
-						<Text style={{ fontSize: 24, marginVertical: 20 }}>Request Maintenance</Text>
-
-						<TextInput
-							placeholder="Issue Title"
-							placeholderTextColor="black"
-							style={{
-								borderColor: '#ccc',
-								borderWidth: 1,
-								borderRadius: 8,
-								padding: 12,
-								marginBottom: 10,
-								backgroundColor: "#f9f9f9"
-							}}
-							onChangeText={setIssueTitle}
-							value={issueTitle}
-						/>
-						<TextInput
-							placeholder="Issue Description"
-							placeholderTextColor="black"
-							style={{
-								borderColor: '#ccc',
-								borderWidth: 1,
-								borderRadius: 8,
-								padding: 12,
-								height: 100,
-								marginBottom: 10,
-								backgroundColor: "#f9f9f9"
-							}}
-							onChangeText={setIssueDescription}
-							value={issueDescription}
-						/>
-						<SelectList
-							setSelected={setSelected}
-							selected={selected}
-							data={maintainenceData}
-							boxStyles={{ marginVertical: 20, borderColor: '#3e1952', borderRadius: 8 }}
-							save="value" />
-
-						<SelectList
-							setSelected={setSelectedPriority}
-							selected={selectedPriority}
-							data={priorityData}
-							boxStyles={{ marginVertical: 20, borderColor: '#3e1952', borderRadius: 8 }}
-							save="value" />
-
-						<TouchableOpacity onPress={() => setImagePickerModalVisible(true)} style={{ alignItems: 'center' }}>
-							<Image source={icons.AddImagesLogo} style={{ width: 200, height: 200 }} />
-						</TouchableOpacity>
-
-						{/* Image Picker Modal */}
-						<Modal
-							visible={imagePickerModalVisible}
-							animationType="slide"
-							transparent={true}
-							onRequestClose={() => setImagePickerModalVisible(false)}>
-							<TouchableOpacity
-								style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}
-								activeOpacity={1}
-								onPress={() => setImagePickerModalVisible(false)}>
-								<TouchableOpacity style={{ width: 300, backgroundColor: 'white', borderRadius: 12, padding: 20, flexDirection: 'row', justifyContent: 'space-around' }} activeOpacity={1}>
-									{/* GALLERY */}
-									<TouchableOpacity onPress={() => uploadImage("Gallery")} style={{ marginBottom: 10 }}>
-										<Image source={icons.GalleryLogo} style={{ width: 50, height: 50 }} />
-									</TouchableOpacity>
-
-									{/* CAMERA */}
-									<TouchableOpacity onPress={() => uploadImage("Camera")}>
-										<Image source={icons.CameraLogo} style={{ width: 50, height: 50 }} />
-									</TouchableOpacity>
-								</TouchableOpacity>
-							</TouchableOpacity>
-						</Modal>
-
-						<LoginButton text="Submit" onPress={handleRepairRequestSubmit} />
-					</View>
-				</Modal>
-
-				{/* NFC Scanner Modal */}
-				<Modal
-					visible={isNfcModalVisible}
-					animationType="fade"
-					onRequestClose={() => setIsNfcModalVisible(false)}
-					presentationStyle="pageSheet">
-					<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-						<Animated.Image
-							style={{
-								width: 300,
-								height: 300,
-								opacity: fadeAnim,
-							}}
-							source={icons.NfcScannerScreen} />
-						<TouchableOpacity onPress={() => setIsNfcModalVisible(false)} style={{ marginTop: 20 }}>
-							<Image source={icons.ArrowDownIcon} style={{ width: 35, height: 35 }} />
-						</TouchableOpacity>
-					</View>
-				</Modal>
 			</View>
-		</View>
+
+			{/* Maintenance Modal */}
+			<Modal visible={isMaintenanceVisible} animationType="slide" onRequestClose={() => setIsMaintenanceVisible(false)}>
+				<ScrollView style={{ padding: 20 }}>
+					<Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Request Maintenance</Text>
+					<TextInput
+						style={{ borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 10 }}
+						placeholder="Title"
+						value={issueTitle}
+						onChangeText={setIssueTitle}
+					/>
+					<TextInput
+						style={{ borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 10 }}
+						placeholder="Description"
+						value={issueDescription}
+						onChangeText={setIssueDescription}
+					/>
+					<SelectList
+						setSelected={setSelected}
+						data={maintainenceData}
+						placeholder="Select Maintenance Type"
+						searchPlaceholder="Search..."
+					/>
+					<SelectList
+						setSelected={setSelectedPriority}
+						data={priorityData}
+						placeholder="Select Priority"
+						searchPlaceholder="Search..."
+					/>
+					<TouchableOpacity onPress={() => setImagePickerModalVisible(true)}>
+						<Image source={icons.AddImagesLogo} style={{ width: 50, height: 50 }} />
+					</TouchableOpacity>
+					<TouchableOpacity onPress={handleRepairRequestSubmit} style={{ backgroundColor: "#4CAF50", borderRadius: 5, padding: 10, marginTop: 10 }}>
+						<Text style={{ color: "white", textAlign: "center" }}>Submit Request</Text>
+					</TouchableOpacity>
+				</ScrollView>
+			</Modal>
+
+			{/* NFC Modal */}
+			<Modal visible={isNfcModalVisible} animationType="slide" transparent={true}>
+				<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+					<Animated.View style={{ opacity: fadeAnim, backgroundColor: "black", padding: 20, borderRadius: 10 }}>
+						<Text style={{ color: "white" }}>NFC Scanning is in progress...</Text>
+					</Animated.View>
+				</View>
+			</Modal>
+
+			{/* Image Picker Modal */}
+			<Modal visible={imagePickerModalVisible} animationType="slide" onRequestClose={() => setImagePickerModalVisible(false)}>
+				<ScrollView contentContainerStyle={{ padding: 20 }}>
+					<Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Upload Image</Text>
+					<TouchableOpacity onPress={() => uploadImage("Camera")} style={{ marginVertical: 10 }}>
+						<Text style={{ textAlign: 'center', color: "blue" }}>Take Photo</Text>
+					</TouchableOpacity>
+					<TouchableOpacity onPress={() => uploadImage("Gallery")} style={{ marginVertical: 10 }}>
+						<Text style={{ textAlign: 'center', color: "blue" }}>Choose from Gallery</Text>
+					</TouchableOpacity>
+				</ScrollView>
+			</Modal>
+		</ScrollView>
 	);
 }
