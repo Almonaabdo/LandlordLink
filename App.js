@@ -12,10 +12,9 @@ import { AnnouncementsScreen } from './Announcements';
 import { Documents } from './Documents';
 import { Contact } from './Contact';
 import RequestsScreen from './RequestScreen';
-import SignOutScreen from './SignOut'
+import SignOutScreen from './SignOut';
 import SignUpScreen from './Signup';
 import { LoginScreen } from './Login';
-
 
 const primaryColor = "#3e1952";
 const Tab = createBottomTabNavigator();
@@ -40,11 +39,13 @@ const TabIcon = ({ icon, label, focused }) => {
   return (
     <View style={{ alignItems: 'center' }}>
       <Image source={icon} style={{ width: iconSize, height: iconSize }} />
-      <Text style={{ fontSize: 12 }}>{label}</Text>
+      <Text style={{ fontSize: 12, color: focused ? primaryColor : '#888' }}>{label}</Text>
     </View>
   );
 };
 
+
+// BOTTOM NAVIGATOR
 const TabNavigator = () => (
   <Tab.Navigator
     screenOptions={({ route }) => ({
@@ -72,13 +73,24 @@ const TabNavigator = () => (
         return <TabIcon icon={icon} label={route.name} focused={focused} />;
       },
       tabBarShowLabel: false,
-      tabBarActiveTintColor: primaryColor,
-      tabBarInactiveTintColor: '#888',
-      tabBarStyle: {
+      //tabBarActiveTintColor: primaryColor,
+      //tabBarInactiveTintColor: '#888',
+      tabBarStyle: 
+      {
+        padding:'5%',
         backgroundColor: '#fff',
-        borderTopColor: '#ccc',
-        borderTopWidth: 1,
-      },
+        borderTopColor: 'transparent',
+        elevation: 15,
+        shadowColor: 'purple',
+        shadowOffset: { width: 0, height: 0},
+        shadowOpacity: 0.70,
+        shadowRadius: 8,
+        position: 'absolute',
+        bottom: 20,
+        left: 10,
+        right: 10,
+        borderRadius: 15
+      }
     })}>
     <Tab.Screen name="Home" component={HomeScreen} options={defaultScreenOptions} />
     <Tab.Screen name="Documents" component={Documents} options={defaultScreenOptions} />
@@ -87,20 +99,22 @@ const TabNavigator = () => (
   </Tab.Navigator>
 );
 
+// SCREEN STACK
 export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={defaultScreenOptions} initialRouteName='Login'>
-        <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login',}} />
-          <Stack.Screen name="Back" component={TabNavigator} options={{ headerShown: false }} />
-          <Stack.Screen name="Requests" component={RequestsScreen} options={{ title: 'Requests' ,headerBackTitleVisible:false}} />
-          <Stack.Screen name="Announcements" component={AnnouncementsScreen} options={{ title: 'Announcements', headerBackTitleVisible:false }} />
-          <Stack.Screen name="SignOut" component={SignOutScreen} options={{ title: 'Sign Out', headerShown:false }} />
-          <Stack.Screen name="Signup" component={SignUpScreen} options={{ title: 'Sign Up'}} />
-          <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile'}} />
 
+        <Stack.Navigator screenOptions={defaultScreenOptions} initialRouteName='Login'>
+          <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login' }} />
+          <Stack.Screen name="Back" component={TabNavigator} options={{ headerShown: false }} />
+          <Stack.Screen name="Requests" component={RequestsScreen} options={{ title: 'Requests', headerBackTitleVisible: false }} />
+          <Stack.Screen name="Announcements" component={AnnouncementsScreen} options={{ title: 'Announcements', headerBackTitleVisible: false }} />
+          <Stack.Screen name="SignOut" component={SignOutScreen} options={{ title: 'Sign Out', headerShown: false }} />
+          <Stack.Screen name="Signup" component={SignUpScreen} options={{ title: 'Sign Up' }} />
+          <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
         </Stack.Navigator>
+
       </NavigationContainer>
     </GestureHandlerRootView>
   );

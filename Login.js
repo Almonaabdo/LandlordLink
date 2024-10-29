@@ -31,7 +31,7 @@ export function LoginScreen({ navigation }) {
       <KeyboardAvoidingView behavior="position">
         <StatusBar barStyle="light-content" />
 
-
+        {/*COMPANY LOGO */}
         <View style={styles.logoContainer}>
           <Image source={logoImg} style={styles.logo} />
         </View>
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   logo: {
     width: '100%',
     height: 150,
-    marginTop: '20%',
+    marginTop: '5%',
     resizeMode: 'stretch',
     borderRadius: 20,
     alignSelf: 'center',

@@ -36,6 +36,7 @@ export default function SignUpScreen({ navigation }) {
       <KeyboardAvoidingView behavior="position">
         <StatusBar barStyle="light-content" />
 
+        {/*COMPANY LOGO */}
         <Image source={logoImg} style={styles.logo} />
 
         <ActivityIndicator size={"large"} color={"purple"} animating={viewError === 1} />
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
     height: 150,
     resizeMode: 'stretch',
     borderRadius: 20,
-    marginTop: '10%',
+    marginTop: '5%',
     alignSelf: 'center',
   },
 
