@@ -14,6 +14,8 @@ import { Contact } from './Contact';
 import RequestsScreen from './RequestScreen';
 import SignOutScreen from './SignOut'
 import SignUpScreen from './Signup';
+import { LoginScreen } from './Login';
+
 
 const primaryColor = "#3e1952";
 const Tab = createBottomTabNavigator();
@@ -89,7 +91,8 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={defaultScreenOptions}>
+        <Stack.Navigator screenOptions={defaultScreenOptions} initialRouteName='Login'>
+        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Back" component={TabNavigator} options={{ headerShown: false }} />
           <Stack.Screen name="Requests" component={RequestsScreen} options={{ title: 'Requests' }} />
           <Stack.Screen name="Announcements" component={AnnouncementsScreen} options={{ title: 'Announcements' }} />
