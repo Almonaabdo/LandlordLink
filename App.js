@@ -12,6 +12,7 @@ import { AnnouncementsScreen } from './Announcements';
 import { Documents } from './Documents';
 import { Contact } from './Contact';
 import RequestsScreen from './RequestScreen';
+import SignOutScreen from './SignOut'
 
 const primaryColor = "#3e1952";
 const Tab = createBottomTabNavigator();
@@ -91,6 +92,8 @@ export default function App() {
           <Stack.Screen name="Back" component={TabNavigator} options={{ headerShown: false }} />
           <Stack.Screen name="Requests" component={RequestsScreen} options={{ title: 'Requests' }} />
           <Stack.Screen name="Announcements" component={AnnouncementsScreen} options={{ title: 'Announcements' }} />
+          <Stack.Screen name="SignOut" component={SignOutScreen} options={{ title: 'SignOut' }} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

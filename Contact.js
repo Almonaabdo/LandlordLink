@@ -77,9 +77,9 @@ export function Contact({ navigation }) {
       <View style={{marginVertical:'5%'}}/>
       {/*SOCIAL MEDIA */}
       <View style={{ height: '3%', flexDirection: 'row', marginVertical: '10%', alignSelf: 'center', justifyContent: 'space-between' }}>
-        <Image source={facebookIcon} style={{ width: '9%', height: '150%', marginRight: '10%' }} />
-        <Image source={instagramIcon} style={{ width: '9%', height: '150%', marginRight: '10%' }} />
-        <Image source={googleIcon} style={{ width: '9%', height: '150%' }} />
+        <Image source={facebookIcon} style={{ width: '9%', height: '165%', marginRight: '10%' }} />
+        <Image source={instagramIcon} style={{ width: '9%', height: '165%', marginRight: '10%' }} />
+        <Image source={googleIcon} style={{ width: '9%', height: '165%' }} />
       </View>
 
 

@@ -6,7 +6,7 @@ import { auth } from './firebaseConfig'; // Firebase configuration
 import { signOut } from 'firebase/auth';
 import { stylesLogin } from './styles/stylesLogin'; // Assuming you have global styles
 
-export function SignOutScreen({ navigation }) {
+export default function SignOutScreen({ navigation }) {
   // Function to handle sign out
   const handleSignOut = async () => {
     try {
@@ -22,7 +22,7 @@ export function SignOutScreen({ navigation }) {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="light-content" />
       <Text style={stylesLogin.textHeader}>Are you sure you want to sign out?</Text>
 
       <LoginButton onPress={handleSignOut} text="Sign Out" />
