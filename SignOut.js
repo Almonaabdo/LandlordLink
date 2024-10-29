@@ -14,7 +14,7 @@ export default function SignOutScreen({ navigation }) {
       console.log("User signed out.");
 
       // Navigate to the Login screen after signing out
-      navigation.navigate("Login");
+      navigation.navigate("Signup");
     } catch (error) {
       console.error("Error signing out: ", error);
     }

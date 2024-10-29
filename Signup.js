@@ -7,7 +7,7 @@ import { LoginButton } from "./components/Buttons";
 // Logo
 const logoImg = require("./assets/Accommod8u.jpg");
 
-export function SignUpScreen({ navigation }) {
+export default function SignUpScreen({ navigation }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -34,7 +34,7 @@ export function SignUpScreen({ navigation }) {
   return (
     <ScrollView style={styles.container}>
       <KeyboardAvoidingView behavior="position">
-        <StatusBar barStyle="dark-content" />
+        <StatusBar barStyle="light-content" />
 
         <Image source={logoImg} style={styles.logo} />
 

@@ -4,6 +4,8 @@ import * as ImagePicker from "expo-image-picker";
 import { SelectList } from 'react-native-dropdown-select-list';
 import { addDocument, fetchDocuments } from "./Functions";
 import { useFocusEffect } from "@react-navigation/native";
+import HomeCard from "./components/HomeCard";
+
 
 // Icons
 const AppartmentImg = require("./assets/256LesterSt.jpg");
@@ -17,6 +19,9 @@ const icons = {
   HouseImage: require("./assets/houseImage.png"),
   NfcScannerScreen: require("./assets/nfcScannerScreen.png"),
   DoorHandleIcon: require("./assets/doorHandleIcon.png"),
+  announcementsBackground: require("./assets/announcementsBackground.jpg"),
+  maintainenceBackground: require("./assets/maintainancebackground.jpg"),
+
 };
 
 export function HomeScreen({ navigation }) {
@@ -176,14 +181,30 @@ export function HomeScreen({ navigation }) {
         </TouchableOpacity>
       </View>
 
-      {/* MAINTENANCE Card */}
+
+      {/* Maintaincence Card */}
+      <HomeCard
+        title="Maintenance"
+        description="Review Open Requests"
+        imageUrl={icons.maintainenceBackground}
+      />
+
+      {/* Announcements Card */}
+      <HomeCard
+        title="Announcements"
+        description="Read recent Announcements"
+        imageUrl={icons.announcementsBackground}
+      />
+
+
+      {/* MAINTENANCE LIST */}
       <View style={{ padding: 16 }}>
         <TouchableOpacity onPress={() => navigation.navigate("Requests")} style={{ backgroundColor: "white", borderRadius: 12, padding: 16, elevation: 3 }}>
           <Text style={{ marginLeft: 10, fontSize: 16 }}>Maintenance Requests</Text>
           <Text style={{ marginLeft: 10, fontSize: 16 }}>Open Requests: {requestCount}</Text>
         </TouchableOpacity>
 
-        {/* Announcements Card */}
+        {/* Announcements LIST */}
         <TouchableOpacity onPress={() => navigation.navigate("Announcements")}>
           <View style={{ backgroundColor: "#9B59B6", borderRadius: 12, padding: 16, elevation: 3, marginTop: 20 }}>
             <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Recent Announcements</Text>
@@ -199,6 +220,7 @@ export function HomeScreen({ navigation }) {
             )}
           </View>
         </TouchableOpacity>
+
       </View>
 
       {/* Maintenance Modal */}
@@ -317,7 +339,7 @@ export function HomeScreen({ navigation }) {
         animationType="fade"
         onRequestClose={() => setIsNfcModalVisible(false)}
         presentationStyle="pageSheet">
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' , backgroundColor:"#2c2c2c"}}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: "#2c2c2c" }}>
 
           {/*Animated Image*/}
           <Animated.Image
@@ -325,7 +347,7 @@ export function HomeScreen({ navigation }) {
               width: 400,
               height: 300,
               opacity: fadeAnim,
-              borderRadius:20
+              borderRadius: 20
             }}
             source={icons.NfcScannerScreen} />
 
