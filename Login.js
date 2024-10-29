@@ -29,7 +29,7 @@ export function LoginScreen({ navigation }) {
   return (
     <ScrollView style={styles.container}>
       <KeyboardAvoidingView behavior="position">
-        <StatusBar barStyle="dark-content" />
+        <StatusBar barStyle="light-content" />
 
 
         <View style={styles.logoContainer}>
