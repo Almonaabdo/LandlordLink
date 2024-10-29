@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, View, Text } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 // My custom components
@@ -10,9 +11,11 @@ import { HomeScreen } from './Home';
 import { AnnouncementsScreen } from './Announcements';
 import { Documents } from './Documents';
 import { Contact } from './Contact';
+import RequestsScreen from './RequestScreen';
 
 const primaryColor = "#3e1952";
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 // Importing local icons
 const HomeIcon = require("./assets/homeIcon.png");
@@ -38,50 +41,57 @@ const TabIcon = ({ icon, label, focused }) => {
   );
 };
 
+const TabNavigator = () => (
+  <Tab.Navigator
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused }) => {
+        let icon;
+        switch (route.name) {
+          case 'Home':
+            icon = HomeIcon;
+            break;
+          case 'Announces':
+            icon = AnnouncementIcon;
+            break;
+          case 'Documents':
+            icon = DocumentsIcon;
+            break;
+          case 'Contact':
+            icon = ContactIcon;
+            break;
+          case 'Profile':
+            icon = ProfileIcon;
+            break;
+          default:
+            icon = HomeIcon;
+        }
+        return <TabIcon icon={icon} label={route.name} focused={focused} />;
+      },
+      tabBarShowLabel: false,
+      tabBarActiveTintColor: primaryColor,
+      tabBarInactiveTintColor: '#888',
+      tabBarStyle: {
+        backgroundColor: '#fff',
+        borderTopColor: '#ccc',
+        borderTopWidth: 1,
+      },
+    })}>
+    <Tab.Screen name="Home" component={HomeScreen} options={defaultScreenOptions} />
+    <Tab.Screen name="Documents" component={Documents} options={defaultScreenOptions} />
+    <Tab.Screen name="Contact" component={Contact} options={defaultScreenOptions} />
+    <Tab.Screen name="Profile" component={Profile} options={defaultScreenOptions} />
+  </Tab.Navigator>
+);
+
 export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused }) => {
-              let icon;
-              switch (route.name) {
-                case 'Home':
-                  icon = HomeIcon;
-                  break;
-                case 'Announces':
-                  icon = AnnouncementIcon;
-                  break;
-                case 'Documents':
-                  icon = DocumentsIcon;
-                  break;
-                case 'Contact':
-                  icon = ContactIcon;
-                  break;
-                case 'Profile':
-                  icon = ProfileIcon;
-                  break;
-                default:
-                  icon = HomeIcon;
-              }
-              return <TabIcon icon={icon} label={route.name} focused={focused} />;
-            },
-            tabBarShowLabel: false,
-            tabBarActiveTintColor: primaryColor,
-            tabBarInactiveTintColor: '#888',
-            tabBarStyle: {
-              backgroundColor: '#fff',
-              borderTopColor: '#ccc',
-              borderTopWidth: 1,
-            },
-          })}>
-          <Tab.Screen name="Home" component={HomeScreen} options={defaultScreenOptions} />
-          <Tab.Screen name="Announces" component={AnnouncementsScreen} options={defaultScreenOptions} />
-          <Tab.Screen name="Documents" component={Documents} options={defaultScreenOptions} />
-          <Tab.Screen name="Contact" component={Contact} options={defaultScreenOptions} />
-          <Tab.Screen name="Profile" component={Profile} options={defaultScreenOptions} />
-        </Tab.Navigator>
+        <Stack.Navigator screenOptions={defaultScreenOptions}>
+          <Stack.Screen name="Back" component={TabNavigator} options={{ headerShown: false }} />
+          <Stack.Screen name="Requests" component={RequestsScreen} options={{ title: 'Requests' }} />
+          <Stack.Screen name="Announcements" component={AnnouncementsScreen} options={{ title: 'Announcements' }} />
+        </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
   );
