@@ -5,6 +5,9 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import { addDocument, fetchDocuments } from "./Functions";
 import { useFocusEffect } from "@react-navigation/native";
 import HomeCard from "./components/HomeCard";
+import { LoginButton } from "./components/Buttons";
+
+
 
 
 // Icons
@@ -161,6 +164,7 @@ export function HomeScreen({ navigation }) {
     <ScrollView
       style={{ backgroundColor: "#f5f5f5" }}
       contentContainerStyle={{ paddingBottom: 20 }}
+      showsVerticalScrollIndicator={false}
       refreshControl={<RefreshControl refreshing={loading} onRefresh={loadRequests} />}
     >
       <StatusBar barStyle="light-content" />
@@ -181,47 +185,43 @@ export function HomeScreen({ navigation }) {
         </TouchableOpacity>
       </View>
 
-
       {/* Maintaincence Card */}
-      <HomeCard
-        title="Maintenance"
-        description="Review Open Requests"
-        imageUrl={icons.maintainenceBackground}
-      />
+      <TouchableOpacity onPress={() => navigation.navigate("Requests")}>
+        <HomeCard
+          title="Maintenance"
+          description={`Open Requests: ${requestCount}`}
+          imageUrl={icons.maintainenceBackground}/>
+      </TouchableOpacity>
 
       {/* Announcements Card */}
-      <HomeCard
-        title="Announcements"
-        description="Read recent Announcements"
-        imageUrl={icons.announcementsBackground}
-      />
+      <TouchableOpacity onPress={() => navigation.navigate("Announcements")}>
+        <HomeCard
+          title="Announcements"
+          description="Read recent Announcements"
+          imageUrl={icons.announcementsBackground}/>
+      </TouchableOpacity>
 
-
-      {/* MAINTENANCE LIST */}
-      <View style={{ padding: 16 }}>
-        <TouchableOpacity onPress={() => navigation.navigate("Requests")} style={{ backgroundColor: "white", borderRadius: 12, padding: 16, elevation: 3 }}>
-          <Text style={{ marginLeft: 10, fontSize: 16 }}>Maintenance Requests</Text>
-          <Text style={{ marginLeft: 10, fontSize: 16 }}>Open Requests: {requestCount}</Text>
-        </TouchableOpacity>
 
         {/* Announcements LIST */}
-        <TouchableOpacity onPress={() => navigation.navigate("Announcements")}>
-          <View style={{ backgroundColor: "#9B59B6", borderRadius: 12, padding: 16, elevation: 3, marginTop: 20 }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Recent Announcements</Text>
-            {announcements.length > 0 ? (
-              announcements.slice(0, 3).map((announcement) => (
-                <View key={announcement.id} style={{ marginBottom: 10 }}>
-                  <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{announcement.title}</Text>
-                  <Text style={{ fontSize: 12, color: 'white' }}>{new Date(announcement.createdAt).toLocaleString()}</Text>
-                </View>
-              ))
-            ) : (
-              <Text style={{ color: 'white' }}>No announcements available</Text>
-            )}
-          </View>
-        </TouchableOpacity>
+        <View style={{padding:"2%"}}>
+          <TouchableOpacity onPress={() => navigation.navigate("Announcements")}>
+            <View style={{ backgroundColor: "#9B59B6", borderRadius: 12, padding: 16, elevation: 3, marginTop: 20 }}>
+              <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Recent Announcements</Text>
+              {announcements.length > 0 ? (
+                announcements.slice(0, 3).map((announcement) => (
+                  <View key={announcement.id} style={{ marginBottom: 10 }}>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{announcement.title}</Text>
+                    <Text style={{ fontSize: 12, color: 'white' }}>{new Date(announcement.createdAt).toLocaleString()}</Text>
+                  </View>
+                ))
+              ) : (
+                <Text style={{ color: 'white' }}>No announcements available</Text>
+              )}
+            </View>
+          </TouchableOpacity>
+        </View>
 
-      </View>
+
 
       {/* Maintenance Modal */}
       <Modal
@@ -238,43 +238,64 @@ export function HomeScreen({ navigation }) {
           </TouchableOpacity>
 
           {/* Issue Title */}
+          <Text style={{marginVertical: '1%'}}>Issue Title</Text>
           <TextInput
             placeholder="Issue Title"
-            style={{ borderColor: 'gray', borderWidth: 1, borderRadius: 5, marginTop: 10, padding: 8 }}
-            value={issueTitle}
+            placeholderTextColor="grey"
+            style={{
+              borderColor: '#ccc',
+              borderWidth: 1,
+              borderRadius: 8,
+              padding: 12,
+              marginBottom: 10,
+              backgroundColor: "#f9f9f9"
+            }}
             onChangeText={setIssueTitle}
+            value={issueTitle}
           />
-
           {/* Issue Description */}
+          <Text style={{marginVertical: '1%'}}>Describe the problem</Text>
           <TextInput
             placeholder="Issue Description"
-            style={{ borderColor: 'gray', borderWidth: 1, borderRadius: 5, marginTop: 10, padding: 8, height: 100 }}
-            multiline
-            value={issueDescription}
+            placeholderTextColor="grey"
+            style={{
+              borderColor: '#ccc',
+              borderWidth: 1,
+              borderRadius: 8,
+              padding: 12,
+              height: 100,
+              marginBottom: 10,
+              backgroundColor: "#f9f9f9"
+            }}
             onChangeText={setIssueDescription}
+            value={issueDescription}
           />
 
           {/* Issue Type Dropdown */}
+          <Text style={{marginVertical: '1%'}}>Maintenance Type</Text>
           <SelectList
             setSelected={setSelected}
             data={maintainenceData}
             placeholder="Select Issue Type"
             searchPlaceholder="Search"
-            dropdownStyles={{ borderRadius: 5, marginTop: 10 }}
+            dropdownStyles={{ borderRadius: 5 }}
+            boxStyles={{ marginVertical: 10, borderRadius: 8 }}
           />
 
           {/* Priority Dropdown */}
+          <Text style={{marginVertical: '1%'}}>How Urgent</Text>
           <SelectList
             setSelected={setSelectedPriority}
             data={priorityData}
             placeholder="Select Priority"
             searchPlaceholder="Search"
-            dropdownStyles={{ borderRadius: 5, marginTop: 10 }}
+            dropdownStyles={{ borderRadius: 5 }}
+            boxStyles={{ marginVertical: 10, borderRadius: 8 }}
           />
 
           {/* Add Image Button */}
-          <TouchableOpacity onPress={() => setImagePickerModalVisible(true)} style={{ backgroundColor: "#3498DB", borderRadius: 5, padding: 10, marginTop: 10 }}>
-            <Text style={{ color: 'white', textAlign: 'center' }}>Add Image</Text>
+          <TouchableOpacity onPress={() => setImagePickerModalVisible(true)} style={{ alignItems: 'center' }}>
+            <Image source={icons.AddImagesLogo} style={{ width: 100, height: 100 }} />
           </TouchableOpacity>
 
           {/* IMAGE UPLOAD MODAL */}
@@ -309,9 +330,8 @@ export function HomeScreen({ navigation }) {
 
 
           {/* Submit Button */}
-          <TouchableOpacity onPress={handleRepairRequestSubmit} style={{ backgroundColor: "#2ECC71", borderRadius: 5, padding: 10, marginTop: 10 }}>
-            <Text style={{ color: 'white', textAlign: 'center' }}>Submit Request</Text>
-          </TouchableOpacity>
+          <LoginButton text="Submit" onPress={handleRepairRequestSubmit}/>
+            
         </View>
       </Modal>
 

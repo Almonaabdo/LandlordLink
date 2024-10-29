@@ -5,6 +5,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { auth } from './firebaseConfig'; // Firebase configuration
 import { signOut } from 'firebase/auth';
 import { stylesLogin } from './styles/stylesLogin'; // Assuming you have global styles
+import { CommonActions } from '@react-navigation/native';
 
 export default function SignOutScreen({ navigation }) {
   // Function to handle sign out
@@ -14,7 +15,15 @@ export default function SignOutScreen({ navigation }) {
       console.log("User signed out.");
 
       // Navigate to the Login screen after signing out
-      navigation.navigate("Signup");
+      //navigation.replace("Signup");
+
+      // clears navigation stack to not allow user to go back
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0, 
+          routes: [{ name: 'Signup' }], 
+        })
+      );
     } catch (error) {
       console.error("Error signing out: ", error);
     }
@@ -28,7 +37,7 @@ export default function SignOutScreen({ navigation }) {
       <LoginButton onPress={handleSignOut} text="Sign Out" />
 
       {/* Cancel button */}
-      <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
         <Text style={stylesLogin.textLabel}>Cancel</Text>
       </TouchableOpacity>
     </View>

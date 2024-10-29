@@ -86,7 +86,7 @@ export default function SignUpScreen({ navigation }) {
         {viewError === -2 && <Text style={styles.errorText}>Passwords Don't Match</Text>}
         {viewError === -3 && <Text style={styles.errorText}>Email is Already in use</Text>}
 
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+        <TouchableOpacity onPress={() => navigation.replace("Login")}>
           <Text style={styles.signInText}>Already A Member?</Text>
         </TouchableOpacity>
 

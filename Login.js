@@ -62,7 +62,7 @@ export function LoginScreen({ navigation }) {
         {viewError === -1 && <Text style={styles.errorText}>Invalid Email or Password</Text>}
         {viewError === -2 && <Text style={styles.errorText}>Invalid Email @</Text>}
 
-        <TouchableOpacity style={styles.signUpContainer} onPress={() => navigation.navigate("Signup")}>
+        <TouchableOpacity style={styles.signUpContainer} onPress={() => navigation.replace("Signup")}>
           <Text style={styles.signUpText}>Not A Member?</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
