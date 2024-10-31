@@ -1,24 +1,40 @@
+/*
+* FILE        : Profile.js
+* 
+* Description : The Profile Screen. Allows user to view, change thier info such as email and password
+* 
+* Author      : Abdurrahman Almouna, Yafet Tekleab
+* Date        : October 31, 2024
+* Version     : 1.0
+* 
+*/
+
+
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StatusBar, StyleSheet, TextInput, ScrollView } from "react-native";
 import { LoginButton } from "./components/Buttons.js";
-import { auth } from './firebaseConfig';  // Import Firebase auth for logout
+import { auth } from './firebaseConfig';
+
 
 const profileImage = require("./assets/profileUser.png");
 
 export function Profile({ navigation }) {
   // State hooks
-  const [firstName, setFirstName] = useState("");
+  const [userFullName, setFirstName] = useState("Yafet Tekleab");
   const [email, setEmail] = useState(auth.currentUser?.email || "user@example.com");
-  const [announcementTitle, setAnnouncementTitle] = useState("");
-  const [announcementDetails, setAnnouncementDetails] = useState("");
+
 
   return (
     <ScrollView style={styles.container}>
       <StatusBar barStyle="light-content" />
 
       <Text style={styles.textHeader}>Account Settings</Text>
-      <Image source={profileImage} style={styles.profileImage} />
-      <Text style={styles.name}>Yafet Tekleab</Text>
+
+      {/* profile Image */}
+      <Image source={profileImage} style={styles.profileImage}/>
+
+      {/* User Name */}
+      <Text style={styles.name}>{userFullName}</Text>
 
 
       {/* Email Input */}
@@ -37,13 +53,15 @@ export function Profile({ navigation }) {
         value="*********"
         editable={false} />
 
-
+      {/* SPACING */}
       <View style={{ margin: '20%' }} />
+
       {/* Logout BUTTON */}
       <LoginButton text="Sign Out" onPress={() => navigation.navigate("SignOut")} />
     </ScrollView>
   );
 }
+
 
 // Styles
 const styles = StyleSheet.create({

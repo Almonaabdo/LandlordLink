@@ -1,3 +1,14 @@
+/*
+* FILE        : Home.js
+* 
+* Description : The Main page of the app. Complex page to handld different modal screens and the main dashboard
+* 
+* Author      : Abdurrahman Almouna, Yafet Tekleab
+* Date        : October 31, 2024
+* Version     : 1.0
+* 
+*/
+
 import React, { useState } from "react";
 import { RefreshControl, Text, Image, Animated, TouchableOpacity, Modal, TextInput, StatusBar, ScrollView, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
@@ -41,14 +52,21 @@ export function HomeScreen({ navigation }) {
   const [requestCount, setRequestCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
+
+  // function to fetch announcements data from database
   useFocusEffect(
-    React.useCallback(() => {
-      const getRecentAnnouncements = async () => {
-        try {
+    React.useCallback(() => 
+    {
+      const getRecentAnnouncements = async () => 
+      {
+        try 
+        {
           const fetchedAnnouncements = await fetchDocuments("announcements");
           fetchedAnnouncements.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
           setAnnouncements(fetchedAnnouncements);
-        } catch (error) {
+        } 
+        catch (error) 
+        {
           console.error("Error fetching announcements: ", error);
         }
       };
@@ -58,14 +76,22 @@ export function HomeScreen({ navigation }) {
     }, [])
   );
 
-  const loadRequests = async () => {
-    try {
+
+  // function to fetch maintanence requests number from database
+  const loadRequests = async () => 
+  {
+    try
+    {
       setLoading(true);
       const fetchedRequests = await fetchDocuments("repairRequests");
       setRequestCount(fetchedRequests.length);
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       console.error("Error fetching requests:", error);
-    } finally {
+    } 
+    finally 
+    {
       setLoading(false);
     }
   };
@@ -102,7 +128,7 @@ export function HomeScreen({ navigation }) {
     }
   };
 
-  const maintainenceData = [
+  const maintainenceList = [
     { key: '1', value: 'Pest control' },
     { key: '2', value: 'Electrical' },
     { key: '3', value: 'Water Leakage' },
@@ -112,38 +138,52 @@ export function HomeScreen({ navigation }) {
     { key: '7', value: 'Doors/Windows' },
   ];
 
-  const priorityData = [
+  const priorityLevels = [
     { key: '1', value: 'High' },
     { key: '2', value: 'Medium' },
     { key: '3', value: 'Low' },
   ];
 
+  // Animating function that allows a component to fade in and out
   const startFading = () => {
     Animated.loop(
-      Animated.sequence([
-        Animated.timing(fadeAnim, { toValue: 1, duration: 800, useNativeDriver: true }),
+      Animated.sequence
+      ([
+        // time in ms
+        Animated.timing(fadeAnim, { toValue: 1, duration: 800, useNativeDriver: true }), 
         Animated.timing(fadeAnim, { toValue: 0, duration: 800, useNativeDriver: true }),
       ])
     ).start();
   };
 
-  const handleNfcModalOpen = () => {
+
+  // function to handle the NFS modal screen
+  const handleNfcModalOpen = () => 
+  {
     setIsNfcModalVisible(true);
     startFading();
     setTimeout(() => setIsNfcModalVisible(false), 6000);
   };
 
+  // function to handle Image/Camera Uploads
   const uploadImage = async (mode) => {
-    try {
+    try 
+    {
       let imageResult = {};
-      if (mode === "Gallery") {
+
+      // GALLERY UPLOAD
+      if (mode === "Gallery") 
+      {
         await ImagePicker.requestMediaLibraryPermissionsAsync();
         imageResult = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: false,
           quality: 1,
         });
-      } else {
+      } 
+      else
+      // CAMERA UPLOAD
+      {
         await ImagePicker.requestCameraPermissionsAsync();
         imageResult = await ImagePicker.launchCameraAsync({
           allowsEditing: true,
@@ -151,11 +191,17 @@ export function HomeScreen({ navigation }) {
         });
       }
 
-      if (!imageResult.canceled) {
+      // hide media upload modal if cancelled
+      if (!imageResult.canceled) 
+      {
         setImage(imageResult.assets[0].uri);
       }
+
+      // close media upload modal
       setImagePickerModalVisible(false);
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       console.log("Image upload error:", error);
     }
   };
@@ -275,7 +321,7 @@ export function HomeScreen({ navigation }) {
           <Text style={{marginVertical: '1%'}}>Maintenance Type</Text>
           <SelectList
             setSelected={setSelected}
-            data={maintainenceData}
+            data={maintainenceList}
             placeholder="Select Issue Type"
             searchPlaceholder="Search"
             dropdownStyles={{ borderRadius: 5 }}
@@ -286,7 +332,7 @@ export function HomeScreen({ navigation }) {
           <Text style={{marginVertical: '1%'}}>How Urgent</Text>
           <SelectList
             setSelected={setSelectedPriority}
-            data={priorityData}
+            data={priorityLevels}
             placeholder="Select Priority"
             searchPlaceholder="Search"
             dropdownStyles={{ borderRadius: 5 }}

@@ -1,3 +1,14 @@
+/*
+* FILE        : Login.js
+* 
+* Description : Login page allows user to login and redirects them to Home page on success. Includes styling
+* 
+* Author      : Abdurrahman Almouna, Yafet Tekleab
+* Date        : October 31, 2024
+* Version     : 1.0
+* 
+*/
+
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StatusBar, ActivityIndicator, Alert, TextInput, KeyboardAvoidingView, ScrollView, StyleSheet } from "react-native";
 import { auth } from './firebaseConfig'; // Adjust the path as necessary
@@ -7,22 +18,34 @@ import { LoginButton } from "./components/Buttons";
 // Logo
 const logoImg = require("./assets/Accommod8u.jpg");
 
-export function LoginScreen({ navigation }) {
+// global variables
+const invalidEmailError = -2;
+const invalidInformationError = -1;
+
+
+export function LoginScreen({ navigation }) 
+{
+
+  // fields for user info
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [viewError, setViewError] = useState(0);
 
-  const handleSignIn = async () => {
-    try {
+  // function to validate user sign in in databse
+  const handleSignIn = async () => 
+  {
+    try 
+    {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
+      // redirect user to home page
       navigation.replace("Back", { isUserLoggedIn: true });
       setViewError(0);
-
-    } catch (error) {
-      console.log(error.code, error.message);
-      setViewError(-1);
+    } 
+    catch (error) 
+    {
+      setViewError(invalidInformationError);
     }
   };
 
@@ -32,16 +55,16 @@ export function LoginScreen({ navigation }) {
         <StatusBar barStyle="light-content" />
 
         {/*COMPANY LOGO */}
-        <View style={styles.logoContainer}>
-          <Image source={logoImg} style={styles.logo} />
-        </View>
+        <Image source={logoImg} style={styles.logo} />
 
+        {/*Loading icon */}
         <ActivityIndicator size={"large"} color={"purple"} animating={viewError === 1} />
 
+        {/* Header Title */}
         <Text style={styles.titleHeader}>Welcome Back!</Text>
         <Text style={styles.subHeader}>Log Into your Account</Text>
 
-
+        {/* EMAIL ADDRESS */}
         <Text style={styles.label}>Email</Text>
         <TextInput
           style={styles.textInput}
@@ -49,6 +72,7 @@ export function LoginScreen({ navigation }) {
           onChangeText={(text) => { setEmail(text); setViewError(0); }}
           value={email} />
 
+        {/* PASSWORD */}
         <Text style={styles.label}>Password</Text>
         <TextInput
           secureTextEntry={true}
@@ -57,25 +81,36 @@ export function LoginScreen({ navigation }) {
           onChangeText={(text) => { setPassword(text); setViewError(0); }}
           value={password} />
 
+
+        {/* LOGIN BUTTON */}
         <LoginButton text="Login" onPress={() => { if (isFormValid()) { handleSignIn(); } }} />
 
-        {viewError === -1 && <Text style={styles.errorText}>Invalid Email or Password</Text>}
-        {viewError === -2 && <Text style={styles.errorText}>Invalid Email @</Text>}
 
+        {/* Error Message */}
+        {viewError === invalidInformationError && <Text style={styles.errorText}>Invalid Email or Password</Text>}
+        {viewError === invalidEmailError && <Text style={styles.errorText}>Invalid Email Address</Text>}
+
+        {/* NOT A MEMBER */}
         <TouchableOpacity style={styles.signUpContainer} onPress={() => navigation.replace("Signup")}>
           <Text style={styles.signUpText}>Not A Member?</Text>
         </TouchableOpacity>
+
       </KeyboardAvoidingView>
     </ScrollView>
   );
 
-  function isFormValid() {
-    if (!email.includes("@")) {
-      setViewError(-2);
+
+  // front end function to validate input values
+  function isFormValid() 
+  {
+    if (!email.includes("@")) 
+    {
+      setViewError(invalidEmailError);
       return false;
     }
-    if (email === "" || password.length < 8) {
-      setViewError(-1);
+    if (email === "" || password.length < 8) 
+    {
+      setViewError(invalidInformationError);
       return false;
     }
     setViewError(1);
@@ -83,6 +118,9 @@ export function LoginScreen({ navigation }) {
   }
 }
 
+
+
+// styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,

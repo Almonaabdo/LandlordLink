@@ -1,4 +1,16 @@
-import { React, useState } from "react";
+/*
+* FILE        : Contact.js
+* 
+* Description : The Contact Screen is for displaying all Company related contact ways such as social media and office locations
+* 
+* Author      : Abdurrahman Almouna, Yafet Tekleab
+* Date        : October 31, 2024
+* Version     : 1.0
+* 
+*/
+
+
+import { React } from "react";
 import { View, Text, Image, TouchableOpacity, StatusBar, StyleSheet } from "react-native";
 import { Linking } from "react-native";
 
@@ -21,7 +33,6 @@ export function Contact({ navigation }) {
   const propertyManagementOffice = "The HUB - 130 Columbia St W, Waterloo";
 
   return (
-    
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
 
@@ -53,7 +64,9 @@ export function Contact({ navigation }) {
           onPress={() => openGoogleMaps(propertyManagementOffice)}/>
       </Section>
 
+      {/* SPACING */}
       <View style={{marginVertical:'7%'}}></View>
+
       {/*LEASING OFFICE */}
       <Section title="Leasing Office" hours="Monday - Friday: 10am - 6pm">
         <ContactLink
@@ -74,14 +87,15 @@ export function Contact({ navigation }) {
           onPress={() => openGoogleMaps(leasingOfficeAddress)}/>
       </Section>
 
+      {/* SPACING */}
       <View style={{marginVertical:'5%'}}/>
-      {/*SOCIAL MEDIA */}
+
+      {/*SOCIAL MEDIA ICONS*/}
       <View style={{ height: '3%', flexDirection: 'row', marginVertical: '10%', alignSelf: 'center', justifyContent: 'space-between' }}>
         <Image source={facebookIcon} style={{ width: '9%', height: '165%', marginRight: '10%' }} />
         <Image source={instagramIcon} style={{ width: '9%', height: '165%', marginRight: '10%' }} />
         <Image source={googleIcon} style={{ width: '9%', height: '165%' }} />
       </View>
-
 
     </View>
   );

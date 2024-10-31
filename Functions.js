@@ -1,3 +1,14 @@
+/*
+* FILE        : Functions.js
+* 
+* Description : Contains related generic databse function that will be utilized from interface screens
+* 
+* Author      : Abdurrahman Almouna, Yafet Tekleab
+* Date        : October 31, 2024
+* Version     : 1.0
+* 
+*/
+
 import { db } from './firebaseConfig';
 import { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
 

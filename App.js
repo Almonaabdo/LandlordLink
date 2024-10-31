@@ -1,3 +1,14 @@
+/*
+* FILE        : App.js
+* 
+* Description : The router of the app where all different screens and tabs are refrenced to be accessed by the app
+* 
+* Author      : Abdurrahman Almouna, Yafet Tekleab
+* Date        : October 31, 2024
+* Version     : 1.0
+* 
+*/
+
 import React from 'react';
 import { Image, View, Text } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
@@ -27,14 +38,16 @@ const AnnouncementIcon = require("./assets/announcementIcon.png");
 const DocumentsIcon = require("./assets/documentsIcon.png");
 const ContactIcon = require("./assets/contactIcon.png");
 
-// Screen options
-const defaultScreenOptions = {
+// Screen Header options
+const defaultScreenOptions = 
+{
   headerStyle: { backgroundColor: primaryColor },
   headerTintColor: '#fff',
 };
 
 // Custom tab bar icon component
-const TabIcon = ({ icon, label, focused }) => {
+const TabIcon = ({ icon, label, focused }) =>
+  {
   const iconSize = focused ? 38 : 24;
   return (
     <View style={{ alignItems: 'center' }}>
@@ -45,7 +58,7 @@ const TabIcon = ({ icon, label, focused }) => {
 };
 
 
-// BOTTOM NAVIGATOR
+// BOTTOM TAB NAVIGATOR
 const TabNavigator = () => (
   <Tab.Navigator
     screenOptions={({ route }) => ({
@@ -73,7 +86,7 @@ const TabNavigator = () => (
         return <TabIcon icon={icon} label={route.name} focused={focused} />;
       },
       tabBarShowLabel: false,
-      //tabBarActiveTintColor: primaryColor,
+      //tabBarActiveTintColor: primaryColor, (styling keep here for later)
       //tabBarInactiveTintColor: '#888',
       tabBarStyle: 
       {
@@ -92,6 +105,8 @@ const TabNavigator = () => (
         borderRadius: 15
       }
     })}>
+    
+    {/* NAVBAR BUTTONS */}
     <Tab.Screen name="Home" component={HomeScreen} options={defaultScreenOptions} />
     <Tab.Screen name="Documents" component={Documents} options={defaultScreenOptions} />
     <Tab.Screen name="Contact" component={Contact} options={defaultScreenOptions} />
@@ -106,13 +121,14 @@ export default function App() {
       <NavigationContainer>
 
         <Stack.Navigator screenOptions={defaultScreenOptions} initialRouteName='Login'>
-          <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login' }} />
           <Stack.Screen name="Back" component={TabNavigator} options={{ headerShown: false }} />
           <Stack.Screen name="Requests" component={RequestsScreen} options={{ title: 'Requests', headerBackTitleVisible: false }} />
           <Stack.Screen name="Announcements" component={AnnouncementsScreen} options={{ title: 'Announcements', headerBackTitleVisible: false }} />
-          <Stack.Screen name="SignOut" component={SignOutScreen} options={{ title: 'Sign Out', headerShown: false }} />
-          <Stack.Screen name="Signup" component={SignUpScreen} options={{ title: 'Sign Up' }} />
           <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
+          <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login' }} />
+          <Stack.Screen name="Signup" component={SignUpScreen} options={{ title: 'Sign Up' }} />
+          <Stack.Screen name="SignOut" component={SignOutScreen} options={{ title: 'Sign Out', headerShown: false }} />
+
         </Stack.Navigator>
 
       </NavigationContainer>

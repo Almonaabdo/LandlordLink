@@ -1,3 +1,15 @@
+/*
+* FILE        : Documents.js
+* 
+* Description : The Documents Screen is for displaying different PDF's related to the user property
+* 
+* Author      : Abdurrahman Almouna, Yafet Tekleab
+* Date        : October 31, 2024
+* Version     : 1.0
+* 
+*/
+
+
 import React, { useState } from 'react';
 import { View, Text, StatusBar, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { WebView } from 'react-native-webview';
@@ -20,10 +32,11 @@ export function Documents({ navigation }) {
   const [isDocumentsVisible, setIsDocumentsVisible] = useState(true);
 
   // Function to toggle the documents open and close based on current state
-  const documentToggle = (uri) => {
+  const documentToggle = (uri) => 
+  {
     if(selectedUri === uri)
     {
-      setSelectedUri("");// Hide document
+      setSelectedUri("");
     }
     else
     {
@@ -36,11 +49,14 @@ export function Documents({ navigation }) {
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
 
+      {/* Header Title */}
       <Text style={styles.header}>Documents & Bills</Text>
       <Text style={styles.description}>Select a document or bill to view or download. </Text>
 
-      {/* Conditional Rendering */}
-      {isDocumentsVisible ? (
+      {/* Conditional Rendering DOCUMENTS/BILLS */}
+      {isDocumentsVisible ?
+      (
+        // Documents button pressed
         <View>
           <View style={styles.section}>
             <Text style={styles.sectionHeader}>Documents</Text>
@@ -49,7 +65,10 @@ export function Documents({ navigation }) {
             ))}
           </View>
         </View>
-      ) : (
+      ) 
+      : 
+      (
+        // Bills button pressed
         <View>
           <View style={styles.section}>
             <Text style={styles.sectionHeader}>Bills</Text>
@@ -61,7 +80,7 @@ export function Documents({ navigation }) {
       )}
 
 
-      {/* Conditional view for PDF */}
+      {/* WEB VIEW PDF */}
       {selectedUri && (
         <View style={styles.webViewContainer}>
           {loading && <ActivityIndicator size="large" color="#3e1952" />}
@@ -75,15 +94,19 @@ export function Documents({ navigation }) {
         </View>
       )}
 
+
+      {/* View Toggle Buttons */}
       <View style={{ flexDirection: 'row', marginTop: 20 }}>
-        <CustomButton text="Documents" onPress={() => setIsDocumentsVisible(true)} style={{ backgroundColor: isDocumentsVisible ? '#3e1952' : 'gray' }} />
-        <CustomButton text="Bills" onPress={() => setIsDocumentsVisible(false)} style={{ backgroundColor: !isDocumentsVisible ? '#3e1952' : 'gray' }} />
+        <ToggleButton text="Documents" onPress={() => setIsDocumentsVisible(true)} style={{ backgroundColor: isDocumentsVisible ? '#3e1952' : 'gray' }} />
+        <ToggleButton text="Bills" onPress={() => setIsDocumentsVisible(false)} style={{ backgroundColor: !isDocumentsVisible ? '#3e1952' : 'gray' }} />
       </View>
 
     </View>
   );
 }
 
+
+// Documents Card (might be moved to components)
 const Card = ({ title, onPress, expiryDate, startDate, endDate }) => (
   <TouchableOpacity style={styles.card} onPress={onPress}>
     <Text style={styles.cardTitle}>{title}</Text>
@@ -94,14 +117,16 @@ const Card = ({ title, onPress, expiryDate, startDate, endDate }) => (
   </TouchableOpacity>
 );
 
-
-
-const CustomButton = ({ text, onPress, style }) => (
+// Toggle Button (might be moved to components)
+const ToggleButton = ({ text, onPress, style }) => (
   <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
     <Text style={styles.buttonText}>{text}</Text>
   </TouchableOpacity>
 );
 
+
+
+// styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
