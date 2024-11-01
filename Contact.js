@@ -43,6 +43,7 @@ export function Contact({ navigation }) {
         <View style={styles.headerTextContainer}>
           <Text style={styles.headerName}>Paul S</Text>
           <Text style={styles.headerRole}>Building Manager</Text>
+          <Text style={[styles.headerName, {fontSize:22}]}>226-898-0000</Text>
         </View>
       </View>
       

@@ -26,6 +26,8 @@ import RequestsScreen from './RequestScreen';
 import SignOutScreen from './SignOut';
 import SignUpScreen from './Signup';
 import { LoginScreen } from './Login';
+import { Events } from './Events';
+
 
 const primaryColor = "#3e1952";
 const Tab = createBottomTabNavigator();
@@ -37,6 +39,7 @@ const ProfileIcon = require("./assets/profileIcon.png");
 const AnnouncementIcon = require("./assets/announcementIcon.png");
 const DocumentsIcon = require("./assets/documentsIcon.png");
 const ContactIcon = require("./assets/contactIcon.png");
+const EventsIcon = require("./assets/calendarIcon.png");
 
 // Screen Header options
 const defaultScreenOptions = 
@@ -68,12 +71,12 @@ const TabNavigator = () => (
           case 'Home':
             icon = HomeIcon;
             break;
-          case 'Announces':
-            icon = AnnouncementIcon;
-            break;
           case 'Documents':
             icon = DocumentsIcon;
             break;
+            case 'Events':
+              icon = EventsIcon;
+              break;
           case 'Contact':
             icon = ContactIcon;
             break;
@@ -108,9 +111,11 @@ const TabNavigator = () => (
     
     {/* NAVBAR BUTTONS */}
     <Tab.Screen name="Home" component={HomeScreen} options={defaultScreenOptions} />
+    <Tab.Screen name="Events" component={Events} options={defaultScreenOptions} />
     <Tab.Screen name="Documents" component={Documents} options={defaultScreenOptions} />
     <Tab.Screen name="Contact" component={Contact} options={defaultScreenOptions} />
     <Tab.Screen name="Profile" component={Profile} options={defaultScreenOptions} />
+
   </Tab.Navigator>
 );
 

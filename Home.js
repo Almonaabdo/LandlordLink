@@ -403,24 +403,28 @@ export function HomeScreen({ navigation }) {
       <Modal
         visible={isNfcModalVisible}
         animationType="fade"
-        onRequestClose={() => setIsNfcModalVisible(false)}
-        presentationStyle="pageSheet">
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: "#2c2c2c" }}>
+        transparent={true}
+        onRequestClose={() => setIsNfcModalVisible(false)}>
+        <View style={{ flex: 1, alignItems: 'center', backgroundColor: "#2c2c2c" }}>
+          
 
-          {/*Animated Image*/}
+          {/*Down Arrow Icon*/}
+          <TouchableOpacity onPress={() => setIsNfcModalVisible(false)} style={{ marginTop: 20 }}>
+            <Image source={icons.ArrowDownIcon} style={{ width: 35, height: 35, marginTop:'20%' }} />
+          </TouchableOpacity>
+
+
+          {/*Animated SCAN IMAGE*/}
           <Animated.Image
             style={{
               width: 400,
               height: 300,
               opacity: fadeAnim,
+              marginTop:'50%',
               borderRadius: 20
             }}
             source={icons.NfcScannerScreen} />
 
-          {/*Down Arrow Icon*/}
-          <TouchableOpacity onPress={() => setIsNfcModalVisible(false)} style={{ marginTop: 20 }}>
-            <Image source={icons.ArrowDownIcon} style={{ width: 35, height: 35 }} />
-          </TouchableOpacity>
         </View>
       </Modal>
 

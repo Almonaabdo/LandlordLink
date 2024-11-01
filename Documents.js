@@ -13,6 +13,7 @@
 import React, { useState } from 'react';
 import { View, Text, StatusBar, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { WebView } from 'react-native-webview';
+const primaryColor = "#3e1952"
 
 const documentsList = [
   { key: '1', value: 'Lease Document', uri: 'https://css4.pub/2015/icelandic/dictionary.pdf', expiryDate: '2025-12-31' },
@@ -83,7 +84,7 @@ export function Documents({ navigation }) {
       {/* WEB VIEW PDF */}
       {selectedUri && (
         <View style={styles.webViewContainer}>
-          {loading && <ActivityIndicator size="large" color="#3e1952" />}
+          {loading && <ActivityIndicator size="large" color= {primaryColor} />}
           <WebView
             originWhitelist={['*']}
             source={{ uri: selectedUri }}
@@ -97,8 +98,8 @@ export function Documents({ navigation }) {
 
       {/* View Toggle Buttons */}
       <View style={{ flexDirection: 'row', marginTop: 20 }}>
-        <ToggleButton text="Documents" onPress={() => setIsDocumentsVisible(true)} style={{ backgroundColor: isDocumentsVisible ? '#3e1952' : 'gray' }} />
-        <ToggleButton text="Bills" onPress={() => setIsDocumentsVisible(false)} style={{ backgroundColor: !isDocumentsVisible ? '#3e1952' : 'gray' }} />
+        <ToggleButton text="Documents" onPress={() => setIsDocumentsVisible(true)} style={{ backgroundColor: isDocumentsVisible ? primaryColor : 'gray' }} />
+        <ToggleButton text="Bills" onPress={() => setIsDocumentsVisible(false)} style={{ backgroundColor: !isDocumentsVisible ? primaryColor : 'gray' }} />
       </View>
 
     </View>
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#3e1952',
+    color: primaryColor,
     marginBottom: 10,
   },
   description: {
@@ -150,7 +151,7 @@ const styles = StyleSheet.create({
   sectionHeader: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#3e1952',
+    color: primaryColor,
     marginBottom: 10,
   },
   card: {
@@ -175,7 +176,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   button: {
-    backgroundColor: '#3e1952',
+    backgroundColor: primaryColor,
     borderRadius: 8,
     padding: 15,
     marginRight: 10,
