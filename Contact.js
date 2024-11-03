@@ -93,9 +93,9 @@ export function Contact({ navigation }) {
 
       {/*SOCIAL MEDIA ICONS*/}
       <View style={{ height: '3%', flexDirection: 'row', marginVertical: '10%', alignSelf: 'center', justifyContent: 'space-between' }}>
-        <Image source={facebookIcon} style={{ width: '9%', height: '165%', marginRight: '10%' }} />
-        <Image source={instagramIcon} style={{ width: '9%', height: '165%', marginRight: '10%' }} />
-        <Image source={googleIcon} style={{ width: '9%', height: '165%' }} />
+        <Image source={facebookIcon} style={{ width: '10%', height: '185%', marginRight: '10%' }} />
+        <Image source={instagramIcon} style={{ width: '10%', height: '185%', marginRight: '10%' }} />
+        <Image source={googleIcon} style={{ width: '10%', height: '185%' }} />
       </View>
 
     </View>

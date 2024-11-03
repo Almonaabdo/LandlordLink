@@ -35,6 +35,7 @@ const icons = {
   DoorHandleIcon: require("./assets/doorHandleIcon.png"),
   announcementsBackground: require("./assets/announcementsBackground.jpg"),
   maintainenceBackground: require("./assets/maintainancebackground.jpg"),
+  dashboardIcon: require("./assets/dashboardIcon.png"),
 
 };
 
@@ -55,18 +56,14 @@ export function HomeScreen({ navigation }) {
 
   // function to fetch announcements data from database
   useFocusEffect(
-    React.useCallback(() => 
-    {
-      const getRecentAnnouncements = async () => 
-      {
-        try 
-        {
+    React.useCallback(() => {
+      const getRecentAnnouncements = async () => {
+        try {
           const fetchedAnnouncements = await fetchDocuments("announcements");
           fetchedAnnouncements.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
           setAnnouncements(fetchedAnnouncements);
-        } 
-        catch (error) 
-        {
+        }
+        catch (error) {
           console.error("Error fetching announcements: ", error);
         }
       };
@@ -78,20 +75,16 @@ export function HomeScreen({ navigation }) {
 
 
   // function to fetch maintanence requests number from database
-  const loadRequests = async () => 
-  {
-    try
-    {
+  const loadRequests = async () => {
+    try {
       setLoading(true);
       const fetchedRequests = await fetchDocuments("repairRequests");
       setRequestCount(fetchedRequests.length);
-    } 
-    catch (error) 
-    {
+    }
+    catch (error) {
       console.error("Error fetching requests:", error);
-    } 
-    finally 
-    {
+    }
+    finally {
       setLoading(false);
     }
   };
@@ -148,18 +141,17 @@ export function HomeScreen({ navigation }) {
   const startFading = () => {
     Animated.loop(
       Animated.sequence
-      ([
-        // time in ms
-        Animated.timing(fadeAnim, { toValue: 1, duration: 800, useNativeDriver: true }), 
-        Animated.timing(fadeAnim, { toValue: 0, duration: 800, useNativeDriver: true }),
-      ])
+        ([
+          // time in ms
+          Animated.timing(fadeAnim, { toValue: 1, duration: 800, useNativeDriver: true }),
+          Animated.timing(fadeAnim, { toValue: 0, duration: 800, useNativeDriver: true }),
+        ])
     ).start();
   };
 
 
   // function to handle the NFS modal screen
-  const handleNfcModalOpen = () => 
-  {
+  const handleNfcModalOpen = () => {
     setIsNfcModalVisible(true);
     startFading();
     setTimeout(() => setIsNfcModalVisible(false), 6000);
@@ -167,20 +159,18 @@ export function HomeScreen({ navigation }) {
 
   // function to handle Image/Camera Uploads
   const uploadImage = async (mode) => {
-    try 
-    {
+    try {
       let imageResult = {};
 
       // GALLERY UPLOAD
-      if (mode === "Gallery") 
-      {
+      if (mode === "Gallery") {
         await ImagePicker.requestMediaLibraryPermissionsAsync();
         imageResult = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: false,
           quality: 1,
         });
-      } 
+      }
       else
       // CAMERA UPLOAD
       {
@@ -192,23 +182,21 @@ export function HomeScreen({ navigation }) {
       }
 
       // hide media upload modal if cancelled
-      if (!imageResult.canceled) 
-      {
+      if (!imageResult.canceled) {
         setImage(imageResult.assets[0].uri);
       }
 
       // close media upload modal
       setImagePickerModalVisible(false);
-    } 
-    catch (error) 
-    {
+    }
+    catch (error) {
       console.log("Image upload error:", error);
     }
   };
 
   return (
     <ScrollView
-      style={{ backgroundColor: "#f5f5f5" }}
+      style={{ padding: 10, backgroundColor: "#f5f5f5" }}
       contentContainerStyle={{ paddingBottom: 20 }}
       showsVerticalScrollIndicator={false}
       refreshControl={<RefreshControl refreshing={loading} onRefresh={loadRequests} />}
@@ -216,7 +204,7 @@ export function HomeScreen({ navigation }) {
       <StatusBar barStyle="light-content" />
 
       {/* APPARTMENT NAME AND IMAGE */}
-      <View style={{ alignItems: "center", padding: 2 }}>
+      <View style={{ alignItems: "center", marginBottom: 5 }}>
         <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#333' }}>256 Lester St N</Text>
         <Image source={AppartmentImg} style={{ width: '100%', height: 200, borderRadius: 12, marginTop: 10 }} />
       </View>
@@ -231,12 +219,20 @@ export function HomeScreen({ navigation }) {
         </TouchableOpacity>
       </View>
 
+      {/* Dashboard Card */}
+      <TouchableOpacity onPress={() => navigation.navigate("Dashboard")}>
+        <HomeCard
+          title="Dashboard"
+          description="Review latest data"
+          imageUrl={icons.dashboardIcon} />
+      </TouchableOpacity>
+
       {/* Maintaincence Card */}
       <TouchableOpacity onPress={() => navigation.navigate("Requests")}>
         <HomeCard
           title="Maintenance"
           description={`Open Requests: ${requestCount}`}
-          imageUrl={icons.maintainenceBackground}/>
+          imageUrl={icons.maintainenceBackground} />
       </TouchableOpacity>
 
       {/* Announcements Card */}
@@ -244,28 +240,27 @@ export function HomeScreen({ navigation }) {
         <HomeCard
           title="Announcements"
           description="Read recent Announcements"
-          imageUrl={icons.announcementsBackground}/>
+          imageUrl={icons.announcementsBackground} />
       </TouchableOpacity>
 
-
-        {/* Announcements LIST */}
-        <View style={{padding:"2%"}}>
-          <TouchableOpacity onPress={() => navigation.navigate("Announcements")}>
-            <View style={{ backgroundColor: "#9B59B6", borderRadius: 12, padding: 16, elevation: 3, marginTop: 20 }}>
-              <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Recent Announcements</Text>
-              {announcements.length > 0 ? (
-                announcements.slice(0, 3).map((announcement) => (
-                  <View key={announcement.id} style={{ marginBottom: 10 }}>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{announcement.title}</Text>
-                    <Text style={{ fontSize: 12, color: 'white' }}>{new Date(announcement.createdAt).toLocaleString()}</Text>
-                  </View>
-                ))
-              ) : (
-                <Text style={{ color: 'white' }}>No announcements available</Text>
-              )}
-            </View>
-          </TouchableOpacity>
-        </View>
+      {/* Announcements LIST */}
+      <View style={{ padding: "2%" }}>
+        <TouchableOpacity onPress={() => navigation.navigate("Announcements")}>
+          <View style={{ backgroundColor: "#6c757d", borderRadius: 12, padding: 16, elevation: 3, marginTop: 20 }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Recent Announcements</Text>
+            {announcements.length > 0 ? (
+              announcements.slice(0, 3).map((announcement) => (
+                <View key={announcement.id} style={{ marginBottom: 10 }}>
+                  <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{announcement.title}</Text>
+                  <Text style={{ fontSize: 12, color: 'white' }}>{new Date(announcement.createdAt).toLocaleString()}</Text>
+                </View>
+              ))
+            ) : (
+              <Text style={{ color: 'white' }}>No announcements available</Text>
+            )}
+          </View>
+        </TouchableOpacity>
+      </View>
 
 
 
@@ -284,7 +279,7 @@ export function HomeScreen({ navigation }) {
           </TouchableOpacity>
 
           {/* Issue Title */}
-          <Text style={{marginVertical: '1%'}}>Issue Title</Text>
+          <Text style={{ marginVertical: '1%' }}>Issue Title</Text>
           <TextInput
             placeholder="Issue Title"
             placeholderTextColor="grey"
@@ -300,7 +295,7 @@ export function HomeScreen({ navigation }) {
             value={issueTitle}
           />
           {/* Issue Description */}
-          <Text style={{marginVertical: '1%'}}>Describe the problem</Text>
+          <Text style={{ marginVertical: '1%' }}>Describe the problem</Text>
           <TextInput
             placeholder="Issue Description"
             placeholderTextColor="grey"
@@ -318,7 +313,7 @@ export function HomeScreen({ navigation }) {
           />
 
           {/* Issue Type Dropdown */}
-          <Text style={{marginVertical: '1%'}}>Maintenance Type</Text>
+          <Text style={{ marginVertical: '1%' }}>Maintenance Type</Text>
           <SelectList
             setSelected={setSelected}
             data={maintainenceList}
@@ -329,7 +324,7 @@ export function HomeScreen({ navigation }) {
           />
 
           {/* Priority Dropdown */}
-          <Text style={{marginVertical: '1%'}}>How Urgent</Text>
+          <Text style={{ marginVertical: '1%' }}>How Urgent</Text>
           <SelectList
             setSelected={setSelectedPriority}
             data={priorityLevels}
@@ -376,8 +371,8 @@ export function HomeScreen({ navigation }) {
 
 
           {/* Submit Button */}
-          <LoginButton text="Submit" onPress={handleRepairRequestSubmit}/>
-            
+          <LoginButton text="Submit" onPress={handleRepairRequestSubmit} />
+
         </View>
       </Modal>
 
@@ -406,11 +401,11 @@ export function HomeScreen({ navigation }) {
         transparent={true}
         onRequestClose={() => setIsNfcModalVisible(false)}>
         <View style={{ flex: 1, alignItems: 'center', backgroundColor: "#2c2c2c" }}>
-          
+
 
           {/*Down Arrow Icon*/}
           <TouchableOpacity onPress={() => setIsNfcModalVisible(false)} style={{ marginTop: 20 }}>
-            <Image source={icons.ArrowDownIcon} style={{ width: 35, height: 35, marginTop:'20%' }} />
+            <Image source={icons.ArrowDownIcon} style={{ width: 35, height: 35, marginTop: '20%' }} />
           </TouchableOpacity>
 
 
@@ -420,7 +415,7 @@ export function HomeScreen({ navigation }) {
               width: 400,
               height: 300,
               opacity: fadeAnim,
-              marginTop:'50%',
+              marginTop: '50%',
               borderRadius: 20
             }}
             source={icons.NfcScannerScreen} />

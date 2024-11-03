@@ -20,13 +20,13 @@ const HomeCard = ({ title, description, imageUrl }) => {
 const styles = StyleSheet.create({
   card: {
     flexDirection: 'row',
-    padding: 20,
+    padding: 15,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 10,
     backgroundColor: '#fff',
     alignItems: 'center',
-    marginVertical: 10,
+    marginVertical: 5,
   },
   textContainer: {
     flex: 1,

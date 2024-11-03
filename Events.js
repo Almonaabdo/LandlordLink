@@ -105,7 +105,6 @@ export function Events({navigation}) {
 
       {/*EVEND DETAILS MODAL */}
       <Modal
-        animationType="fade"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}>
@@ -121,8 +120,6 @@ export function Events({navigation}) {
           </View>
         </View>
       </Modal>
-
-
 
     </View>
   );

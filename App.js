@@ -27,7 +27,7 @@ import SignOutScreen from './SignOut';
 import SignUpScreen from './Signup';
 import { LoginScreen } from './Login';
 import { Events } from './Events';
-
+import { Dashboard } from './Dashboard';
 
 const primaryColor = "#3e1952";
 const Tab = createBottomTabNavigator();
@@ -93,19 +93,19 @@ const TabNavigator = () => (
       //tabBarInactiveTintColor: '#888',
       tabBarStyle: 
       {
-        padding:'5%',
-        backgroundColor: '#fff',
+        padding:'2%',
+        backgroundColor: '#ffffff',
         borderTopColor: 'transparent',
         elevation: 15,
         shadowColor: 'purple',
         shadowOffset: { width: 0, height: 0},
         shadowOpacity: 0.70,
         shadowRadius: 8,
-        position: 'absolute',
-        bottom: 20,
-        left: 10,
+        position: 'relative',
+        bottom: 0,
+        left: 0,
         right: 10,
-        borderRadius: 15
+        borderRadius: 0
       }
     })}>
     
@@ -133,6 +133,7 @@ export default function App() {
           <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login' }} />
           <Stack.Screen name="Signup" component={SignUpScreen} options={{ title: 'Sign Up' }} />
           <Stack.Screen name="SignOut" component={SignOutScreen} options={{ title: 'Sign Out', headerShown: false }} />
+          <Stack.Screen name="Dashboard" component={Dashboard} options={{ title: 'Dashboard'}} />
 
         </Stack.Navigator>
 
