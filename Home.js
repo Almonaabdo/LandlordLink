@@ -17,8 +17,7 @@ import { addDocument, fetchDocuments } from "./Functions";
 import { useFocusEffect } from "@react-navigation/native";
 import HomeCard from "./components/HomeCard";
 import { LoginButton } from "./components/Buttons";
-
-
+import { StylesHome } from "./styles/stylesHome";
 
 
 // Icons
@@ -36,6 +35,10 @@ const icons = {
   announcementsBackground: require("./assets/announcementsBackground.jpg"),
   maintainenceBackground: require("./assets/maintainancebackground.jpg"),
   dashboardIcon: require("./assets/dashboardIcon.png"),
+  emergencyIcon: require("./assets/emergency.png"),
+  exitIcon: require("./assets/exitIcon.png"),
+  shelterIcon: require("./assets/shelterIcon.png"),
+  helpIcon: require("./assets/helpIcon.png"),
 
 };
 
@@ -44,7 +47,8 @@ export function HomeScreen({ navigation }) {
   const [issueDescription, setIssueDescription] = useState("");
   const [selected, setSelected] = useState("");
   const [image, setImage] = useState();
-  const [isMaintenanceVisible, setIsMaintenanceVisible] = useState(false);
+  const [isMaintenanceModalVisible, setIsMaintenanceModalVisible] = useState(false);
+  const [isEmergencyModalVisible, setIsEmergencyModalVisible] = useState(false);
   const [imagePickerModalVisible, setImagePickerModalVisible] = useState(false);
   const [isNfcModalVisible, setIsNfcModalVisible] = useState(false);
   const [fadeAnim] = useState(new Animated.Value(0));
@@ -113,7 +117,7 @@ export function HomeScreen({ navigation }) {
       setIssueDescription("");
       setSelected("");
       setImage(null);
-      setIsMaintenanceVisible(false);
+      setIsMaintenanceModalVisible(false);
       loadRequests();
     } catch (error) {
       console.error("Error submitting repair request:", error);
@@ -149,7 +153,17 @@ export function HomeScreen({ navigation }) {
     ).start();
   };
 
-
+  const EmergencyModalCard = ({ icon, title, description }) => {
+    return (
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20, padding: 15, backgroundColor: '#fff', borderRadius: 8, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 4, elevation: 5 }}>
+        <Image source={icon} style={{ width: 50, height: 50, marginRight: 15 }} />
+        <View style={{ flex: 1 }}>
+          <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#333' }}>{title}</Text>
+          <Text style={{ fontSize: 14, color: 'red' }}>{description}</Text>
+        </View>
+      </View>
+    );
+  };
   // function to handle the NFS modal screen
   const handleNfcModalOpen = () => {
     setIsNfcModalVisible(true);
@@ -204,18 +218,23 @@ export function HomeScreen({ navigation }) {
       <StatusBar barStyle="light-content" />
 
       {/* APPARTMENT NAME AND IMAGE */}
-      <View style={{ alignItems: "center", marginBottom: 5 }}>
+      <View style={{ alignItems: "center", marginVertical: 15 }}>
         <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#333' }}>256 Lester St N</Text>
         <Image source={AppartmentImg} style={{ width: '100%', height: 200, borderRadius: 12, marginTop: 10 }} />
       </View>
 
-      {/* MAINTENANCE AND DOOR ICONS */}
+      {/* Modal Menu ICONS */}
       <View style={{ flexDirection: "row", justifyContent: "space-around", marginBottom: 20 }}>
-        <TouchableOpacity onPress={() => setIsMaintenanceVisible(true)}>
+        <TouchableOpacity onPress={() => setIsMaintenanceModalVisible(true)}>
           <Image source={icons.WrenchIcon} style={{ width: 50, height: 50 }} />
         </TouchableOpacity>
+
         <TouchableOpacity onPress={handleNfcModalOpen}>
           <Image source={icons.DoorHandleIcon} style={{ width: 50, height: 50 }} />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => { setIsEmergencyModalVisible(true) }}>
+          <Image source={icons.emergencyIcon} style={{ width: 50, height: 50 }} />
         </TouchableOpacity>
       </View>
 
@@ -266,17 +285,14 @@ export function HomeScreen({ navigation }) {
 
       {/* Maintenance Modal */}
       <Modal
-        visible={isMaintenanceVisible}
-        onRequestClose={() => setIsMaintenanceVisible(false)}
+        visible={isMaintenanceModalVisible}
+        onRequestClose={() => setIsMaintenanceModalVisible(false)}
         animationType="slide"
         presentationStyle="pageSheet"
       >
         <View style={{ padding: 16 }}>
-          {/* Close Icon */}
-          <TouchableOpacity onPress={() => setIsMaintenanceVisible(false)}>
-            <Image source={icons.CloseIcon} style={{ width: 30, height: 30 }} />
-            <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>Request Maintenance</Text>
-          </TouchableOpacity>
+
+          <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>Request Maintenance</Text>
 
           {/* Issue Title */}
           <Text style={{ marginVertical: '1%' }}>Issue Title</Text>
@@ -419,6 +435,42 @@ export function HomeScreen({ navigation }) {
               borderRadius: 20
             }}
             source={icons.NfcScannerScreen} />
+
+        </View>
+      </Modal>
+
+
+      {/* NFC Scanner Modal */}
+      <Modal
+        visible={isEmergencyModalVisible}
+        animationType="slide"
+        onRequestClose={() => setIsEmergencyModalVisible(false)}
+        presentationStyle="pageSheet">
+        <View style={{ flex: 1, alignItems: 'center', backgroundColor: "#FFFFF", padding: 10 }}>
+
+          <View style={{ marginVertical: "5%" }} />
+          <View style={{ backgroundColor: "red", padding: 10, borderRadius: 7 }}>
+            <Text style={{ fontSize: 34 }}>Fire Safety Guide</Text>
+          </View>
+          <View style={{ marginVertical: "10%" }} />
+
+          <EmergencyModalCard
+            icon={icons.exitIcon}
+            title="Step 1: Evacuate"
+            description="Go to the nearest exit and leave the building. Avoid Elvators" />
+
+          <EmergencyModalCard
+            icon={icons.shelterIcon}
+            title="Step 2: Shelter in Place"
+            description="If you can't exit safely, close doors, seal gaps." />
+
+
+          <EmergencyModalCard
+            icon={icons.helpIcon}
+            title="Step 3: Signal for help"
+            description="Open the window and signal for help after calling 911." />
+
+            <LoginButton text={"CALL 9 1 1 "}></LoginButton>
 
         </View>
       </Modal>

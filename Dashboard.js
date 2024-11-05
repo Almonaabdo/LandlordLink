@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Dimensions, ScrollView,Modal, TouchableOpacity , Image} from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ScrollView, Modal, TouchableOpacity, Image } from 'react-native';
 import { PieChart } from 'react-native-chart-kit';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { LoginButton } from './components/Buttons';
+import { KeyboardAvoidingView } from "react-native";
+
 
 const primaryColor = "#3e1952";
 const AppartmentImg = require("./assets/appartmentInside.jpg");
+const ArrowDownIcon = require("./assets/arrowDownIcon.png");
+const NfcScannerScreen = require("./assets/nfcScannerScreen.png");
+const DoorHandleIcon = require("./assets/doorHandleIcon.png");
 
 const apartments = [
   { key: 1, name: 'Apartment 1', occupied: true },
@@ -16,12 +21,12 @@ const apartments = [
   { key: 6, name: 'Apartment 6', occupied: true },
 ];
 
-export function Dashboard({ navigation }) 
-{
+export function Dashboard({ navigation }) {
   const occupiedCount = apartments.filter(apartment => apartment.occupied).length;
   const totalCount = apartments.length;
   const unoccupiedCount = totalCount - occupiedCount;
   const [viewApartment, setViewApartment] = useState(false);
+  const [viewNfcModal, setViewNfcModal] = useState(false);
 
   const data = [
     {
@@ -53,11 +58,20 @@ export function Dashboard({ navigation })
         <Text style={styles.title}>Building Dashboard</Text>
       </View>
 
+      {/* APPARTMENTS DROPDOWN LIST */}
+      <SelectList
+        data={dropdownData}
+        placeholder="Select Apartment"
+        searchPlaceholder="Search"
+        dropdownStyles={{ borderRadius: 5 }}
+        boxStyles={{ marginVertical: 10, borderRadius: 8 }}
+        setSelected={(val) => console.log(val)} />
+
       {/* DATE VISUALIZATION */}
       <View style={styles.pieContainer}>
         <PieChart
           data={data}
-          width={Dimensions.get('window').width -50}
+          width={Dimensions.get('window').width - 50}
           height={220}
           chartConfig={{
             color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
@@ -80,14 +94,8 @@ export function Dashboard({ navigation })
         <Text style={styles.statText}>Unoccupied: <Text style={styles.statValue}>{unoccupiedCount}</Text></Text>
       </View>
 
-      {/* DROPDOWN LIST */}
-      <SelectList
-        data={dropdownData}
-        placeholder="Select Apartment"
-        searchPlaceholder="Search"
-        dropdownStyles={{ borderRadius: 5 }}
-        boxStyles={{ marginVertical: 10, borderRadius: 8 }}
-        setSelected={(val) => console.log(val)} />
+
+      <View style={{ marginTop: "10%" }}></View>
 
       {/* VIEW BUTTON */}
       <LoginButton text={"View"} onPress={() => { setViewApartment(true); }} />
@@ -96,16 +104,23 @@ export function Dashboard({ navigation })
 
       {/* APPARTMENT MODAL */}
       <Modal
-      visible={viewApartment}
-      animationType="fade"
-      presentationStyle="pageSheet"
-      onRequestClose={() => setViewApartment(false)}>
+        visible={viewApartment}
+        animationType="fade"
+        presentationStyle="pageSheet"
+        onRequestClose={() => setViewApartment(false)}>
         <View style={styles.modalContainer}>
-  
-          <View style={{ marginTop: "10%" }}></View>
 
+          <View style={{ marginTop: "10%" }}></View>
           <Text style={styles.statTitle}> APPARTMENT: 1C09 </Text>
-          <Image source={AppartmentImg} style={styles.image}/>
+          <Image source={AppartmentImg} style={styles.image} />
+
+          {/* DOOR OPEN ICON*/}
+          <TouchableOpacity onPress={() => { setViewApartment(false), setViewNfcModal(true) }}>
+            <Image source={DoorHandleIcon} style={{ height: 50, width: 50 }}>
+            </Image>
+          </TouchableOpacity>
+
+
 
           {/* Apartment Details Card */}
           <View style={styles.statsContainer}>
@@ -118,11 +133,32 @@ export function Dashboard({ navigation })
           </View>
 
           <View style={{ marginTop: "10%" }}></View>
-          <LoginButton text={"Close"} onPress={() => {setViewApartment(false)}}/>
+          <LoginButton text={"Close"} onPress={() => { setViewApartment(false) }} />
 
         </View>
       </Modal>
 
+
+
+
+      {/* NFC Scanner Modal */}
+      <Modal
+        visible={viewNfcModal}
+        animationType="fade"
+        onRequestClose={() => setViewNfcModal(false)}>
+
+        <View style={{ flex: 1, alignItems: 'center', backgroundColor: "#2c2c2c", padding: 10 }}>
+
+          {/*Down Arrow Icon*/}
+          <TouchableOpacity onPress={() => setViewNfcModal(false)} style={{ marginTop: 20 }}>
+            <Image source={ArrowDownIcon} style={{ width: 35, height: 35, marginTop: '20%' }} />
+          </TouchableOpacity>
+
+          {/*Animated SCAN IMAGE*/}
+          <Image source={NfcScannerScreen} style={{ height: '50%', width: '100%', borderRadius: 10 }} />
+
+        </View>
+      </Modal>
     </ScrollView>
   );
 };
@@ -176,14 +212,14 @@ const styles = StyleSheet.create({
     color: '#333',
     marginVertical: 5,
   },
-  statValue: 
+  statValue:
   {
     fontWeight: 'bold',
     color: primaryColor,
   },
 
   // MODAL STYLING
-  modalContainer: 
+  modalContainer:
   {
     flex: 1,
     padding: 20,
@@ -191,10 +227,10 @@ const styles = StyleSheet.create({
   },
   image:
   {
-    marginVertical:10,
-    height:'35%', 
-    width:'100%',
-    borderRadius:10,
+    marginVertical: 10,
+    height: '35%',
+    width: '100%',
+    borderRadius: 10,
   },
 
 });
