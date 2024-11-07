@@ -13,7 +13,7 @@ import React, { useState } from "react";
 import { RefreshControl, Text, Image, Animated, TouchableOpacity, Modal, TextInput, StatusBar, ScrollView, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { SelectList } from 'react-native-dropdown-select-list';
-import { addDocument, fetchDocuments } from "./Functions";
+import { addDocument, fetchDocuments, createApartment } from "./Functions";
 import { useFocusEffect } from "@react-navigation/native";
 import HomeCard from "./components/HomeCard";
 import { LoginButton } from "./components/Buttons";
@@ -77,6 +77,14 @@ export function HomeScreen({ navigation }) {
     }, [])
   );
 
+  const newApt = {
+    id:"A123",
+    floor: 2, 
+    rooms: 4,
+    occupied: false,
+    est: 1500,
+    userId:1223
+  };
 
   // function to fetch maintanence requests number from database
   const loadRequests = async () => {

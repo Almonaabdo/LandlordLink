@@ -14,6 +14,7 @@ import { View, Text, Image, TouchableOpacity, StatusBar, ActivityIndicator, Text
 import { auth } from './firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { LoginButton } from "./components/Buttons";
+import { addDocument} from "./Functions";
 
 // Logo
 const logoImg = require("./assets/Accommod8u.jpg");
@@ -46,7 +47,7 @@ export default function SignUpScreen({ navigation }) {
     {
       // submit to database and take user to home page
       await createUserWithEmailAndPassword(auth, email, password);
-      navigation.navigate("Home");
+      navigation.replace("Back", { isUserLoggedIn: true });
     } 
     catch (error) 
     {
@@ -59,6 +60,17 @@ export default function SignUpScreen({ navigation }) {
         setViewError(invalidInformationError);
       }
     }
+
+    const newUser = {
+      first:firstName,
+      last:lastName,
+      email:email,
+      password: password,
+      apartmentID:null,
+    }
+
+    addDocument("users", newUser);
+
   };
 
   return (

@@ -10,7 +10,39 @@
 */
 
 import { db } from './firebaseConfig';
-import { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
+import { collection, addDoc,setDoc, getDocs, updateDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
+
+// Create Apartments table
+// export const createApartment = async (apartment) => {
+//   try {
+//     // Check if the ID is valid (4 characters long, alphanumeric)
+//     const idRegex = /^[A-Za-z0-9]{4}$/;
+//     if (!idRegex.test(apartment.id)) {
+//       console.error("Invalid ID format. It must be 4 characters long and alphanumeric.");
+//       return;
+//     }
+
+//     // Ensure values are valid
+//     if (apartment.floor <= 0 || apartment.rooms <= 0 || apartment.est <= 0) {
+//       console.error("FLOOR, ROOMS, and EST must be greater than 0.");
+//       return;
+//     }
+
+//     // Create or update the apartment document in the collection
+//     await setDoc(doc(db, "apartments", apartment.id), {
+//       floor: apartment.floor,
+//       rooms: apartment.rooms,
+//       occupied: apartment.occupied,
+//       est: apartment.est,
+//       userId: apartment.userId
+      
+//     });
+
+//     console.log("Apartment created successfully");
+//   } catch (e) {
+//     console.error("Error adding apartment: ", e);
+//   }
+// };
 
 // Add data
 export const addDocument = async (collectionName, data) => {
@@ -67,7 +99,7 @@ export const deleteDocument = async (collectionName, id) => {
 };
 
 // Update Status
-const updateStatus = async (requestId, newStatus) => {
+export const updateStatus = async (requestId, newStatus) => {
     try {
         const requestRef = doc(db, 'repairRequests', requestId);
         await updateDoc(requestRef, {
