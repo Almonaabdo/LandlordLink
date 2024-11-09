@@ -10,6 +10,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 const penIcon = require("./assets/penIcon.png");
 const CloseIcon = require("./assets/close.png");
+const personImage = require("./assets/person.jpg");
 
 export function AnnouncementsScreen({ navigation }) {
   const [isCreatePost, setIsCreatePost] = useState(false);
@@ -173,6 +174,7 @@ export function AnnouncementsScreen({ navigation }) {
             title={announcement.title}
             details={announcement.details}
             timeAgo={announcement.createdAt.toLocaleString()}
+            image={personImage}
           />
         </Swipeable>
       ))}

@@ -17,10 +17,10 @@ import { addDocument, fetchDocuments, createApartment } from "./Functions";
 import { useFocusEffect } from "@react-navigation/native";
 import HomeCard from "./components/HomeCard";
 import { LoginButton } from "./components/Buttons";
-import { StylesHome } from "./styles/stylesHome";
-
+import AnnouncementsList from "./components/AnnouncementsList";
 
 // Icons
+const darkBlue = "#2e395d";
 const AppartmentImg = require("./assets/256LesterSt.jpg");
 const icons = {
   WrenchIcon: require("./assets/wrenchIcon.png"),
@@ -226,25 +226,32 @@ export function HomeScreen({ navigation }) {
       <StatusBar barStyle="light-content" />
 
       {/* APPARTMENT NAME AND IMAGE */}
-      <View style={{ alignItems: "center", marginVertical: 15 }}>
-        <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#333' }}>256 Lester St N</Text>
+      <View style={{ alignItems: "center", marginVertical: 10 }}>
+        <View style={{backgroundColor:"#3e1952", paddingHorizontal:80, borderRadius:5, paddingVertical:3, marginBottom:20}}> 
+          <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#FFF',fontFamily:'Avenir' }}>256 Lester St N</Text>
+        </View>
         <Image source={AppartmentImg} style={{ width: '100%', height: 200, borderRadius: 12, marginTop: 10 }} />
       </View>
 
       {/* Modal Menu ICONS */}
       <View style={{ flexDirection: "row", justifyContent: "space-around", marginBottom: 20 }}>
         <TouchableOpacity onPress={() => setIsMaintenanceModalVisible(true)}>
-          <Image source={icons.WrenchIcon} style={{ width: 50, height: 50 }} />
+          <Image source={icons.WrenchIcon} style={{ width: 40, height: 40 }} />
         </TouchableOpacity>
 
+
         <TouchableOpacity onPress={handleNfcModalOpen}>
-          <Image source={icons.DoorHandleIcon} style={{ width: 50, height: 50 }} />
+          <Image source={icons.DoorHandleIcon} style={{ width: 40, height: 40 }} />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => { setIsEmergencyModalVisible(true) }}>
-          <Image source={icons.emergencyIcon} style={{ width: 50, height: 50 }} />
+          <Image source={icons.emergencyIcon} style={{ width: 40, height: 40 }} />
         </TouchableOpacity>
       </View>
+
+      {/* Announcements LIST */}
+      <AnnouncementsList announcements={announcements} navigation={navigation} />
+
 
       {/* Dashboard Card */}
       <TouchableOpacity onPress={() => navigation.navigate("Dashboard")}>
@@ -261,35 +268,6 @@ export function HomeScreen({ navigation }) {
           description={`Open Requests: ${requestCount}`}
           imageUrl={icons.maintainenceBackground} />
       </TouchableOpacity>
-
-      {/* Announcements Card */}
-      <TouchableOpacity onPress={() => navigation.navigate("Announcements")}>
-        <HomeCard
-          title="Announcements"
-          description="Read recent Announcements"
-          imageUrl={icons.announcementsBackground} />
-      </TouchableOpacity>
-
-      {/* Announcements LIST */}
-      <View style={{ padding: "2%" }}>
-        <TouchableOpacity onPress={() => navigation.navigate("Announcements")}>
-          <View style={{ backgroundColor: "#6c757d", borderRadius: 12, padding: 16, elevation: 3, marginTop: 20 }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>Recent Announcements</Text>
-            {announcements.length > 0 ? (
-              announcements.slice(0, 3).map((announcement) => (
-                <View key={announcement.id} style={{ marginBottom: 10 }}>
-                  <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{announcement.title}</Text>
-                  <Text style={{ fontSize: 12, color: 'white' }}>{new Date(announcement.createdAt).toLocaleString()}</Text>
-                </View>
-              ))
-            ) : (
-              <Text style={{ color: 'white' }}>No announcements available</Text>
-            )}
-          </View>
-        </TouchableOpacity>
-      </View>
-
-
 
       {/* Maintenance Modal */}
       <Modal

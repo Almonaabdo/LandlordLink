@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 
 // announcement card component
-const AnnouncementCard = ({ title, details, timeAgo }) => {
+const AnnouncementCard = ({ title, details, timeAgo, image }) => {
   const [expanded, setExpanded] = useState(false);
 
   const toggleExpand = () => 
@@ -19,9 +19,16 @@ const AnnouncementCard = ({ title, details, timeAgo }) => {
         <Text style={styles.timeAgo}>{timeAgo}</Text>
       </View>
 
+
       <Text style={styles.details}>
         {expanded ? details : (details.length > 15 ? `${details.slice(0, 30)} read more...` : details)}
       </Text>
+    <View style={{flexDirection:'row' }}>
+      <Image source={image} style={styles.image}/>
+      <Text style={[styles.details, {color:"#3e1952"}]}> Andy Robinson</Text>
+    </View>
+
+
     </TouchableOpacity>
   );
 };
@@ -55,13 +62,19 @@ const styles = StyleSheet.create({
   {
     fontSize: 16,
     color: '#555',
-    marginTop: 5,
+    marginTop: 15,
   },
   timeAgo: 
   {
     fontSize: 12,
     color: '#aaa',
-  }
+  },
+  image:{
+    width:47, height:47, 
+    borderRadius:1000,
+    marginRight:10,
+    marginTop:5
+  },
 });
 
 export default AnnouncementCard;
