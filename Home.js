@@ -78,12 +78,12 @@ export function HomeScreen({ navigation }) {
   );
 
   const newApt = {
-    id:"A123",
-    floor: 2, 
+    id: "A123",
+    floor: 2,
     rooms: 4,
     occupied: false,
     est: 1500,
-    userId:1223
+    userId: 1223
   };
 
   // function to fetch maintanence requests number from database
@@ -218,7 +218,7 @@ export function HomeScreen({ navigation }) {
 
   return (
     <ScrollView
-      style={{ padding: 10, backgroundColor: "#f5f5f5" }}
+      style={{ backgroundColor: "#f5f5f5" }}
       contentContainerStyle={{ paddingBottom: 20 }}
       showsVerticalScrollIndicator={false}
       refreshControl={<RefreshControl refreshing={loading} onRefresh={loadRequests} />}
@@ -227,18 +227,18 @@ export function HomeScreen({ navigation }) {
 
       {/* APPARTMENT NAME AND IMAGE */}
       <View style={{ alignItems: "center", marginVertical: 10 }}>
-        <View style={{backgroundColor:"#3e1952", paddingHorizontal:80, borderRadius:5, paddingVertical:3, marginBottom:20}}> 
-          <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#FFF',fontFamily:'Avenir' }}>256 Lester St N</Text>
+        <View style={{ backgroundColor: "#3e1952", paddingHorizontal: 80, borderRadius: 5, paddingVertical: 3, marginBottom: 20 }}>
+          <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#FFF', fontFamily: 'Avenir' }}>256 Lester St N</Text>
         </View>
         <Image source={AppartmentImg} style={{ width: '100%', height: 200, borderRadius: 12, marginTop: 10 }} />
       </View>
 
       {/* Modal Menu ICONS */}
       <View style={{ flexDirection: "row", justifyContent: "space-around", marginBottom: 20 }}>
+
         <TouchableOpacity onPress={() => setIsMaintenanceModalVisible(true)}>
           <Image source={icons.WrenchIcon} style={{ width: 40, height: 40 }} />
         </TouchableOpacity>
-
 
         <TouchableOpacity onPress={handleNfcModalOpen}>
           <Image source={icons.DoorHandleIcon} style={{ width: 40, height: 40 }} />
@@ -247,6 +247,7 @@ export function HomeScreen({ navigation }) {
         <TouchableOpacity onPress={() => { setIsEmergencyModalVisible(true) }}>
           <Image source={icons.emergencyIcon} style={{ width: 40, height: 40 }} />
         </TouchableOpacity>
+
       </View>
 
       {/* Announcements LIST */}
@@ -456,7 +457,7 @@ export function HomeScreen({ navigation }) {
             title="Step 3: Signal for help"
             description="Open the window and signal for help after calling 911." />
 
-            <LoginButton text={"CALL 9 1 1 "}></LoginButton>
+          <LoginButton text={"CALL 9 1 1 "}></LoginButton>
 
         </View>
       </Modal>
