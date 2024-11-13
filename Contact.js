@@ -11,8 +11,9 @@
 
 
 import { React } from "react";
-import { View, Text, Image, TouchableOpacity, StatusBar, StyleSheet } from "react-native";
-import { Linking } from "react-native";
+import { View, Text, Image, TouchableOpacity, StatusBar, StyleSheet, Linking, SafeAreaView } from "react-native";
+import { LoginButton } from "./components/Buttons";
+import { WebView } from 'react-native-webview';
 
 // icons
 const emailIcon = require("./assets/emailIcon.png");
@@ -90,6 +91,11 @@ export function Contact({ navigation }) {
 
       {/* SPACING */}
       <View style={{marginVertical:'5%'}}/>
+      
+
+      <LoginButton text={"Visit Us"} onPress={()=>{Linking.openURL('https://www.accommod8u.com/')}}>
+
+      </LoginButton>
 
       {/*SOCIAL MEDIA ICONS*/}
       <View style={{ height: '3%', flexDirection: 'row', marginVertical: '10%', alignSelf: 'center', justifyContent: 'space-between' }}>

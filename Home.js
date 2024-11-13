@@ -250,9 +250,6 @@ export function HomeScreen({ navigation }) {
 
       </View>
 
-      {/* Announcements LIST */}
-      <AnnouncementsList announcements={announcements} navigation={navigation} />
-
 
       {/* Dashboard Card */}
       <TouchableOpacity onPress={() => navigation.navigate("Dashboard")}>
@@ -270,6 +267,11 @@ export function HomeScreen({ navigation }) {
           imageUrl={icons.maintainenceBackground} />
       </TouchableOpacity>
 
+
+      {/* Announcements LIST */}
+      <AnnouncementsList announcements={announcements} navigation={navigation} />
+
+      
       {/* Maintenance Modal */}
       <Modal
         visible={isMaintenanceModalVisible}

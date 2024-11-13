@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     marginVertical: 5,
+    margin:'1.5%',
   },
   textContainer: {
     flex: 1,
