@@ -67,8 +67,9 @@ export function HomeScreen({ navigation }) {
           fetchedAnnouncements.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
           setAnnouncements(fetchedAnnouncements);
         }
-        catch (error) {
-          console.error("Error fetching announcements: ", error);
+        catch (error) 
+        {
+          1+1; //TOBEREPLACED
         }
       };
 
@@ -93,8 +94,9 @@ export function HomeScreen({ navigation }) {
       const fetchedRequests = await fetchDocuments("repairRequests");
       setRequestCount(fetchedRequests.length);
     }
-    catch (error) {
-      console.error("Error fetching requests:", error);
+    catch (error) 
+    {
+      1+1; //TOBEREPLACED
     }
     finally {
       setLoading(false);
@@ -127,8 +129,8 @@ export function HomeScreen({ navigation }) {
       setImage(null);
       setIsMaintenanceModalVisible(false);
       loadRequests();
-    } catch (error) {
-      console.error("Error submitting repair request:", error);
+    } catch (error) 
+    {
       alert("Failed to submit repair request. Please try again.");
     }
   };
@@ -211,8 +213,9 @@ export function HomeScreen({ navigation }) {
       // close media upload modal
       setImagePickerModalVisible(false);
     }
-    catch (error) {
-      console.log("Image upload error:", error);
+    catch (error)
+    {
+      1+1; //TOBEREPLACED
     }
   };
 

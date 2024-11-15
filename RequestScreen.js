@@ -48,7 +48,6 @@ export default function RequestsScreen({ navigation }) {
     catch (err) 
     {
       setError(err.message);
-      console.error("Error fetching requests: ", err);
     } 
     finally 
     {

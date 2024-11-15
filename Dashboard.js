@@ -65,7 +65,7 @@ export function Dashboard({ navigation }) {
         searchPlaceholder="Search"
         dropdownStyles={{ borderRadius: 5 }}
         boxStyles={{ marginVertical: 10, borderRadius: 8 }}
-        setSelected={(val) => console.log(val)} />
+        setSelected={(val) => placeholder="Select Apartment"} /> {/*TOBEREPLACED */}
 
       {/* DATE VISUALIZATION */}
       <View style={styles.pieContainer}>
