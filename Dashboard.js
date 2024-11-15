@@ -110,7 +110,11 @@ export function Dashboard({ navigation }) {
         onRequestClose={() => setViewApartment(false)}>
         <View style={styles.modalContainer}>
 
-          <View style={{ marginTop: "10%" }}></View>
+          {/*Down Arrow Icon*/}
+          <TouchableOpacity onPress={() => setViewApartment(false)} style={{ marginTop: 20 }}>
+            <Image source={ArrowDownIcon} style={{ width: 35, height: 35, marginVertical: '5%', alignSelf: "center" }} />
+          </TouchableOpacity>
+
           <Text style={styles.statTitle}> APPARTMENT: 1C09 </Text>
           <Image source={AppartmentImg} style={styles.image} />
 

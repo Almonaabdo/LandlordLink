@@ -67,9 +67,8 @@ export function HomeScreen({ navigation }) {
           fetchedAnnouncements.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
           setAnnouncements(fetchedAnnouncements);
         }
-        catch (error) 
-        {
-          1+1; //TOBEREPLACED
+        catch (error) {
+          1 + 1; //TOBEREPLACED
         }
       };
 
@@ -94,9 +93,8 @@ export function HomeScreen({ navigation }) {
       const fetchedRequests = await fetchDocuments("repairRequests");
       setRequestCount(fetchedRequests.length);
     }
-    catch (error) 
-    {
-      1+1; //TOBEREPLACED
+    catch (error) {
+      1 + 1; //TOBEREPLACED
     }
     finally {
       setLoading(false);
@@ -129,8 +127,7 @@ export function HomeScreen({ navigation }) {
       setImage(null);
       setIsMaintenanceModalVisible(false);
       loadRequests();
-    } catch (error) 
-    {
+    } catch (error) {
       alert("Failed to submit repair request. Please try again.");
     }
   };
@@ -213,9 +210,8 @@ export function HomeScreen({ navigation }) {
       // close media upload modal
       setImagePickerModalVisible(false);
     }
-    catch (error)
-    {
-      1+1; //TOBEREPLACED
+    catch (error) {
+      1 + 1; //TOBEREPLACED
     }
   };
 
@@ -274,15 +270,21 @@ export function HomeScreen({ navigation }) {
       {/* Announcements LIST */}
       <AnnouncementsList announcements={announcements} navigation={navigation} />
 
-      
+
       {/* Maintenance Modal */}
       <Modal
         visible={isMaintenanceModalVisible}
-        onRequestClose={() => setIsMaintenanceModalVisible(false)}
+        onRequestClose={() => { setIsMaintenanceModalVisible(false) }}
+        onDismiss={() => setImagePickerModalVisible(false)}
         animationType="slide"
         presentationStyle="pageSheet"
       >
         <View style={{ padding: 16 }}>
+
+          {/*Down Arrow Icon*/}
+          <TouchableOpacity onPress={() => setIsMaintenanceModalVisible(false)} style={{ marginTop: 20 }}>
+            <Image source={icons.ArrowDownIcon} style={{ width: 35, height: 35, marginVertical: '5%', alignSelf: "center" }} />
+          </TouchableOpacity>
 
           <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>Request Maintenance</Text>
 
@@ -432,7 +434,7 @@ export function HomeScreen({ navigation }) {
       </Modal>
 
 
-      {/* NFC Scanner Modal */}
+      {/* EMERGENCY  Modal */}
       <Modal
         visible={isEmergencyModalVisible}
         animationType="slide"
@@ -440,7 +442,11 @@ export function HomeScreen({ navigation }) {
         presentationStyle="pageSheet">
         <View style={{ flex: 1, alignItems: 'center', backgroundColor: "#FFFFF", padding: 10 }}>
 
-          <View style={{ marginVertical: "5%" }} />
+          {/*Down Arrow Icon*/}
+          <TouchableOpacity onPress={() => setIsEmergencyModalVisible(false)} style={{ marginTop: 20 }}>
+            <Image source={icons.ArrowDownIcon} style={{ width: 35, height: 35, marginVertical: '5%', alignSelf: "center" }} />
+          </TouchableOpacity>
+
           <View style={{ backgroundColor: "red", padding: 10, borderRadius: 7 }}>
             <Text style={{ fontSize: 34 }}>Fire Safety Guide</Text>
           </View>
