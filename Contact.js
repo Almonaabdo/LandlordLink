@@ -119,7 +119,7 @@ const ContactLink = ({ icon, text, onPress }) => (
 
 // Section component
 const Section = ({ title, hours, children }) => (
-  <View style={styles.section}>
+  <View>
     <Text style={[styles.sectionTitle]}>{title}</Text>
     <Text style={styles.sectionHours}>{hours}</Text>
     {children}
@@ -168,9 +168,6 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: '#e0e0e0',
   },
-  section: {
-    marginBottom: 0,
-  },
   sectionTitle: {
     fontSize: 26,
     fontWeight: 'bold',
@@ -179,6 +176,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0eff5',
     padding: 10,
     borderRadius: 5,
+    width:"100%"
   },
   sectionHours: {
     fontSize: 16,

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Dimensions, ScrollView, Modal, TouchableOpacity
 import { PieChart } from 'react-native-chart-kit';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { LoginButton } from './components/Buttons';
-import { KeyboardAvoidingView } from "react-native";
+import { Checkbox } from 'expo-checkbox';
 
 
 const primaryColor = "#3e1952";
@@ -27,6 +27,7 @@ export function Dashboard({ navigation }) {
   const unoccupiedCount = totalCount - occupiedCount;
   const [viewApartment, setViewApartment] = useState(false);
   const [viewNfcModal, setViewNfcModal] = useState(false);
+  const [isRentedChecked, setIsRentedChecked] = useState(false);
 
   const data = [
     {
@@ -65,7 +66,12 @@ export function Dashboard({ navigation }) {
         searchPlaceholder="Search"
         dropdownStyles={{ borderRadius: 5 }}
         boxStyles={{ marginVertical: 10, borderRadius: 8 }}
-        setSelected={(val) => placeholder="Select Apartment"} /> {/*TOBEREPLACED */}
+        setSelected={(val) => placeholder = "Select Apartment"} /> {/*TOBEREPLACED */}
+
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom:"3%"}}>
+        <Text style={styles.statText}>Empty Units Only</Text>
+        <Checkbox value={isRentedChecked} onValueChange={setIsRentedChecked} color= {primaryColor}/>
+      </View>
 
       {/* DATE VISUALIZATION */}
       <View style={styles.pieContainer}>
@@ -99,7 +105,6 @@ export function Dashboard({ navigation }) {
 
       {/* VIEW BUTTON */}
       <LoginButton text={"View"} onPress={() => { setViewApartment(true); }} />
-
 
 
       {/* APPARTMENT MODAL */}
@@ -141,8 +146,6 @@ export function Dashboard({ navigation }) {
 
         </View>
       </Modal>
-
-
 
 
       {/* NFC Scanner Modal */}

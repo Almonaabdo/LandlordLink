@@ -14,14 +14,28 @@ import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StatusBar, StyleSheet, TextInput, ScrollView } from "react-native";
 import { LoginButton } from "./components/Buttons.js";
 import { auth } from './firebaseConfig';
-
+import { Checkbox } from 'expo-checkbox';
+import { StylesHome } from "./styles/stylesHome.js";
 
 const profileImage = require("./assets/profileUser.png");
+const buildingIcon = require("./assets/buildingIcon.png");
+const phoneIcon = require("./assets/phoneIcon.png");
+
+
+const ProfileCard = ({ icon, text }) => {
+  return (
+    <View style={styles.profileCard}>
+      <Image source={icon} style={StylesHome.Icons}></Image>
+      <Text style={{ fontSize: 18 }}>{text}</Text>
+    </View>
+  )
+}
 
 export function Profile({ navigation }) {
   // State hooks
   const [userFullName, setFirstName] = useState("Yafet Tekleab");
   const [email, setEmail] = useState(auth.currentUser?.email || "user@example.com");
+  const [isNotificationsChecked, setIsNotificationsChecked] = useState(false);
 
 
   return (
@@ -31,7 +45,7 @@ export function Profile({ navigation }) {
       <Text style={styles.textHeader}>Account Settings</Text>
 
       {/* profile Image */}
-      <Image source={profileImage} style={styles.profileImage}/>
+      <Image source={profileImage} style={styles.profileImage} />
 
       {/* User Name */}
       <Text style={styles.name}>{userFullName}</Text>
@@ -53,8 +67,20 @@ export function Profile({ navigation }) {
         value="*********"
         editable={false} />
 
+
+      {/* Notifications Checkbox */}
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginVertical: "5%" }}>
+        <Text style={{ fontSize: 18 }}>Notifications</Text>
+        <Checkbox value={isNotificationsChecked} onValueChange={setIsNotificationsChecked} color={"purple"} />
+      </View>
+
+      <ProfileCard icon={buildingIcon} text={"13C9"} />
+
+      <ProfileCard icon={phoneIcon} text={"226-898-4470"} />
+
+
       {/* SPACING */}
-      <View style={{ margin: '20%' }} />
+      <View style={{ margin: '10%' }} />
 
       {/* Logout BUTTON */}
       <LoginButton text="Sign Out" onPress={() => navigation.navigate("SignOut")} />
@@ -111,5 +137,15 @@ const styles = StyleSheet.create({
   },
   spacer: {
     height: 60,
+  },
+
+  profileCard: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginVertical: "3%",
+    backgroundColor:"#f3ebf5",
+    padding:5,
+    borderRadius:10,
   },
 });

@@ -11,9 +11,14 @@
 
 
 import React, { useState } from 'react';
-import { View, Text, StatusBar, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Text, StatusBar, StyleSheet, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { StylesHome } from './styles/stylesHome';
+
 const primaryColor = "#3e1952"
+
+const budgetIcon = require("./assets/budgetIcon.png");
+const historyIcon = require("./assets/historyIcon.png");
 
 const documentsList = [
   { key: '1', value: 'Lease Document', uri: 'https://css4.pub/2015/icelandic/dictionary.pdf', expiryDate: '2025-12-31' },
@@ -33,14 +38,11 @@ export function Documents({ navigation }) {
   const [isDocumentsVisible, setIsDocumentsVisible] = useState(true);
 
   // Function to toggle the documents open and close based on current state
-  const documentToggle = (uri) => 
-  {
-    if(selectedUri === uri)
-    {
+  const documentToggle = (uri) => {
+    if (selectedUri === uri) {
       setSelectedUri("");
     }
-    else
-    {
+    else {
       setSelectedUri(uri);
     }
   };
@@ -56,35 +58,35 @@ export function Documents({ navigation }) {
 
       {/* Conditional Rendering DOCUMENTS/BILLS */}
       {isDocumentsVisible ?
-      (
-        // Documents button pressed
-        <View>
-          <View style={styles.section}>
-            <Text style={styles.sectionHeader}>Documents</Text>
-            {documentsList.map(doc => (
-              <Card key={doc.key} title={doc.value} onPress={() => documentToggle(doc.uri)} expiryDate={doc.expiryDate} />
-            ))}
+        (
+          // Documents button pressed
+          <View>
+            <View style={styles.section}>
+              <Text style={styles.sectionHeader}>Documents</Text>
+              {documentsList.map(doc => (
+                <Card key={doc.key} title={doc.value} onPress={() => documentToggle(doc.uri)} expiryDate={doc.expiryDate} />
+              ))}
+            </View>
           </View>
-        </View>
-      ) 
-      : 
-      (
-        // Bills button pressed
-        <View>
-          <View style={styles.section}>
-            <Text style={styles.sectionHeader}>Bills</Text>
-            {billsList.map(bill => (
-              <Card key={bill.key} title={bill.value} onPress={() => documentToggle(bill.uri)} />
-            ))}
+        )
+        :
+        (
+          // Bills button pressed
+          <View>
+            <View style={styles.section}>
+              <Text style={styles.sectionHeader}>Bills</Text>
+              {billsList.map(bill => (
+                <Card key={bill.key} title={bill.value} onPress={() => documentToggle(bill.uri)} />
+              ))}
+            </View>
           </View>
-        </View>
-      )}
+        )}
 
 
       {/* WEB VIEW PDF */}
       {selectedUri && (
         <View style={styles.webViewContainer}>
-          {loading && <ActivityIndicator size="large" color= {primaryColor} />}
+          {loading && <ActivityIndicator size="large" color={primaryColor} />}
           <WebView
             originWhitelist={['*']}
             source={{ uri: selectedUri }}
@@ -100,6 +102,19 @@ export function Documents({ navigation }) {
       <View style={{ flexDirection: 'row', marginTop: 20 }}>
         <ToggleButton text="Documents" onPress={() => setIsDocumentsVisible(true)} style={{ backgroundColor: isDocumentsVisible ? primaryColor : 'gray' }} />
         <ToggleButton text="Bills" onPress={() => setIsDocumentsVisible(false)} style={{ backgroundColor: !isDocumentsVisible ? primaryColor : 'gray' }} />
+      </View>
+
+
+      {/*History and budget buttons */}
+      <View style={{ flexDirection: 'row', marginTop: 20, justifyContent: "space-evenly" }}>
+        <TouchableOpacity>
+          <Image style={StylesHome.Icons} source={budgetIcon} />
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+          <Image style={StylesHome.Icons} source={historyIcon} />
+        </TouchableOpacity>
+
       </View>
 
     </View>

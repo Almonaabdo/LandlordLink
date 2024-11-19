@@ -77,15 +77,6 @@ export function HomeScreen({ navigation }) {
     }, [])
   );
 
-  const newApt = {
-    id: "A123",
-    floor: 2,
-    rooms: 4,
-    occupied: false,
-    est: 1500,
-    userId: 1223
-  };
-
   // function to fetch maintanence requests number from database
   const loadRequests = async () => {
     try {
@@ -220,16 +211,15 @@ export function HomeScreen({ navigation }) {
       style={{ backgroundColor: "#f5f5f5" }}
       contentContainerStyle={{ paddingBottom: 20 }}
       showsVerticalScrollIndicator={false}
-      refreshControl={<RefreshControl refreshing={loading} onRefresh={loadRequests} />}
-    >
+      refreshControl={<RefreshControl refreshing={loading} onRefresh={loadRequests} />}>
       <StatusBar barStyle="light-content" />
 
       {/* APPARTMENT NAME AND IMAGE */}
       <View style={{ alignItems: "center", marginVertical: 10 }}>
-        <View style={{ backgroundColor: "#3e1952", paddingHorizontal: 80, borderRadius: 5, paddingVertical: 3, marginBottom: 20 }}>
+        <View style={{ backgroundColor: "#3e1952", paddingHorizontal: 80, borderRadius: 5, paddingVertical: 3, marginBottom: 10 }}>
           <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#FFF', fontFamily: 'Avenir' }}>256 Lester St N</Text>
         </View>
-        <Image source={AppartmentImg} style={{ width: '100%', height: 200, borderRadius: 12, marginTop: 10 }} />
+        <Image source={AppartmentImg} style={{ width: '100%', height: 200, borderRadius: 12}} />
       </View>
 
       {/* Modal Menu ICONS */}
@@ -443,8 +433,8 @@ export function HomeScreen({ navigation }) {
         <View style={{ flex: 1, alignItems: 'center', backgroundColor: "#FFFFF", padding: 10 }}>
 
           {/*Down Arrow Icon*/}
-          <TouchableOpacity onPress={() => setIsEmergencyModalVisible(false)} style={{ marginTop: 20 }}>
-            <Image source={icons.ArrowDownIcon} style={{ width: 35, height: 35, marginVertical: '5%', alignSelf: "center" }} />
+          <TouchableOpacity onPress={() => setIsEmergencyModalVisible(false)} style={{ marginTop: 10 }}>
+            <Image source={icons.ArrowDownIcon} style={{ width: 35, height: 35, marginBottom: '10%', alignSelf: "center" }} />
           </TouchableOpacity>
 
           <View style={{ backgroundColor: "red", padding: 10, borderRadius: 7 }}>
@@ -468,6 +458,7 @@ export function HomeScreen({ navigation }) {
             title="Step 3: Signal for help"
             description="Open the window and signal for help after calling 911." />
 
+          <View style={{ marginVertical: "20%" }} />
           <LoginButton text={"CALL 9 1 1 "}></LoginButton>
 
         </View>
