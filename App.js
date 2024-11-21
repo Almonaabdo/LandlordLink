@@ -53,9 +53,9 @@ const TabIcon = ({ icon, label, focused }) =>
   {
   const iconSize = focused ? 38 : 24;
   return (
-    <View style={{ alignItems: 'center' }}>
+    <View style={{ alignItems: 'center'}}>
       <Image source={icon} style={{ width: iconSize, height: iconSize }} />
-      <Text style={{ fontSize: 12, color: focused ? primaryColor : '#888' }}>{label}</Text>
+      <Text style={{ fontSize: 10, color: focused ? primaryColor : 'black', fontWeight:"bold" }}>{label}</Text>
     </View>
   );
 };
@@ -96,13 +96,13 @@ const TabNavigator = () => (
         padding:'2%',
         backgroundColor: '#ffffff',
         borderTopColor: 'transparent',
-        elevation: 15,
+        elevation: 0,
         shadowColor: 'purple',
-        shadowOffset: { width: 0, height: 0},
-        shadowOpacity: 0.90,
-        shadowRadius: 3,
+        shadowOffset: { width: 0, height: -1},
+        shadowOpacity: 0.5,
+        shadowRadius: 1,
         position: 'relative',
-        bottom: 0,
+        bottom: 5,
         left: 0,
         right: 10,
         borderRadius: 0

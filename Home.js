@@ -19,6 +19,7 @@ import HomeCard from "./components/HomeCard";
 import { LoginButton } from "./components/Buttons";
 import AnnouncementsList from "./components/AnnouncementsList";
 
+
 // Icons
 const darkBlue = "#2e395d";
 const AppartmentImg = require("./assets/256LesterSt.jpg");
@@ -39,6 +40,7 @@ const icons = {
   exitIcon: require("./assets/exitIcon.png"),
   shelterIcon: require("./assets/shelterIcon.png"),
   helpIcon: require("./assets/helpIcon.png"),
+  incidentIcon: require("./assets/incidentIcon.png"),
 
 };
 
@@ -51,6 +53,8 @@ export function HomeScreen({ navigation }) {
   const [isEmergencyModalVisible, setIsEmergencyModalVisible] = useState(false);
   const [imagePickerModalVisible, setImagePickerModalVisible] = useState(false);
   const [isNfcModalVisible, setIsNfcModalVisible] = useState(false);
+  const [isIncidentModalVisible, setIsIncidentModalVisible] = useState(false);
+
   const [fadeAnim] = useState(new Animated.Value(0));
   const [selectedPriority, setSelectedPriority] = useState("");
   const [announcements, setAnnouncements] = useState([]);
@@ -205,7 +209,7 @@ export function HomeScreen({ navigation }) {
       1 + 1; //TOBEREPLACED
     }
   };
-
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <ScrollView
       style={{ backgroundColor: "#f5f5f5" }}
@@ -219,34 +223,35 @@ export function HomeScreen({ navigation }) {
         <View style={{ backgroundColor: "#3e1952", paddingHorizontal: 80, borderRadius: 5, paddingVertical: 3, marginBottom: 10 }}>
           <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#FFF', fontFamily: 'Avenir' }}>256 Lester St N</Text>
         </View>
-        <Image source={AppartmentImg} style={{ width: '100%', height: 200, borderRadius: 12}} />
+        <Image source={AppartmentImg} style={{ width: '100%', height: 200, borderRadius: 12 }} />
       </View>
 
       {/* Modal Menu ICONS */}
       <View style={{ flexDirection: "row", justifyContent: "space-around", marginBottom: 20 }}>
-
         <TouchableOpacity onPress={() => setIsMaintenanceModalVisible(true)}>
-          <Image source={icons.WrenchIcon} style={{ width: 40, height: 40 }} />
+          <View style={{ backgroundColor: "#b6c6d6", padding: 5, borderRadius: 7 }}>
+            <Image source={icons.WrenchIcon} style={{ width: 40, height: 40 }} />
+          </View>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={handleNfcModalOpen}>
-          <Image source={icons.DoorHandleIcon} style={{ width: 40, height: 40 }} />
+          <View style={{ backgroundColor: "#b6c6d6", padding: 5, borderRadius: 7 }}>
+            <Image source={icons.DoorHandleIcon} style={{ width: 40, height: 40 }} />
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => { setIsIncidentModalVisible(true) }}>
+          <View style={{ backgroundColor: "#b6c6d6", padding: 5, borderRadius: 7 }}>
+            <Image source={icons.incidentIcon} style={{ width: 40, height: 40 }} />
+          </View>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => { setIsEmergencyModalVisible(true) }}>
-          <Image source={icons.emergencyIcon} style={{ width: 40, height: 40 }} />
+          <View style={{ backgroundColor: "#b6c6d6", padding: 5, borderRadius: 7 }}>
+            <Image source={icons.emergencyIcon} style={{ width: 40, height: 40 }} />
+          </View>
         </TouchableOpacity>
-
       </View>
-
-
-      {/* Dashboard Card */}
-      <TouchableOpacity onPress={() => navigation.navigate("Dashboard")}>
-        <HomeCard
-          title="Dashboard"
-          description="Review latest data"
-          imageUrl={icons.dashboardIcon} />
-      </TouchableOpacity>
 
       {/* Maintaincence Card */}
       <TouchableOpacity onPress={() => navigation.navigate("Requests")}>
@@ -256,6 +261,14 @@ export function HomeScreen({ navigation }) {
           imageUrl={icons.maintainenceBackground} />
       </TouchableOpacity>
 
+
+      {/* Dashboard Card */}
+      <TouchableOpacity onPress={() => navigation.navigate("Dashboard")}>
+        <HomeCard
+          title="Dashboard"
+          description="Review latest data"
+          imageUrl={icons.dashboardIcon} />
+      </TouchableOpacity>
 
       {/* Announcements LIST */}
       <AnnouncementsList announcements={announcements} navigation={navigation} />
@@ -269,7 +282,7 @@ export function HomeScreen({ navigation }) {
         animationType="slide"
         presentationStyle="pageSheet"
       >
-        <View style={{ padding: 16 }}>
+        <View style={{ padding: 20 }}>
 
           {/*Down Arrow Icon*/}
           <TouchableOpacity onPress={() => setIsMaintenanceModalVisible(false)} style={{ marginTop: 20 }}>
@@ -298,15 +311,18 @@ export function HomeScreen({ navigation }) {
           <Text style={{ marginVertical: '1%' }}>Describe the problem</Text>
           <TextInput
             placeholder="Issue Description"
+            multiline
+            numberOfLines={4}
             placeholderTextColor="grey"
             style={{
-              borderColor: '#ccc',
+              height: 120,
               borderWidth: 1,
-              borderRadius: 8,
-              padding: 12,
-              height: 100,
-              marginBottom: 10,
-              backgroundColor: "#f9f9f9"
+              borderColor: '#ccc',
+              padding: 10,
+              marginTop: 5,
+              borderRadius: 10,
+              fontSize: 16,
+              textAlignVertical: 'top',
             }}
             onChangeText={setIssueDescription}
             value={issueDescription}
@@ -342,55 +358,42 @@ export function HomeScreen({ navigation }) {
           {/* IMAGE UPLOAD MODAL */}
           <Modal
             visible={imagePickerModalVisible}
-            animationType="slide"
+            animationType="fade"
             transparent={true}
             onDismiss={() => setImagePickerModalVisible(false)}
             onRequestClose={() => setImagePickerModalVisible(false)}>
 
             {/* Centering the modal content */}
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-              <View style={{ width: '80%', backgroundColor: 'white', borderRadius: 10, padding: 20, alignItems: 'center' }}>
+              {/*White background */}
 
-                {/* Gallery Logo */}
-                <TouchableOpacity onPress={() => uploadImage("Gallery")} style={{ marginVertical: 15 }}>
-                  <Image source={icons.GalleryLogo} style={{ width: 50, height: 50 }} />
-                </TouchableOpacity>
+              <View style={{ width: '70%', backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
 
-                {/* Camera Logo */}
-                <TouchableOpacity onPress={() => uploadImage("Camera")} style={{ marginVertical: 15 }}>
-                  <Image source={icons.CameraLogo} style={{ width: 50, height: 50 }} />
-                </TouchableOpacity>
+                <View style={{ flexDirection: "row-reverse", alignItems: "center", justifyContent: "space-around" }}>
+                  {/* Camera Logo */}
+                  <TouchableOpacity onPress={() => uploadImage("Camera")}>
+                    <Image source={icons.CameraLogo} style={{ width: 50, height: 50, borderRadius: 15 }} />
+                  </TouchableOpacity>
 
-                {/* Close button or action can be added here if needed */}
+                  {/* Gallery Logo */}
+                  <TouchableOpacity onPress={() => uploadImage("Gallery")}>
+                    <Image source={icons.GalleryLogo} style={{ width: 50, height: 50, borderRadius: 15 }} />
+                  </TouchableOpacity>
+                </View>
+
+                {/* Close button */}
                 <TouchableOpacity onPress={() => setImagePickerModalVisible(false)} style={{ marginTop: 20 }}>
-                  <Text style={{ color: 'blue' }}>Close</Text>
+                  <Text style={{ color: 'red', alignSelf: "center" }}>Close</Text>
                 </TouchableOpacity>
               </View>
+
             </View>
           </Modal>
 
 
-          {/* Submit Button */}
+          {/* Submit request Button */}
           <LoginButton text="Submit" onPress={handleRepairRequestSubmit} />
 
-        </View>
-      </Modal>
-
-      {/* Image Picker Modal */}
-      <Modal visible={imagePickerModalVisible} onRequestClose={() => setImagePickerModalVisible(false)} animationType="slide">
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ fontSize: 24, marginBottom: 20 }}>Choose an option</Text>
-          <TouchableOpacity onPress={() => uploadImage("Camera")}>
-            <Image source={icons.CameraLogo} style={{ width: 100, height: 100 }} />
-            <Text style={{ marginTop: 10 }}>Camera</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => uploadImage("Gallery")} style={{ marginTop: 20 }}>
-            <Image source={icons.GalleryLogo} style={{ width: 100, height: 100 }} />
-            <Text style={{ marginTop: 10 }}>Gallery</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setImagePickerModalVisible(false)} style={{ marginTop: 20 }}>
-            <Text style={{ fontSize: 18, color: 'blue' }}>Cancel</Text>
-          </TouchableOpacity>
         </View>
       </Modal>
 
