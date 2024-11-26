@@ -35,7 +35,7 @@ export default function RequestsScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const getRequests = async () => 
+  const getData = async () => 
   {
     try 
     {
@@ -58,7 +58,7 @@ export default function RequestsScreen({ navigation }) {
   // Fetch requests when the screen is focused
   useFocusEffect(
     React.useCallback(() => {
-      getRequests();
+      getData();
     }, [])
   );
 

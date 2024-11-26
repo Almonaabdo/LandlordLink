@@ -36,7 +36,7 @@ const Stack = createStackNavigator();
 // Importing local icons
 const HomeIcon = require("./assets/homeIcon.png");
 const ProfileIcon = require("./assets/profileIcon.png");
-const AnnouncementIcon = require("./assets/announcementIcon.png");
+const AnnouncementIcon = require("./assets/announcementsIcon.png");
 const DocumentsIcon = require("./assets/documentsIcon.png");
 const ContactIcon = require("./assets/contactIcon.png");
 const EventsIcon = require("./assets/calendarIcon.png");
@@ -51,11 +51,13 @@ const defaultScreenOptions =
 // Custom tab bar icon component
 const TabIcon = ({ icon, label, focused }) =>
   {
-  const iconSize = focused ? 38 : 24;
+  const iconSize = focused ? 36 : 28;
   return (
     <View style={{ alignItems: 'center'}}>
-      <Image source={icon} style={{ width: iconSize, height: iconSize }} />
-      <Text style={{ fontSize: 10, color: focused ? primaryColor : 'black', fontWeight:"bold" }}>{label}</Text>
+      <View style={{backgroundColor: focused?"#dbceeb":"white", borderRadius:7, padding:3,marginBottom:5,shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.50, shadowRadius: 1, elevation: 6}}>
+        <Image source={icon} style={{ width: iconSize, height: iconSize }} />
+      </View>
+      {/** <Text style={{ fontSize: 10, color: focused ? primaryColor : 'black', fontWeight:"700" }}>{label}</Text>*/}
     </View>
   );
 };
@@ -83,6 +85,9 @@ const TabNavigator = () => (
           case 'Profile':
             icon = ProfileIcon;
             break;
+            case 'Announces':
+              icon = AnnouncementIcon;
+              break;
           default:
             icon = HomeIcon;
         }
@@ -93,16 +98,16 @@ const TabNavigator = () => (
       //tabBarInactiveTintColor: '#888',
       tabBarStyle: 
       {
-        padding:'2%',
+        paddingTop:'2%',
+        height:"10%",
         backgroundColor: '#ffffff',
         borderTopColor: 'transparent',
-        elevation: 0,
-        shadowColor: 'purple',
+        shadowColor: 'black',
         shadowOffset: { width: 0, height: -1},
-        shadowOpacity: 0.5,
+        shadowOpacity: 0.1,
         shadowRadius: 1,
         position: 'relative',
-        bottom: 5,
+        bottom: 0,
         left: 0,
         right: 10,
         borderRadius: 0
@@ -111,6 +116,7 @@ const TabNavigator = () => (
     
     {/* NAVBAR BUTTONS */}
     <Tab.Screen name="Home" component={HomeScreen} options={defaultScreenOptions} />
+    <Tab.Screen name="Announces" component={AnnouncementsScreen} options={defaultScreenOptions} />
     <Tab.Screen name="Events" component={Events} options={defaultScreenOptions} />
     <Tab.Screen name="Documents" component={Documents} options={defaultScreenOptions} />
     <Tab.Screen name="Contact" component={Contact} options={defaultScreenOptions} />

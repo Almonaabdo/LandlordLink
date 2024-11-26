@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   {
     alignSelf:"start",
     width:"100%",
-    backgroundColor: '#fff',
+    backgroundColor: '#dbceeb',
     borderRadius: 10,
     padding: 20,
     elevation: 3,
