@@ -18,7 +18,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import HomeCard from "./components/HomeCard";
 import { LoginButton } from "./components/Buttons";
 import AnnouncementsList from "./components/AnnouncementsList";
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 // Icons
 const darkBlue = "#2e395d";
@@ -41,7 +41,7 @@ const icons = {
   shelterIcon: require("./assets/shelterIcon.png"),
   helpIcon: require("./assets/helpIcon.png"),
   incidentIcon: require("./assets/incidentIcon.png"),
-
+  King_Street_North: require("./assets/308 King Street North.jpg"), 
 };
 
 export function HomeScreen({ navigation }) {
@@ -212,19 +212,22 @@ export function HomeScreen({ navigation }) {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <ScrollView
-      style={{ backgroundColor: "#f5f5f5" }}
+      style={{ backgroundColor: "#f5f5f5", flex:1 }}
       contentContainerStyle={{ paddingBottom: 20 }}
       showsVerticalScrollIndicator={false}
       refreshControl={<RefreshControl refreshing={loading} onRefresh={loadRequests} />}>
       <StatusBar barStyle="light-content" />
 
       {/* APPARTMENT NAME AND IMAGE */}
-      <View style={{ alignItems: "center", marginVertical: 10 }}>
-        <View style={{ backgroundColor: "#3e1952", borderRadius: 8, width:"90%", alignItems:"center" }}>
-          <Text style={{fontSize: 30, fontWeight: 'bold', color: '#FFF', fontFamily: 'Avenir' }}>256 lester st N</Text>
+      {/** // Start gradient at the left and end it at right // remove to make it top to bottom*/}
+      <LinearGradient colors={['#7e658c', 'white']} start={{ x: 0, y: 0.7 }} end={{ x: 0, y: 1.1 }} style={{ marginBottom: "2%", height: "40%", paddingHorizontal:0 }}>
+
+        <View style={{ flexDirection: 'column', alignItems: 'center', flex: 1 }}>
+          <Image source={icons.King_Street_North} style={{ width: '100%', height: "65%", borderRadius: 5,resizeMode:"stretch"  }} />
+            <Text style={{fontSize: 28, fontWeight: "500", color: 'white', fontFamily:'Avenir'}}>308 King Street North </Text>
         </View>
-        <Image source={AppartmentImg} style={{ width: '100%', height: 230 ,marginBottom: "4%"}} />
-      </View>
+
+      </LinearGradient>
 
       {/* Modal Menu ICONS */}
       <View style={{ flexDirection: "row", justifyContent: "space-around", marginBottom: 20 }}>

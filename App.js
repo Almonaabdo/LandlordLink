@@ -44,20 +44,18 @@ const EventsIcon = require("./assets/calendarIcon.png");
 // Screen Header options
 const defaultScreenOptions = 
 {
-  headerStyle: { backgroundColor: primaryColor },
+  headerStyle: { backgroundColor: primaryColor, height:85},
   headerTintColor: '#fff',
 };
 
 // Custom tab bar icon component
 const TabIcon = ({ icon, label, focused }) =>
   {
-  const iconSize = focused ? 36 : 28;
+  const iconSize = focused ? 30 : 24;
   return (
     <View style={{ alignItems: 'center'}}>
-      <View style={{backgroundColor: focused?"#dbceeb":"white", borderRadius:7, padding:3,marginBottom:5,shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.50, shadowRadius: 1, elevation: 6}}>
         <Image source={icon} style={{ width: iconSize, height: iconSize }} />
-      </View>
-      {/** <Text style={{ fontSize: 10, color: focused ? primaryColor : 'black', fontWeight:"700" }}>{label}</Text>*/}
+      <Text style={{ fontSize: 10, color: focused ? primaryColor : 'black', fontWeight:"700" }}>{label}</Text>
     </View>
   );
 };
