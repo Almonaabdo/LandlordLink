@@ -4,22 +4,24 @@ import { PieChart } from 'react-native-chart-kit';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { LoginButton } from './components/Buttons';
 import { Checkbox } from 'expo-checkbox';
-
+import MiniCard from "./components/MiniCard";
 
 const primaryColor = "#3e1952";
 const AppartmentImg = require("./assets/appartmentInside.jpg");
 const ArrowDownIcon = require("./assets/arrowDownIcon.png");
 const NfcScannerScreen = require("./assets/nfcScannerScreen.png");
 const DoorHandleIcon = require("./assets/doorHandleIcon.png");
+const barChartIcon = require("./assets/barChartIcon.png");
 
 const apartments = [
-  { key: 1, name: 'Apartment 1', occupied: true },
-  { key: 2, name: 'Apartment 2', occupied: false },
-  { key: 3, name: 'Apartment 3', occupied: true },
-  { key: 4, name: 'Apartment 4', occupied: false },
-  { key: 5, name: 'Apartment 5', occupied: true },
-  { key: 6, name: 'Apartment 6', occupied: true },
+  { key: 1, name: '1C09', occupied: true },
+  { key: 2, name: '1C12', occupied: false },
+  { key: 3, name: '2A11', occupied: true },
+  { key: 4, name: '2A03', occupied: false },
+  { key: 5, name: '2E07', occupied: true },
+  { key: 6, name: '3C16', occupied: true },
 ];
+
 
 export function Dashboard({ navigation }) {
   const occupiedCount = apartments.filter(apartment => apartment.occupied).length;
@@ -28,20 +30,19 @@ export function Dashboard({ navigation }) {
   const [viewApartment, setViewApartment] = useState(false);
   const [viewNfcModal, setViewNfcModal] = useState(false);
   const [isRentedChecked, setIsRentedChecked] = useState(false);
-
   const data = [
     {
       name: 'Occupied',
       population: occupiedCount,
-      color: primaryColor,
-      legendFontColor: '#7F7F7F',
+      color: "#876FD4",
+      legendFontColor: '#876FD4',
       legendFontSize: 15,
     },
     {
       name: 'Unoccupied',
       population: unoccupiedCount,
-      color: 'white',
-      legendFontColor: '#7F7F7F',
+      color: '#F8AE54',
+      legendFontColor: '#F8AE54',
       legendFontSize: 15,
     },
   ];
@@ -59,38 +60,36 @@ export function Dashboard({ navigation }) {
         <Text style={styles.title}>Building Dashboard</Text>
       </View>
 
+      <View style={{flex:1, flexDirection: "row", justifyContent: "space-around",marginBottom:"5%" }}>
+        <MiniCard title="Total Appartments" detail="148" icon={barChartIcon} />
+        <MiniCard title="Empty Appartments" detail="17" icon={barChartIcon} />
+      </View>
+
       {/* APPARTMENTS DROPDOWN LIST */}
       <SelectList
         data={dropdownData}
-        placeholder="Select Apartment"
+        placeholder="Unit lookup"
         searchPlaceholder="Search"
-        dropdownStyles={{ borderRadius: 5 }}
-        boxStyles={{ marginVertical: 10, borderRadius: 8 }}
-        setSelected={(val) => placeholder = "Select Apartment"} /> {/*TOBEREPLACED */}
+        dropdownStyles={{ width: 150 }}
+        boxStyles={{ marginVertical: 10, borderRadius: 4, backgroundColor: "white" }}
+        setSelected={(val) => 1 + 1} />
 
-      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom:"3%"}}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: "3%" }}>
         <Text style={styles.statText}>Empty Units Only</Text>
-        <Checkbox value={isRentedChecked} onValueChange={setIsRentedChecked} color= {primaryColor}/>
+        <Checkbox value={isRentedChecked} onValueChange={setIsRentedChecked} color="orange" />
       </View>
 
       {/* DATE VISUALIZATION */}
-      <View style={styles.pieContainer}>
-        <PieChart
-          data={data}
-          width={Dimensions.get('window').width - 50}
-          height={220}
-          chartConfig={{
-            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            backgroundGradientFrom: '#fff',
-            backgroundGradientTo: '#fff',
-          }}
-          accessor="population"
-          backgroundColor="transparent"
-          paddingLeft="15"
-          style={{ borderRadius: 16 }}
-          innerRadius="60%"
-        />
-      </View>
+      <PieChart
+        data={data}
+        width={Dimensions.get('window').width - 20}
+        height={100}
+        chartConfig={{ color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})` }}
+        accessor="population"
+        backgroundColor="white"
+        paddingLeft="15"
+        style={{ borderRadius: 12, width: 20,shadowColor: '#000',shadowOffset: { width: 0, height: 0 },shadowOpacity: 0.5,shadowRadius: 2,elevation: 2 }}
+      />
 
       {/* STATISTICS TEXT */}
       <View style={styles.statsContainer}>
@@ -171,18 +170,17 @@ export function Dashboard({ navigation }) {
 };
 
 
-
 // styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     //alignItems: 'center', MIGHTNEED
     padding: 10,
   },
   header: {
     backgroundColor: primaryColor,
-    padding: 20,
+    padding: 7,
     borderRadius: 7,
     marginBottom: '5%',
   },
@@ -190,17 +188,19 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: "#FFF",
+    alignSelf: "center"
   },
   pieContainer: {
-    backgroundColor: "#EAEAEA",
+    backgroundColor: "white",
     borderRadius: 10,
+    width: "100%",
     padding: 10,
   },
   statsContainer: {
     marginTop: 20,
     //alignItems: 'center', MIGHTNEED
     padding: 15,
-    backgroundColor: '#F9F9F9',
+    backgroundColor: 'white',
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

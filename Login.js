@@ -68,7 +68,8 @@ export function LoginScreen({ navigation })
         <Text style={styles.label}>Email</Text>
         <TextInput
           style={styles.textInput}
-          placeholder="Enter Email..."
+          placeholder="Enter Email"
+          placeholderTextColor={"black"}
           onChangeText={(text) => { setEmail(text); setViewError(0); }}
           value={email} />
 
@@ -77,7 +78,8 @@ export function LoginScreen({ navigation })
         <TextInput
           secureTextEntry={true}
           style={styles.textInput}
-          placeholder="Enter Password..."
+          placeholder="Enter Password"
+          placeholderTextColor={"black"}
           onChangeText={(text) => { setPassword(text); setViewError(0); }}
           value={password} />
 

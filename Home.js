@@ -19,6 +19,7 @@ import HomeCard from "./components/HomeCard";
 import { LoginButton } from "./components/Buttons";
 import AnnouncementsList from "./components/AnnouncementsList";
 import { LinearGradient } from 'expo-linear-gradient';
+import MiniCard from "./components/MiniCard.js";
 
 // Icons
 const darkBlue = "#2e395d";
@@ -34,6 +35,7 @@ const icons = {
   NfcScannerScreen: require("./assets/nfcScannerScreen.png"),
   DoorHandleIcon: require("./assets/doorHandleIcon.png"),
   announcementsBackground: require("./assets/announcementsBackground.jpg"),
+  announcementIcon: require("./assets/announcementIcon.png"),
   maintainenceBackground: require("./assets/maintainancebackground.jpg"),
   dashboardIcon: require("./assets/dashboardIcon.png"),
   emergencyIcon: require("./assets/emergency.png"),
@@ -41,7 +43,8 @@ const icons = {
   shelterIcon: require("./assets/shelterIcon.png"),
   helpIcon: require("./assets/helpIcon.png"),
   incidentIcon: require("./assets/incidentIcon.png"),
-  King_Street_North: require("./assets/308 King Street North.jpg"), 
+  King_Street_North: require("./assets/308 King Street North.jpg"),
+  packageIcon: require("./assets/packageIcon.png"),
 };
 
 export function HomeScreen({ navigation }) {
@@ -212,50 +215,54 @@ export function HomeScreen({ navigation }) {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <ScrollView
-      style={{ backgroundColor: "#f5f5f5", flex:1 }}
-      contentContainerStyle={{ paddingBottom: 20 }}
+      style={{ flex: 1, backgroundColor: "white" }}
+      contentContainerStyle={{ paddingBottom: "50%" }}
       showsVerticalScrollIndicator={false}
       refreshControl={<RefreshControl refreshing={loading} onRefresh={loadRequests} />}>
       <StatusBar barStyle="light-content" />
 
       {/* APPARTMENT NAME AND IMAGE */}
       {/** // Start gradient at the left and end it at right // remove to make it top to bottom*/}
-      <LinearGradient colors={['#7e658c', 'white']} start={{ x: 0, y: 0.7 }} end={{ x: 0, y: 1.1 }} style={{ marginBottom: "2%", height: "40%", paddingHorizontal:0 }}>
+      <LinearGradient colors={['#7e658c', 'white']} start={{ x: 0, y: 0.7 }} end={{ x: 0, y: 1.1 }} style={{ height: "30%", paddingHorizontal: 0 }}>
 
         <View style={{ flexDirection: 'column', alignItems: 'center', flex: 1 }}>
-          <Image source={icons.King_Street_North} style={{ width: '100%', height: "65%", borderRadius: 5,resizeMode:"stretch"  }} />
-            <Text style={{fontSize: 28, fontWeight: "500", color: 'white', fontFamily:'Avenir'}}>308 King Street North </Text>
+          <Image source={icons.King_Street_North} style={{ width: '100%', height: "65%", borderRadius: 5, resizeMode: "stretch" }} />
+          <Text style={{ fontSize: 28, fontWeight: "500", color: 'white', fontFamily: 'Avenir' }}>308 King Street North </Text>
         </View>
 
       </LinearGradient>
 
       {/* Modal Menu ICONS */}
-      <View style={{ flexDirection: "row", justifyContent: "space-around", marginBottom: 20 }}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between", marginHorizontal: 20, marginVertical: "2%" }}>
 
-        <View style={{ backgroundColor: '#e6e6fa', padding: 5, borderRadius: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.50, shadowRadius: 1, elevation: 6 }}>
+        <View style={{ backgroundColor: '#e6e6fa', padding: 5, borderRadius: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.50, shadowRadius: 2, elevation: 6 }}>
           <TouchableOpacity onPress={() => setIsMaintenanceModalVisible(true)}>
             <Image source={icons.WrenchIcon} style={{ width: 40, height: 40 }} />
           </TouchableOpacity>
         </View>
 
-        <View style={{ backgroundColor: '#e6e6fa', padding: 5, borderRadius: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.50, shadowRadius: 1, elevation: 6 }}>
-          <TouchableOpacity onPress={handleNfcModalOpen}>
-            <Image source={icons.DoorHandleIcon} style={{ width: 40, height: 40 }} />
-          </TouchableOpacity>
-        </View>
-
-        <View style={{ backgroundColor: '#e6e6fa', padding: 5, borderRadius: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.50, shadowRadius: 1, elevation: 6 }}>
+        <View style={{ backgroundColor: '#e6e6fa', padding: 5, borderRadius: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.50, shadowRadius: 2, elevation: 6 }}>
           <TouchableOpacity onPress={() => { setIsIncidentModalVisible(true) }}>
             <Image source={icons.incidentIcon} style={{ width: 40, height: 40 }} />
           </TouchableOpacity>
         </View>
 
-        <View style={{ backgroundColor: '#e6e6fa', padding: 5, borderRadius: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.50, shadowRadius: 1, elevation: 6 }}>
+        <View style={{ backgroundColor: '#e6e6fa', padding: 5, borderRadius: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.50, shadowRadius: 2, elevation: 6 }}>
           <TouchableOpacity onPress={() => { setIsEmergencyModalVisible(true) }}>
             <Image source={icons.emergencyIcon} style={{ width: 40, height: 40 }} />
           </TouchableOpacity>
         </View>
 
+        <View style={{ backgroundColor: '#e6e6fa', padding: 5, borderRadius: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.50, shadowRadius: 2, elevation: 6 }}>
+          <TouchableOpacity onPress={handleNfcModalOpen}>
+            <Image source={icons.DoorHandleIcon} style={{ width: 40, height: 40 }} />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around", marginVertical: "4%" }}>
+        <MiniCard title="Waiting Packages" detail="0" icon={icons.packageIcon} />
+        <MiniCard title="New Announcements" detail="0" icon={icons.announcementIcon} />
       </View>
 
       {/* Maintaincence Card */}
@@ -265,8 +272,7 @@ export function HomeScreen({ navigation }) {
           description={`Open Requests: ${requestCount}`}
           imageUrl={icons.maintainenceBackground} />
       </TouchableOpacity>
-
-
+      
       {/* Dashboard Card */}
       <TouchableOpacity onPress={() => navigation.navigate("Dashboard")}>
         <HomeCard
