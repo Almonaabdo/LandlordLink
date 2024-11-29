@@ -19,7 +19,7 @@ import { signOut } from 'firebase/auth';
 import { stylesLogin } from '../styles/stylesLogin';
 import { CommonActions } from '@react-navigation/native';
 
-export default function SignOutScreen({ navigation }) {
+export function SignOutScreen({ navigation }) {
   // Function to handle sign out
   const handleSignOut = async () => 
   {

@@ -8,9 +8,9 @@ import { LoginButton } from "../components/Buttons.js";
 import { addDocument, fetchDocuments, deleteDocument, updateDocument } from "../Functions.js"; // Ensure deleteDocument is included
 import { useFocusEffect } from "@react-navigation/native";
 
-const penIcon = require("././assets/penIcon.png");
-const CloseIcon = require("././assets/close.png");
-const personImage = require("././assets/person.jpg");
+const penIcon = require(".././assets/penIcon.png");
+const CloseIcon = require(".././assets/close.png");
+const personImage = require(".././assets/person.jpg");
 
 export function AnnouncementsScreen({ navigation }) {
   const [isCreatePost, setIsCreatePost] = useState(false);

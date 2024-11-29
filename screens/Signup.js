@@ -25,7 +25,7 @@ const passwordsDismatchError = -2;
 const invalidInformationError = -1;
 
 
-export default function SignUpScreen({ navigation }) {
+export function SignUpScreen({ navigation }) {
 
   // fields for user info
   const [firstName, setFirstName] = useState("");
