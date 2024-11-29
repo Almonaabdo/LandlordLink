@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, Dimensions, ScrollView, Modal, TouchableOpacity, Image } from 'react-native';
 import { PieChart } from 'react-native-chart-kit';
 import { SelectList } from 'react-native-dropdown-select-list';
-import { LoginButton } from './components/Buttons';
+import { LoginButton } from '../components/Buttons';
 import { Checkbox } from 'expo-checkbox';
-import MiniCard from "./components/MiniCard";
+import MiniCard from "../components/MiniCard";
 
 const primaryColor = "#3e1952";
-const AppartmentImg = require("./assets/appartmentInside.jpg");
-const ArrowDownIcon = require("./assets/arrowDownIcon.png");
-const NfcScannerScreen = require("./assets/nfcScannerScreen.png");
-const DoorHandleIcon = require("./assets/doorHandleIcon.png");
-const barChartIcon = require("./assets/barChartIcon.png");
+const AppartmentImg = require(".././assets/appartmentInside.jpg");
+const ArrowDownIcon = require(".././assets/arrowDownIcon.png");
+const NfcScannerScreen = require(".././assets/nfcScannerScreen.png");
+const DoorHandleIcon = require(".././assets/doorHandleIcon.png");
+const barChartIcon = require(".././assets/barChartIcon.png");
 
 const apartments = [
   { key: 1, name: '1C09', occupied: true },

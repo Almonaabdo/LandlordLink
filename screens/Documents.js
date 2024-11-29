@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, StatusBar, StyleSheet, ActivityIndicator, TouchableOpacity, Image, Modal, Button } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { StylesHome } from './styles/stylesHome';
+import { StylesHome } from '../styles/stylesHome';
 
 const primaryColor = "#3e1952";
 
-const budgetIcon = require("./assets/budgetIcon.png");
-const historyIcon = require("./assets/historyIcon.png");
+const budgetIcon = require(".././assets/budgetIcon.png");
+const historyIcon = require(".././assets/historyIcon.png");
 
 const documentsList = [
   { key: '1', value: 'Lease Document', uri: 'https://css4.pub/2015/icelandic/dictionary.pdf', expiryDate: '2025-12-31' },

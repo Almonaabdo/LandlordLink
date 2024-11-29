@@ -17,17 +17,17 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 // My custom components
-import { Profile } from './Profile';
-import { HomeScreen } from './Home';
+import { Profile } from './screens/Profile';
+import { HomeScreen } from './screens/Home';
 import { AnnouncementsScreen } from './Announcements';
-import { Documents } from './Documents';
-import { Contact } from './Contact';
-import RequestsScreen from './RequestScreen';
-import SignOutScreen from './SignOut';
-import SignUpScreen from './Signup';
-import { LoginScreen } from './Login';
-import { Events } from './Events';
-import { Dashboard } from './Dashboard';
+import { Documents } from './screens/Documents';
+import { Contact } from './screens/Contact';
+import RequestsScreen from './screens/RequestScreen';
+import SignOutScreen from './screens/SignOut';
+import SignUpScreen from './screens/Signup';
+import { LoginScreen } from './screens/Login';
+import { Events } from './screens/Events';
+import { Dashboard } from './screens/Dashboard';
 
 const primaryColor = "#3e1952";
 const Tab = createBottomTabNavigator();

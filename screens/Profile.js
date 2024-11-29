@@ -12,14 +12,14 @@
 
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StatusBar, StyleSheet, TextInput, ScrollView } from "react-native";
-import { LoginButton } from "./components/Buttons.js";
-import { auth } from './firebaseConfig';
+import { LoginButton } from "../components/Buttons.js";
+import { auth } from '../firebaseConfig.js';
 import { Checkbox } from 'expo-checkbox';
-import { StylesHome } from "./styles/stylesHome.js";
+import { StylesHome } from "../styles/stylesHome.js";
 
-const profileImage = require("./assets/profileUser.png");
-const buildingIcon = require("./assets/buildingIcon.png");
-const phoneIcon = require("./assets/phoneIcon.png");
+const profileImage = require("../assets/profileUser.png");
+const buildingIcon = require(".././assets/buildingIcon.png");
+const phoneIcon = require(".././assets/phoneIcon.png");
 
 
 const ProfileCard = ({ icon, text }) => {

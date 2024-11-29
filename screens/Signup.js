@@ -11,13 +11,13 @@
 
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StatusBar, ActivityIndicator, TextInput, KeyboardAvoidingView, ScrollView, StyleSheet } from "react-native";
-import { auth } from './firebaseConfig';
+import { auth } from '../firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { LoginButton } from "./components/Buttons";
-import { addDocument} from "./Functions";
+import { LoginButton } from "../components/Buttons";
+import { addDocument} from "../Functions";
 
 // Logo
-const logoImg = require("./assets/Accommod8u.jpg");
+const logoImg = require(".././assets/Accommod8u.jpg");
 
 // global variables
 const emailInUseError = -3;
@@ -94,7 +94,7 @@ export default function SignUpScreen({ navigation }) {
         <Text style={styles.label}>First Name</Text>
         <TextInput
           style={styles.textInput}
-          placeholder="Enter First Name..."
+          placeholder="Enter First Name"
           onChangeText={(text) => { setFirstName(text); setViewError(0); }}
           value={firstName} />
 
@@ -102,7 +102,7 @@ export default function SignUpScreen({ navigation }) {
         <Text style={styles.label}>Last Name</Text>
         <TextInput
           style={styles.textInput}
-          placeholder="Enter Last Name..."
+          placeholder="Enter Last Name"
           onChangeText={(text) => { setLastName(text); setViewError(0); }}
           value={lastName} />
 
@@ -111,7 +111,8 @@ export default function SignUpScreen({ navigation }) {
         <Text style={styles.label}>Email</Text>
         <TextInput
           style={styles.textInput}
-          placeholder="Enter Email..."
+          placeholder="Enter Email"
+          placeholderTextColor={"black"}
           onChangeText={(text) => { setEmail(text); setViewError(0); }}
           value={email} />
 
@@ -121,7 +122,8 @@ export default function SignUpScreen({ navigation }) {
         <TextInput
           secureTextEntry={true}
           style={styles.textInput}
-          placeholder="Enter Password..."
+          placeholder="Enter Password"
+          placeholderTextColor={"black"}
           onChangeText={(text) => { setPassword(text); setViewError(0); }}
           value={password} />
 
@@ -131,7 +133,8 @@ export default function SignUpScreen({ navigation }) {
         <TextInput
           secureTextEntry={true}
           style={styles.textInput}
-          placeholder="Confirm Password..."
+          placeholder="Confirm Password"
+          placeholderTextColor={"black"}
           onChangeText={(text) => { setConfirmPassword(text); setViewError(0); }}
           value={confirmPassword} />
 

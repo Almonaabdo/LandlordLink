@@ -12,8 +12,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
-import RequestCard from './components/RequestCard';
-import { fetchDocuments } from './Functions';
+import RequestCard from '../components/RequestCard';
+import { fetchDocuments } from '../Functions';
 import { useFocusEffect } from '@react-navigation/native';
 
 

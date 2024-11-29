@@ -13,38 +13,38 @@ import React, { useState } from "react";
 import { RefreshControl, Text, Image, Animated, TouchableOpacity, Modal, TextInput, StatusBar, ScrollView, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { SelectList } from 'react-native-dropdown-select-list';
-import { addDocument, fetchDocuments, createApartment } from "./Functions";
+import { addDocument, fetchDocuments, createApartment } from "../Functions.js";
 import { useFocusEffect } from "@react-navigation/native";
-import HomeCard from "./components/HomeCard";
-import { LoginButton } from "./components/Buttons";
-import AnnouncementsList from "./components/AnnouncementsList";
+import HomeCard from "../components/HomeCard.js";
+import { LoginButton } from "../components/Buttons.js";
+import AnnouncementsList from "../components/AnnouncementsList.js";
 import { LinearGradient } from 'expo-linear-gradient';
-import MiniCard from "./components/MiniCard.js";
+import MiniCard from "../components/MiniCard.js";
 
 // Icons
 const darkBlue = "#2e395d";
-const AppartmentImg = require("./assets/256LesterSt.jpg");
+const AppartmentImg = require(".././assets/256LesterSt.jpg");
 const icons = {
-  WrenchIcon: require("./assets/wrenchIcon.png"),
-  CloseIcon: require("./assets/close.png"),
-  AddImagesLogo: require("./assets/addImagesLogo.png"),
-  CameraLogo: require("./assets/cameraLogo.png"),
-  GalleryLogo: require("./assets/galleryLogo.png"),
-  ArrowDownIcon: require("./assets/arrowDownIcon.png"),
-  HouseImage: require("./assets/houseImage.png"),
-  NfcScannerScreen: require("./assets/nfcScannerScreen.png"),
-  DoorHandleIcon: require("./assets/doorHandleIcon.png"),
-  announcementsBackground: require("./assets/announcementsBackground.jpg"),
-  announcementIcon: require("./assets/announcementIcon.png"),
-  maintainenceBackground: require("./assets/maintainancebackground.jpg"),
-  dashboardIcon: require("./assets/dashboardIcon.png"),
-  emergencyIcon: require("./assets/emergency.png"),
-  exitIcon: require("./assets/exitIcon.png"),
-  shelterIcon: require("./assets/shelterIcon.png"),
-  helpIcon: require("./assets/helpIcon.png"),
-  incidentIcon: require("./assets/incidentIcon.png"),
-  King_Street_North: require("./assets/308 King Street North.jpg"),
-  packageIcon: require("./assets/packageIcon.png"),
+  WrenchIcon: require(".././assets/wrenchIcon.png"),
+  CloseIcon: require(".././assets/close.png"),
+  AddImagesLogo: require(".././assets/addImagesLogo.png"),
+  CameraLogo: require(".././assets/cameraLogo.png"),
+  GalleryLogo: require(".././assets/galleryLogo.png"),
+  ArrowDownIcon: require(".././assets/arrowDownIcon.png"),
+  HouseImage: require(".././assets/houseImage.png"),
+  NfcScannerScreen: require(".././assets/nfcScannerScreen.png"),
+  DoorHandleIcon: require(".././assets/doorHandleIcon.png"),
+  announcementsBackground: require(".././assets/announcementsBackground.jpg"),
+  announcementIcon: require(".././assets/announcementIcon.png"),
+  maintainenceBackground: require(".././assets/maintainancebackground.jpg"),
+  dashboardIcon: require(".././assets/dashboardIcon.png"),
+  emergencyIcon: require(".././assets/emergency.png"),
+  exitIcon: require(".././assets/exitIcon.png"),
+  shelterIcon: require(".././assets/shelterIcon.png"),
+  helpIcon: require(".././assets/helpIcon.png"),
+  incidentIcon: require(".././assets/incidentIcon.png"),
+  King_Street_North: require(".././assets/308 King Street North.jpg"),
+  packageIcon: require(".././assets/packageIcon.png"),
 };
 
 export function HomeScreen({ navigation }) {

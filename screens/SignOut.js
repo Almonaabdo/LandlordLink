@@ -10,13 +10,13 @@
 */
 
 
-import { LoginButton } from "./components/Buttons";
+import { LoginButton } from "../components/Buttons";
 import { StatusBar } from "react-native";
 import React from "react";
 import { View, Text, TouchableOpacity } from 'react-native';
-import { auth } from './firebaseConfig'; 
+import { auth } from '../firebaseConfig'; 
 import { signOut } from 'firebase/auth';
-import { stylesLogin } from './styles/stylesLogin';
+import { stylesLogin } from '../styles/stylesLogin';
 import { CommonActions } from '@react-navigation/native';
 
 export default function SignOutScreen({ navigation }) {

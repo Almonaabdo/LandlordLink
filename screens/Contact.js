@@ -12,17 +12,17 @@
 
 import { React } from "react";
 import { View, Text, Image, TouchableOpacity, StatusBar, StyleSheet, Linking, SafeAreaView } from "react-native";
-import { LoginButton } from "./components/Buttons";
+import { LoginButton } from "../components/Buttons";
 import { WebView } from 'react-native-webview';
 
 // icons
-const emailIcon = require("./assets/emailIcon.png");
-const callIcon = require("./assets/callIcon.png");
-const mapsIcon = require("./assets/mapsIcon.png");
-const personImage = require("./assets/person.jpg");
-const instagramIcon = require("./assets/instagramIcon.png");
-const facebookIcon = require("./assets/facebookIcon.png");
-const googleIcon = require("./assets/googleIcon.png");
+const emailIcon = require(".././assets/emailIcon.png");
+const callIcon = require(".././assets/callIcon.png");
+const mapsIcon = require(".././assets/mapsIcon.png");
+const personImage = require(".././assets/person.jpg");
+const instagramIcon = require(".././assets/instagramIcon.png");
+const facebookIcon = require(".././assets/facebookIcon.png");
+const googleIcon = require(".././assets/googleIcon.png");
 
 // Divider component
 const Divider = () => (

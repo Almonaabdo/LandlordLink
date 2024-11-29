@@ -11,12 +11,12 @@
 
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StatusBar, ActivityIndicator, Alert, TextInput, KeyboardAvoidingView, ScrollView, StyleSheet } from "react-native";
-import { auth } from './firebaseConfig'; // Adjust the path as necessary
+import { auth } from '../firebaseConfig'; // Adjust the path as necessary
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { LoginButton } from "./components/Buttons";
+import { LoginButton } from "../components/Buttons";
 
 // Logo
-const logoImg = require("./assets/Accommod8u.jpg");
+const logoImg = require("../assets/Accommod8u.jpg");
 
 // global variables
 const invalidEmailError = -2;
