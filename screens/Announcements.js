@@ -1,16 +1,16 @@
 import { React, useState, useEffect } from "react";
 import { View, Text, Image, ScrollView, TouchableOpacity, Modal, TextInput, StatusBar, Alert } from "react-native";
 import { Swipeable } from 'react-native-gesture-handler';
-import AnnouncementCard from "./components/AnnouncementCard.js";
-import { StylesHome } from "./styles/stylesHome.js";
-import { stylesLogin } from "./styles/stylesLogin.js";
-import { LoginButton } from "./components/Buttons.js";
-import { addDocument, fetchDocuments, deleteDocument, updateDocument } from "./Functions.js"; // Ensure deleteDocument is included
+import AnnouncementCard from "../components/AnnouncementCard.js";
+import { StylesHome } from "../styles/stylesHome.js";
+import { stylesLogin } from "../styles/stylesLogin.js";
+import { LoginButton } from "../components/Buttons.js";
+import { addDocument, fetchDocuments, deleteDocument, updateDocument } from "../Functions.js"; // Ensure deleteDocument is included
 import { useFocusEffect } from "@react-navigation/native";
 
-const penIcon = require("./assets/penIcon.png");
-const CloseIcon = require("./assets/close.png");
-const personImage = require("./assets/person.jpg");
+const penIcon = require("././assets/penIcon.png");
+const CloseIcon = require("././assets/close.png");
+const personImage = require("././assets/person.jpg");
 
 export function AnnouncementsScreen({ navigation }) {
   const [isCreatePost, setIsCreatePost] = useState(false);
