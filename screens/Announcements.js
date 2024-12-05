@@ -174,8 +174,7 @@ export function AnnouncementsScreen({ navigation }) {
             title={announcement.title}
             details={announcement.details}
             timeAgo={announcement.createdAt.toLocaleString()}
-            image={personImage}
-          />
+            image={personImage}/>
         </Swipeable>
       ))}
 
@@ -231,16 +230,14 @@ export function AnnouncementsScreen({ navigation }) {
             style={stylesLogin.textInput}
             placeholderTextColor="black"
             onChangeText={(text) => setAnnouncementTitle(text)}
-            value={announcementTitle}
-          />
+            value={announcementTitle}/>
 
           <TextInput
             placeholder="Announcement Details"
             style={[stylesLogin.textInput, { height: 150 }]}
             placeholderTextColor="black"
             onChangeText={(text) => setAnnouncementDetails(text)}
-            value={announcementDetails}
-          />
+            value={announcementDetails}/>
 
           <LoginButton text="Update" onPress={handleEditSubmit} />
 

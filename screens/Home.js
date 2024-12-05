@@ -260,6 +260,10 @@ export function HomeScreen({ navigation }) {
         </View>
       </View>
 
+      {/* Announcements LIST */}
+      <AnnouncementsList announcements={announcements} navigation={navigation} />
+
+      
       <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around", marginVertical: "4%" }}>
         <MiniCard title="Waiting Packages" detail="0" icon={icons.packageIcon} />
         <MiniCard title="New Announcements" detail="0" icon={icons.announcementIcon} />
@@ -280,9 +284,6 @@ export function HomeScreen({ navigation }) {
           description="Review latest data"
           imageUrl={icons.dashboardIcon} />
       </TouchableOpacity>
-
-      {/* Announcements LIST */}
-      <AnnouncementsList announcements={announcements} navigation={navigation} />
 
       {/* Maintenance Modal */}
       <Modal

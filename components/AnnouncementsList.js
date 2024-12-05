@@ -9,7 +9,7 @@ const AnnouncementsList = ({ announcements, navigation }) => {
           <Text style={styles.title}>Recent Announcements</Text>
 
           {announcements.length > 0 ? (
-            announcements.slice(0, 3).map((announcement) => (
+            announcements.slice(0, 2).map((announcement) => (
               <View key={announcement.id} style={styles.announcementCard}>
                 <Text style={styles.announcementTitle}>{announcement.title}</Text>
                 <Text style={styles.announcementDate}>

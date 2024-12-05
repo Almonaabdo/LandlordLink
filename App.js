@@ -83,9 +83,6 @@ const TabNavigator = () => (
           case 'Profile':
             icon = ProfileIcon;
             break;
-            case 'Announces':
-              icon = AnnouncementIcon;
-              break;
           default:
             icon = HomeIcon;
         }
@@ -114,7 +111,6 @@ const TabNavigator = () => (
     
     {/* NAVBAR BUTTONS */}
     <Tab.Screen name="Home" component={HomeScreen} options={defaultScreenOptions} />
-    <Tab.Screen name="Announces" component={AnnouncementsScreen} options={defaultScreenOptions} />
     <Tab.Screen name="Events" component={Events} options={defaultScreenOptions} />
     <Tab.Screen name="Documents" component={Documents} options={defaultScreenOptions} />
     <Tab.Screen name="Contact" component={Contact} options={defaultScreenOptions} />
