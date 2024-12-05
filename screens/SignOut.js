@@ -25,9 +25,9 @@ export function SignOutScreen({ navigation }) {
   {
     try 
     {
-      await signOut(auth); // Firebase sign out function
-      console.log("User signed out.");
-
+      // Firebase sign out function
+      await signOut(auth); 
+      
       // clears navigation stack to not allow user to go back
       navigation.dispatch
       (

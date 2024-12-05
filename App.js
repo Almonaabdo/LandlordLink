@@ -28,7 +28,6 @@ import {SignUpScreen} from './screens/Signup';
 import { LoginScreen } from './screens/Login';
 import { Events } from './screens/Events';
 import { Dashboard } from './screens/Dashboard';
-import { Payments } from './screens/Payments';
 
 const primaryColor = "#3e1952";
 const Tab = createBottomTabNavigator();
@@ -139,8 +138,6 @@ export default function App() {
           <Stack.Screen name="Signup" component={SignUpScreen} options={{ title: 'Sign Up' }} />
           <Stack.Screen name="SignOut" component={SignOutScreen} options={{ title: 'Sign Out', headerShown: false }} />
           <Stack.Screen name="Dashboard" component={Dashboard} options={{ title: 'Dashboard'}} />
-          <Stack.Screen name="Payments" component={Payments} options={{ title: 'Payments'}} />
-          
         </Stack.Navigator>
 
       </NavigationContainer>
