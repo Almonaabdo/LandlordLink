@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, StatusBar, StyleSheet, ActivityIndicator, TouchableOpacity, Image, Modal, Button } from 'react-native';
+import { View, Text, StatusBar, StyleSheet, ActivityIndicator, TouchableOpacity, Image, Modal, Button, TextInput } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { StylesHome } from '../styles/stylesHome';
+import { LoginButton } from '../components/Buttons';
 
 const primaryColor = "#3e1952";
 
 const budgetIcon = require(".././assets/budgetIcon.png");
 const historyIcon = require(".././assets/historyIcon.png");
+const paymentMethodsImage = require(".././assets/paymentsMethod.jpg");
 
 const documentsList = [
   { key: '1', value: 'Lease Document', uri: 'https://css4.pub/2015/icelandic/dictionary.pdf', expiryDate: '2025-12-31' },
@@ -25,6 +27,7 @@ export function Documents({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [isDocumentsVisible, setIsDocumentsVisible] = useState(true);
   const [isBudgetModalVisible, setIsBudgetModalVisible] = useState(false);
+  const [isPaymentModalVisible, setIsPaymentModalVisible] = useState(false);
 
   // Function to toggle the documents open and close based on current state
   const documentToggle = (uri) => {
@@ -83,16 +86,23 @@ export function Documents({ navigation }) {
       <View style={{ flexDirection: 'row', marginTop: 20 }}>
         <ToggleButton text="Documents" onPress={() => setIsDocumentsVisible(true)} style={{ backgroundColor: isDocumentsVisible ? primaryColor : 'gray' }} />
         <ToggleButton text="Bills" onPress={() => setIsDocumentsVisible(false)} style={{ backgroundColor: !isDocumentsVisible ? primaryColor : 'gray' }} />
+        {!isDocumentsVisible && <ToggleButton text="Pay Bill" onPress={() => setIsPaymentModalVisible(true)} style={{ backgroundColor: "#345635" }} />}
+      </View>
+
+      <View style={{ height: 50, width: 120, alignSelf: "center", marginVertical: "5%" }}>
       </View>
 
       {/* History and budget buttons */}
       <View style={{ flexDirection: 'row', marginTop: 20, justifyContent: "space-evenly" }}>
-        <TouchableOpacity onPress={() =>{setIsBudgetModalVisible(true)}}>
+
+        <TouchableOpacity onPress={() => { setIsBudgetModalVisible(true) }}>
           <Image style={StylesHome.Icons} source={budgetIcon} />
         </TouchableOpacity>
+
         <TouchableOpacity>
           <Image style={StylesHome.Icons} source={historyIcon} />
         </TouchableOpacity>
+
       </View>
 
       {/* Budget Modal */}
@@ -100,7 +110,7 @@ export function Documents({ navigation }) {
         animationType="fade"
         transparent={true}
         visible={isBudgetModalVisible}
-        onRequestClose={() => {setIsBudgetModalVisible(false)}}>
+        onRequestClose={() => { setIsBudgetModalVisible(false) }}>
 
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
@@ -131,12 +141,50 @@ export function Documents({ navigation }) {
               <Text style={styles.modalStatValue}>$1450.00</Text>
             </View>
 
-            <TouchableOpacity style={styles.closeButton} onPress={()=>{setIsBudgetModalVisible(false)}}>
+            <TouchableOpacity style={styles.closeButton} onPress={() => { setIsBudgetModalVisible(false) }}>
               <Text style={styles.buttonText}>Close</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
+
+      {/* Payment Modal */}
+      <Modal visible={isPaymentModalVisible}
+        animationType="slide"
+        transparent={true}>
+        <View style={{ flex: 1, backgroundColor: "white" }}>
+
+          {/* TOP HEADER SECTION */}
+          <View style={styles.paymentModalHeader}>
+            <Text style={[styles.headerText, { marginLeft: "40%", marginTop:"10%" }]}> Payments </Text>
+            <TouchableOpacity onPress={() => {setIsPaymentModalVisible(false)}} style={{marginTop:"10%"}}>
+              <Text style={styles.headerText}> Cancel</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{ gap: "5%", padding: "4%" }}>
+            <Text style={{ fontSize: 24, alignSelf: "center" }}>Secure Payment</Text>
+
+            <Text style={{ textAlign: "center", color: "grey", fontSize: 15, alignSelf: "center" }}>Your credit or debit information will be kept{'\n'} encrypted and secure</Text>
+
+            <Text style={{ backgroundColor: "#ededed", textAlign: "center", paddingVertical: "4%", width: "100%", borderRadius: "2%", fontSize: 18, alignSelf: "center" }}>Account: 924371244</Text>
+
+            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+              <Text style={{ fontSize: 18, alignSelf: "center" }}>Amount</Text>
+              <Text style={{ fontSize: 18, borderWidth: 1, padding: 5, borderRadius: 5, borderColor: "grey", width: "25%" }}>$80.01</Text>
+            </View>
+            <View style={{ marginBottom: "10%", height: 2, backgroundColor: "#E0E0E0" }}></View>
+
+            <Text style={{ alignSelf: "center" }}>Enter your card details</Text>
+            <Image source={paymentMethodsImage} style={{ alignSelf: "center", height: "5%", width: "70%" }}></Image>
+
+            <LoginButton text={"Confirm Payment"}></LoginButton>
+
+          </View>
+        </View>
+      </Modal>
+
+
     </View>
   );
 }
@@ -238,7 +286,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     width: '80%',
-    alignItems: 'flex-start', 
+    alignItems: 'flex-start',
   },
   modalTitle: {
     fontSize: 20,
@@ -256,14 +304,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
-    marginRight: 10, 
+    marginRight: 10,
     flex: 1,
   },
   modalStatValue: {
     fontSize: 18,
     color: '#555',
-    flex: 1, 
-    textAlign: 'right', 
+    flex: 1,
+    textAlign: 'right',
   },
   closeButton: {
     marginTop: 20,
@@ -271,4 +319,22 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
   },
+
+  // PAYMENT MODAL STYLING
+  paymentModalHeader: {
+    padding: "3%",
+    backgroundColor: primaryColor,
+    height: "10%",
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  headerText: {
+    alignContent: "center",
+    color: "white",
+    fontWeight: "500",
+  },
+
+
 });

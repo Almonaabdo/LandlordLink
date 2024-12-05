@@ -20,10 +20,10 @@ const styles = StyleSheet.create({
 
   LoginButton:
   {
-    borderRadius: 10,
+    borderRadius: 8,
     padding: 10,
     backgroundColor: primaryColor,
-    width: '40%',
+    width: '50%',
     alignSelf: 'center'
   },
 
