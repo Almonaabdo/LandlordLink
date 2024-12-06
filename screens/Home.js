@@ -13,7 +13,7 @@ import React, { useState } from "react";
 import { RefreshControl, Text, Image, Animated, TouchableOpacity, Modal, TextInput, StatusBar, ScrollView, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { SelectList } from 'react-native-dropdown-select-list';
-import { addDocument, fetchDocuments, createApartment } from "../Functions.js";
+import { addDocument, fetchDocuments } from "../Functions.js";
 import { useFocusEffect } from "@react-navigation/native";
 import HomeCard from "../components/HomeCard.js";
 import { LoginButton } from "../components/Buttons.js";
@@ -263,10 +263,10 @@ export function HomeScreen({ navigation }) {
       {/* Announcements LIST */}
       <AnnouncementsList announcements={announcements} navigation={navigation} />
 
-      
+
       <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around", marginVertical: "4%" }}>
-        <MiniCard title="Waiting Packages" detail="0" icon={icons.packageIcon} />
-        <MiniCard title="New Announcements" detail="0" icon={icons.announcementIcon} />
+        <MiniCard title="Packages" detail="0" icon={icons.packageIcon} />
+        <MiniCard title="Announcements" detail="0" icon={icons.announcementIcon} />
       </View>
 
       {/* Maintaincence Card */}
@@ -276,7 +276,7 @@ export function HomeScreen({ navigation }) {
           description={`Open Requests: ${requestCount}`}
           imageUrl={icons.maintainenceBackground} />
       </TouchableOpacity>
-      
+
       {/* Dashboard Card */}
       <TouchableOpacity onPress={() => navigation.navigate("Dashboard")}>
         <HomeCard
@@ -291,19 +291,19 @@ export function HomeScreen({ navigation }) {
         onRequestClose={() => { setIsMaintenanceModalVisible(false) }}
         onDismiss={() => setImagePickerModalVisible(false)}
         animationType="slide"
-        presentationStyle="pageSheet"
-      >
-        <View style={{ padding: 20 }}>
+        presentationStyle="pageSheet">
+
+        <View style={{ padding: "4%", gap: "1.5%" }}>
 
           {/*Down Arrow Icon*/}
-          <TouchableOpacity onPress={() => setIsMaintenanceModalVisible(false)} style={{ marginTop: 20 }}>
-            <Image source={icons.ArrowDownIcon} style={{ width: 35, height: 35, marginVertical: '5%', alignSelf: "center" }} />
+          <TouchableOpacity onPress={() => setIsMaintenanceModalVisible(false)}>
+            <Image source={icons.ArrowDownIcon} style={{ width: 35, height: 35, marginVertical: '2%', alignSelf: "center" }} />
           </TouchableOpacity>
 
           <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>Request Maintenance</Text>
 
           {/* Issue Title */}
-          <Text style={{ marginVertical: '1%' }}>Issue Title</Text>
+          <Text>Issue Title</Text>
           <TextInput
             placeholder="Issue Title"
             placeholderTextColor="grey"
@@ -312,14 +312,13 @@ export function HomeScreen({ navigation }) {
               borderWidth: 1,
               borderRadius: 8,
               padding: 12,
-              marginBottom: 10,
               backgroundColor: "#f9f9f9"
             }}
             onChangeText={setIssueTitle}
             value={issueTitle}
           />
           {/* Issue Description */}
-          <Text style={{ marginVertical: '1%' }}>Describe the problem</Text>
+          <Text>Describe the problem</Text>
           <TextInput
             placeholder="Issue Description"
             multiline
@@ -330,7 +329,6 @@ export function HomeScreen({ navigation }) {
               borderWidth: 1,
               borderColor: '#ccc',
               padding: 10,
-              marginTop: 5,
               borderRadius: 10,
               fontSize: 16,
               textAlignVertical: 'top',
@@ -340,25 +338,25 @@ export function HomeScreen({ navigation }) {
           />
 
           {/* Issue Type Dropdown */}
-          <Text style={{ marginVertical: '1%' }}>Maintenance Type</Text>
+          <Text>Maintenance Type</Text>
           <SelectList
             setSelected={setSelected}
             data={maintainenceList}
             placeholder="Select Issue Type"
             searchPlaceholder="Search"
             dropdownStyles={{ borderRadius: 5 }}
-            boxStyles={{ marginVertical: 10, borderRadius: 8 }}
+            boxStyles={{ borderRadius: 8 }}
           />
 
           {/* Priority Dropdown */}
-          <Text style={{ marginVertical: '1%' }}>How Urgent</Text>
+          <Text>How Urgent</Text>
           <SelectList
             setSelected={setSelectedPriority}
             data={priorityLevels}
             placeholder="Select Priority"
             searchPlaceholder="Search"
             dropdownStyles={{ borderRadius: 5 }}
-            boxStyles={{ marginVertical: 10, borderRadius: 8 }}
+            boxStyles={{ borderRadius: 8 }}
           />
 
           {/* Add Image Button */}
@@ -443,10 +441,10 @@ export function HomeScreen({ navigation }) {
         animationType="slide"
         onRequestClose={() => setIsEmergencyModalVisible(false)}
         presentationStyle="pageSheet">
-        <View style={{ flex: 1, alignItems: 'center', backgroundColor: "#FFFFF", padding: 10 }}>
+        <View style={{ flex: 1, alignItems: 'center', backgroundColor: "#FFFFF", padding: "4%" }}>
 
           {/*Down Arrow Icon*/}
-          <TouchableOpacity onPress={() => setIsEmergencyModalVisible(false)} style={{ marginTop: 10 }}>
+          <TouchableOpacity onPress={() => setIsEmergencyModalVisible(false)}>
             <Image source={icons.ArrowDownIcon} style={{ width: 35, height: 35, marginBottom: '10%', alignSelf: "center" }} />
           </TouchableOpacity>
 

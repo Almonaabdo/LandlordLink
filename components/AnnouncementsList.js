@@ -6,7 +6,7 @@ const AnnouncementsList = ({ announcements, navigation }) => {
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate("Announcements")}>
         <View style={styles.card}>
-          <Text style={styles.title}>Recent Announcements</Text>
+          <Text style={styles.title}>Recent updates</Text>
 
           {announcements.length > 0 ? (
             announcements.slice(0, 2).map((announcement) => (

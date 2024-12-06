@@ -16,7 +16,6 @@ import React from "react";
 import { View, Text, TouchableOpacity } from 'react-native';
 import { auth } from '../firebaseConfig'; 
 import { signOut } from 'firebase/auth';
-import { stylesLogin } from '../styles/stylesLogin';
 import { CommonActions } from '@react-navigation/native';
 
 export function SignOutScreen({ navigation }) {
@@ -45,19 +44,19 @@ export function SignOutScreen({ navigation }) {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
-      <StatusBar barStyle="light-content" />
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "white", gap:"3%" }}>
 
-      <Text style={stylesLogin.textHeader}>Are you sure you want to sign out?</Text>
+      <StatusBar barStyle="dark-content" />
+
+      <Text>Are you sure you want to sign out?</Text>
 
       {/* Logout button */}
       <LoginButton onPress={handleSignOut} text="Sign Out" />
 
       {/* Cancel button */}
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text style={stylesLogin.textLabel}>Cancel</Text>
+        <Text>Cancel</Text>
       </TouchableOpacity>
-
     </View>
   );
 }

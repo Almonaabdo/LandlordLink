@@ -11,9 +11,8 @@
 
 
 import { React } from "react";
-import { View, Text, Image, TouchableOpacity, StatusBar, StyleSheet, Linking, SafeAreaView } from "react-native";
+import { View, Text, Image, TouchableOpacity, StatusBar, StyleSheet, Linking } from "react-native";
 import { LoginButton } from "../components/Buttons";
-import { WebView } from 'react-native-webview';
 
 // icons
 const emailIcon = require(".././assets/emailIcon.png");
@@ -148,8 +147,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   profileImage: {
-    width: 99,
-    height: 99,
+    width: '25%',
+    height: "135%",
     borderRadius: 99,
     marginRight: '5%',
   },
@@ -174,14 +173,13 @@ const styles = StyleSheet.create({
     width:'300',
     color: '#333',
     backgroundColor: '#f0eff5',
-    padding: 10,
-    borderRadius: 5,
+    padding: "2%",
     width:"100%"
   },
   sectionHours: {
     fontSize: 16,
     color: '#888',
-    marginVertical: 4,
+    marginVertical: "1%",
   },
   contactLink: {
     flexDirection: 'row',
