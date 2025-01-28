@@ -11,7 +11,7 @@
 
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StatusBar, ActivityIndicator, Alert, TextInput, KeyboardAvoidingView, ScrollView, StyleSheet } from "react-native";
-import { auth } from '../firebaseConfig'; // Adjust the path as necessary
+import { auth } from '../firebaseConfig';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { LoginButton } from "../components/Buttons";
 

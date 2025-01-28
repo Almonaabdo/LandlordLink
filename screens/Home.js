@@ -23,7 +23,6 @@ import MiniCard from "../components/MiniCard.js";
 
 // Icons
 const darkBlue = "#2e395d";
-const AppartmentImg = require(".././assets/256LesterSt.jpg");
 const icons = {
   WrenchIcon: require(".././assets/wrenchIcon.png"),
   CloseIcon: require(".././assets/close.png"),
