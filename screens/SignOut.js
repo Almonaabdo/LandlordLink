@@ -33,7 +33,7 @@ export function SignOutScreen({ navigation }) {
         CommonActions.reset
         ({
           index: 0, 
-          routes: [{ name: 'Signup' }], 
+          routes: [{ name: 'Login' }], 
         })
       );
     } 
