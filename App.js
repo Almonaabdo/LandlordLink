@@ -22,7 +22,7 @@ import { HomeScreen } from './screens/Home';
 import { AnnouncementsScreen } from './screens/Announcements';
 import { Documents } from './screens/Documents';
 import { Contact } from './screens/Contact';
-import {RequestsScreen} from './screens/RequestScreen';
+import {Maintenances} from './screens/Maintenances';
 import {SignOutScreen} from './screens/SignOut';
 import {SignUpScreen} from './screens/Signup';
 import { LoginScreen } from './screens/Login';
@@ -127,7 +127,7 @@ export default function App() {
 
         <Stack.Navigator screenOptions={defaultScreenOptions} initialRouteName='Login'>
           <Stack.Screen name="Back" component={TabNavigator} options={{ headerShown: false }} />
-          <Stack.Screen name="Requests" component={RequestsScreen} options={{ title: 'Requests', headerBackTitleVisible: false }} />
+          <Stack.Screen name="Maintenances" component={Maintenances} options={{ title: 'Maintenances', headerBackTitleVisible: false }} />
           <Stack.Screen name="Announcements" component={AnnouncementsScreen} options={{ title: 'Announcements', headerBackTitleVisible: false }} />
           <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
           <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login' }} />

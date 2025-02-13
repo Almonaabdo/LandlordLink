@@ -30,7 +30,7 @@ const sortRequestsByPriority = (requests) => {
   return requests.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
 };
 
-export function RequestsScreen({ navigation }) {
+export function Maintenances({ navigation }) {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

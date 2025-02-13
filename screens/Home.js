@@ -269,7 +269,7 @@ export function HomeScreen({ navigation }) {
       </View>
 
       {/* Maintaincence Card */}
-      <TouchableOpacity onPress={() => navigation.navigate("Requests")}>
+      <TouchableOpacity onPress={() => navigation.navigate("Maintenances")}>
         <HomeCard
           title="Maintenance"
           description={`Open Requests: ${requestCount}`}
