@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StatusBar, StyleSheet, ActivityIndicator, TouchableOpacity, Image, Modal, Button, TextInput } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { StylesHome } from '../styles/stylesHome';
 import { LoginButton } from '../components/Buttons';
 
 const primaryColor = "#3e1952";
@@ -96,11 +95,11 @@ export function Documents({ navigation }) {
       <View style={{ flexDirection: 'row', marginTop: 20, justifyContent: "space-evenly" }}>
 
         <TouchableOpacity onPress={() => { setIsBudgetModalVisible(true) }}>
-          <Image style={StylesHome.Icons} source={budgetIcon} />
+          <Image style={styles.icon} source={budgetIcon} />
         </TouchableOpacity>
 
         <TouchableOpacity>
-          <Image style={StylesHome.Icons} source={historyIcon} />
+          <Image style={styles.icon} source={historyIcon} />
         </TouchableOpacity>
 
       </View>
@@ -335,6 +334,12 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "500",
   },
+
+  icon:{
+    width: 30,
+    height: 30,
+    margin:10,
+},
 
 
 });

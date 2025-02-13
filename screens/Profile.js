@@ -15,7 +15,6 @@ import { View, Text, Image, TouchableOpacity, StatusBar, StyleSheet, TextInput, 
 import { LoginButton } from "../components/Buttons.js";
 import { auth } from '../firebaseConfig.js';
 import { Checkbox } from 'expo-checkbox';
-import { StylesHome } from "../styles/stylesHome.js";
 
 const profileImage = require("../assets/profileUser.png");
 const buildingIcon = require(".././assets/buildingIcon.png");
@@ -25,7 +24,7 @@ const phoneIcon = require(".././assets/phoneIcon.png");
 const ProfileCard = ({ icon, text }) => {
   return (
     <View style={styles.profileCard}>
-      <Image source={icon} style={StylesHome.Icons}></Image>
+      <Image source={icon} style={styles.icon}></Image>
       <Text style={{ fontSize: 18 }}>{text}</Text>
     </View>
   )
@@ -103,6 +102,11 @@ const styles = StyleSheet.create({
     marginBottom: '3%',
     alignSelf: 'center',
   },
+  ProfileImage:{
+    width: 30,
+    height: 30,
+    margin:10,
+},
   profileImage: {
     width: 100,
     height: 100,
@@ -124,6 +128,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#666',
     marginBottom: 5,
+  },
+  icon:{
+    width: 30,
+    height: 30,
+    margin:10,
   },
   input: {
     height: 40,
