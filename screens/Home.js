@@ -10,7 +10,7 @@
 */
 
 import React, { useState } from "react";
-import { RefreshControl, Text, Image, Animated, TouchableOpacity, Modal, TextInput, StatusBar, ScrollView, View } from "react-native";
+import { RefreshControl, Text,Linking, Image, Animated, TouchableOpacity, Modal, TextInput, StatusBar, ScrollView, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { SelectList } from 'react-native-dropdown-select-list';
 import { addDocument, fetchDocuments } from "../Functions.js";
@@ -296,9 +296,9 @@ export function HomeScreen({ navigation }) {
         <View style={{ padding: "4%", gap: "1.5%" }}>
 
           {/*Down Arrow Icon*/}
-          <TouchableOpacity onPress={() => setIsMaintenanceModalVisible(false)}>
+          {/* <TouchableOpacity onPress={() => setIsMaintenanceModalVisible(false)}>
             <Image source={icons.ArrowDownIcon} style={{ width: 35, height: 35, marginVertical: '2%', alignSelf: "center" }} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>Request Maintenance</Text>
 
@@ -444,9 +444,9 @@ export function HomeScreen({ navigation }) {
         <View style={{ flex: 1, alignItems: 'center', backgroundColor: "#FFFFF", padding: "4%" }}>
 
           {/*Down Arrow Icon*/}
-          <TouchableOpacity onPress={() => setIsEmergencyModalVisible(false)}>
+          {/* <TouchableOpacity onPress={() => setIsEmergencyModalVisible(false)}>
             <Image source={icons.ArrowDownIcon} style={{ width: 35, height: 35, marginBottom: '10%', alignSelf: "center" }} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <View style={{ backgroundColor: "red", padding: 10, borderRadius: 7 }}>
             <Text style={{ fontSize: 34 }}>Fire Safety Guide</Text>
@@ -470,7 +470,7 @@ export function HomeScreen({ navigation }) {
             description="Open the window and signal for help after calling 911." />
 
           <View style={{ marginVertical: "20%" }} />
-          <LoginButton text={"CALL 9 1 1 "}></LoginButton>
+          <LoginButton text={"CALL 9 1 1 "} onPress={() => Linking.openURL(`tel:911`)}/>
 
         </View>
       </Modal>
