@@ -16,9 +16,9 @@
 Follow the steps below to get started with **LandlordLink**:
 
 
-### 1. Clone the repository https://github.com/Almonaabdo/LandlordLink.git
+### 1. Clone the repository 
 
-git clone https://github.com/yourusername/landlordlink.git
+git clone https://github.com/Almonaabdo/LandlordLink.git
 
 
 ### 2. install dependencies
