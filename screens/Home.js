@@ -211,7 +211,7 @@ export function HomeScreen({ navigation }) {
       1 + 1; //TOBEREPLACED
     }
   };
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////VIEW///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "white" }}
@@ -263,9 +263,10 @@ export function HomeScreen({ navigation }) {
       <AnnouncementsList announcements={announcements} navigation={navigation} />
 
 
+      {/* Mini cards */}
       <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around", marginVertical: "4%" }}>
         <MiniCard title="Packages" detail="0" icon={icons.packageIcon} />
-        <MiniCard title="Announcements" detail="0" icon={icons.announcementIcon} />
+        <MiniCard title="Announcements" detail={announcements.length} icon={icons.announcementIcon} />
       </View>
 
       {/* Maintaincence Card */}

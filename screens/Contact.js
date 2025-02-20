@@ -92,7 +92,7 @@ export function Contact({ navigation }) {
       <View style={{marginVertical:'5%'}}/>
       
 
-      <LoginButton text={"Visit Us"} onPress={()=>{Linking.openURL('https://www.accommod8u.com/')}}>
+      <LoginButton text={"Accommd8u.com"} onPress={()=>{Linking.openURL('https://www.accommod8u.com/')}}>
 
       </LoginButton>
 
@@ -141,6 +141,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F8F9FA',
     padding: '3%',
+    paddingVertical: '5%'
   },
   header: {
     flexDirection: 'row',
@@ -187,8 +188,8 @@ const styles = StyleSheet.create({
     marginVertical: '3%',
   },
   linkIcon: {
-    width: '7%',
-    height: '165%',
+    width: '6%',
+    height: '150%',
     marginRight: '3%',
   },
   linkText: {
