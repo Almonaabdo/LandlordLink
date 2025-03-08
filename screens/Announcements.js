@@ -57,7 +57,6 @@ export function AnnouncementsScreen({ navigation }) {
     // submitting announcement to databse
     try {
       await addDocument("announcements", announcementData);
-      alert("Announcement submitted successfully.");
       setAnnouncementTitle("");
       setAnnouncementDetails("");
 
@@ -67,7 +66,6 @@ export function AnnouncementsScreen({ navigation }) {
       setIsCreatePost(false);                     // close modal window
     }
     catch (error) {
-      console.log("Error submitting announcement.", error);
       alert("Failed to submit announcement. Please try again later.");
     }
   };
@@ -123,7 +121,6 @@ export function AnnouncementsScreen({ navigation }) {
       [
         {
           text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
         },
         {
           text: 'Ok',
@@ -132,7 +129,6 @@ export function AnnouncementsScreen({ navigation }) {
               await deleteDocument("announcements", id);
               const updatedAnnouncements = announcements.filter(announcement => announcement.id !== id);
               setAnnouncements(updatedAnnouncements);
-              console.log('Announcement deleted');
             }
             catch (error) {
               console.error("Error deleting announcement: ", error);
@@ -218,11 +214,17 @@ export function AnnouncementsScreen({ navigation }) {
       </Modal>
 
       {/*Edit post modal*/}
-      <Modal visible={isEditPost} onRequestClose={() => setIsEditPost(false)} animationType="slide">
-        <TouchableOpacity onPress={() => { setIsEditPost(false) }}>
+      <Modal visible={isEditPost} onRequestClose={() => setIsEditPost(false)} animationType="slide" style={{gap: '1%'}}>
+        
+        <TouchableOpacity onPress={() => { setIsEditPost(false); setAnnouncementTitle(""); setAnnouncementDetails(""); }}>
           <Image source={CloseIcon} style={StylesHome.IconsSmall} />
+
+          {/* modal title */}
           <Text style={StylesHome.TextHeader}>Edit Announcement</Text>
         </TouchableOpacity>
+
+        
+
 
         <View style={stylesLogin.container}>
           <TextInput
